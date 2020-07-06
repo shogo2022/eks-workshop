@@ -1,5 +1,5 @@
 ---
-title: "Data Plane"
+title: "データプレーン"
 date: 2018-10-03T10:18:27-07:00
 draft: false
 weight: 110
@@ -35,6 +35,7 @@ internet((internet))
   class internet green;
   class kubectl orange;
 {{< /mermaid >}}
+
 <!--
 * Made up of worker nodes
 -->

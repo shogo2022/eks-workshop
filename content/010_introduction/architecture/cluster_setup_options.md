@@ -1,5 +1,5 @@
 ---
-title: "Kubernetes Cluster Setup"
+title: "Kubernetesクラスターのセットアップ"
 date: 2018-10-03T10:21:11-07:00
 draft: false
 weight: 120

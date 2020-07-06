@@ -1,5 +1,5 @@
 ---
-title: "Kubernetes Architecture"
+title: "Kubernetesの構成"
 date: 2018-10-03T10:17:52-07:00
 draft: false
 weight: 80
