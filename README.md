@@ -5,37 +5,71 @@
 ### Setup:
 #### Using GitPod.io:
 
+<!--
 This is how I set up my environment:
 (I am using gitpod.io for editing)
+-->
+私はこのように環境を構築しました。
+(編集にはgitpod.ioを使っています)
 
+<!--
 1. fork the repo to your own github account
 2. prepend `gitpod.io#` to the beginning of your github url. Mine becomes: `https://gitpod.io#github.com/brentley/eks-workshop`
 3. once gitpod has started, in the terminal, run `npm install && npm run theme`
 This will install the dependencies and clone the theme submodule.
+-->
+1. 自分のgithubアカウントにリポジトリをフォークします。
+2. あなたのgithub urlの前に`gitpod.io#`をつけます。私の場合は、`https://gitpod.io#github.com/brentley/eks-workshop`になります。
+3. gitpodが起動したら、ターミナルで`npm install && npm run theme`と入力します。
+これは依存パッケージのインストールとテーマサブモジュールのクローンを行います。
 
+<!--
 From here, you can use the online IDE to edit /content/chapter/filename.md...
 If you want to preview your edits, in the terminal, run:
 `npx hugo server`.
 That will start the local hugo server.
+-->
+これでオンラインIDEを使って/content/chapter/filename.mdを編集できるようになりました。
+編集のプレビューをみるときは、ターミナルで以下を実行します:
+`npx hugo server`
+ローカルのhugoサーバが起動します。
 
+<!--
 A dialog box will pop up telling you "A service is listening on port 1313, but is not
 exposed." -- press the expose button. After that, choose "open browser" to get a new
 tab with your preview site. As you save edits, this tab should refresh.
+-->
+ポップアップしたダイアログボックスで"A service is listening on port 1313, but is not
+exposed."と出るので、exposeボタンを押します。その後に"open browser"を選ぶと新しいタブでプレビューが表示されます。
+変更を保存すると、このタブも更新されるはずです。
 
+<!--
 When you're happy with your edits, commit, push, and open a pull request to the upstream
 repo's main branch. Once merged, the preview site (linked above) will be refreshed.
+-->
 
+<!--
 #### On a Mac:
 Install Hugo:
 `brew install hugo`
+-->
+#### On a Mac:
+Hugoのインストール:
+`brew install hugo`
 
+<!--
 #### On Linux:
   - Download from the releases page: https://github.com/gohugoio/hugo/releases/tag/v0.64.1
   - Extract and save the executable to `/usr/local/bin`
+-->
+#### On Linux:
+  - リリースページからダウンロードします: https://github.com/gohugoio/hugo/releases/tag/v0.64.1
+  - 展開後、実行ファイルを`/usr/local/bin`に置きます。
 
 #### Clone this repo:
 From wherever you checkout repos:
 `git clone git@github.com:aws-samples/eks-workshop.git` (or your fork)
+
 
 #### Clone the theme submodule:
 `cd eks-workshop`
@@ -73,5 +107,3 @@ deployed hash at the bottom of the menu panel.
 An example is the "jenkinsworld" branch would be deployed to https://eksworkshop.com/jenkinsworld/
 
 note: shift-reload may be necessary in your browser to reflect the latest changes.
-
-
