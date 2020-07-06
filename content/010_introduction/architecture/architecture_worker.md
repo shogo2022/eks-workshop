@@ -35,11 +35,22 @@ internet((internet))
   class internet green;
   class kubectl orange;
 {{< /mermaid >}}
-
+<!--
 * Made up of worker nodes
+-->
+* ワーカーノードで構成されています
 
+<!--
 * kubelet: Acts as a conduit between the API server and the node
+-->
+* kubelet: APIサーバとノード間の繋ぎとして動きます
 
+<!--
 * kube-proxy: Manages IP translation and routing
+-->
+* kube-proxy: IPの変換とルーティングを管理します
 
+<!--
 Check out [the official Kubernetes documentation](https://kubernetes.io/docs/concepts/overview/components/#node-components) for a more in-depth explanation of data plane components.
+-->
+データプレーンに関するより詳細な説明は[Kubernetesの公式ドキュメント](https://kubernetes.io/docs/concepts/overview/components/#node-components)を参照してください。

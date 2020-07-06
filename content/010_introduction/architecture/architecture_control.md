@@ -29,12 +29,27 @@ kubectl{kubectl}
   class kubectl orange;
 {{< /mermaid >}}
 
+<!--
 * One or More API Servers: Entry point for REST / kubectl
+-->
+* APIサーバがひとつ以上: RESTとKubectlのエントリーポイント
 
+<!--
 * etcd: Distributed key/value store
+-->
+* etcd: ディストリビューテッド　キー・バリューストア
 
+<!--
 * Controller-manager: Always evaluating current vs desired state
+-->
+* コントローラマネージャ: 常に現状とあるべき状態を比較する
 
+<!--
 * Scheduler: Schedules pods to worker nodes
+-->
+* スケジューラ: ワーカーノードにpodをスケジュールする
 
+<!--
 Check out [the official Kubernetes documentation](https://kubernetes.io/docs/concepts/overview/components/#master-components) for a more in-depth explanation of control plane components.
+-->
+コントロールプレーンに関するより詳細な説明は[Kubernetesの公式ドキュメント](https://kubernetes.io/docs/concepts/overview/components/#master-components)を参照してください。
