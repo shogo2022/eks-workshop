@@ -5,7 +5,10 @@ draft: false
 weight: 90
 ---
 
+<!--
 In this section, we'll cover the following topics:
+-->
+このセクションでは、次のトピックを扱います:
 
 {{% children showhidden="false" %}}
 
