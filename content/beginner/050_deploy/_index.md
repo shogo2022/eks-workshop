@@ -1,5 +1,5 @@
 ---
-title: "Deploy the Example Microservices"
+title: "マイクロサービスの一例をデプロイする"
 chapter: true
 weight: 50
 tags:
@@ -7,7 +7,10 @@ tags:
   - CON203
 ---
 
+<!--
 # Deploy the Example Microservices
+-->
+# サンプルのマイクロサービスの一例をデプロイする
 
 ![microservices](/images/crystal.svg)
 {{% children showhidden="false" %}}
