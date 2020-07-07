@@ -13,21 +13,41 @@ tags:
 
 {{< youtube XIVCS2j_JxU >}}
 
+<!--
 {{% notice info %}}
 This tutorial has been updated for Helm v3. In version 3, the Tiller component
 was removed, which simplified operations and improved security.
 {{% /notice %}}
+-->
+{{% notice info %}}
+この手順はHelm v3用にアップデートされています。バージョン3ではTillerコンポーネントが削除され、
+運用が楽になりセキュリティも改善しています。
+{{% /notice %}}
 
+<!--
 {{% notice note %}}
 If you need to migrate from Helm v2 to v3 [click here for the official documentation](https://helm.sh/blog/migrate-from-helm-v2-to-helm-v3/).
 {{% /notice %}}
+-->
+{{% notice note %}}
+Heml v2からv3に移行するには[ここをクリックして公式のドキュメンを確認してください](https://helm.sh/blog/migrate-from-helm-v2-to-helm-v3/)。
+{{% /notice %}}
 
+<!--
 [Helm](https://helm.sh/) is a package manager for Kubernetes that packages
 multiple Kubernetes resources into a single logical deployment unit called
 a **Chart**. Charts are easy to create, version, share, and publish.
+-->
+[Helm](https://helm.sh/)はKubernetes用のパッケージマネージャで、複数のKubernetesリソースを**Chart**と呼ばれる
+単一の設定単位にパッケージします。Chartは作成やバージョン管理、共有、そして公開が簡単です。
 
+<!--
 In this chapter, we'll cover [installing Helm](helm_intro).  Once installed,
 we'll demonstrate how Helm can be used to [deploy a simple nginx
 webserver](helm_nginx), and a more [sophisticated microservice](helm_micro).
+-->
+このチャプターでは[Helmのインストール](helm_intro)を扱います。インストールができたら、
+[簡単なWebサーバ](helm_nginx)と、もっと[複雑なマイクロサービス](helm_micro)
+のデプロイにHelmがどのように使えるかをお見せします。
 
 ![Helm Logo](/images/helm-logo.svg)

@@ -1,18 +1,26 @@
 ---
-title: "Search Chart Repositories"
+title: "Chartレポジトリを検索する"
 date: 2018-08-07T08:30:11-07:00
 weight: 200
 ---
 
+<!--
 Now that our repository Chart list has been updated, we can [search for
 Charts](https://helm.sh/docs/helm/helm_search/).
+-->
+レポジトリのChartリストがアップデートされたら、[Chartの検索](https://helm.sh/docs/helm/helm_search/)
+ができます。
 
+<!--
 To list all Charts:
+-->
+全てのChartをリストするには:
 
 ```sh
 helm search repo
 ```
 
+<!--
 That should output something similar to:
 {{< output >}}
 NAME                                    CHART VERSION   APP VERSION                     DESCRIPTION
@@ -20,15 +28,29 @@ stable/acs-engine-autoscaler            2.2.2           2.1.1                   
 stable/aerospike                        0.3.2           v4.5.0.5                        A Helm chart...
 ...
 {{< /output >}}
+-->
+次のような表示が出るはずです:
+{{< output >}}
+NAME                                    CHART VERSION   APP VERSION                     DESCRIPTION
+stable/acs-engine-autoscaler            2.2.2           2.1.1                           Scales worker...
+stable/aerospike                        0.3.2           v4.5.0.5                        A Helm chart...
+...
+{{< /output >}}
 
+<!--
 You can see from the output that it dumped the list of all Charts we have added.
 In some cases that may be useful, but an even more useful search would involve a
 keyword argument.  So next, we'll search just for `nginx`:
+-->
+みてわかるように、追加した全てのChartが表示されています。
+これが役に立つこともありますが、ひとつキーワードをつけるだけでより使いやすくなります。
+次は`nginx`で検索してみます。
 
 ```sh
 helm search repo nginx
 ```
 
+<!--
 That results in:
 {{< output >}}
 NAME                            CHART VERSION   APP VERSION     DESCRIPTION
@@ -38,8 +60,24 @@ stable/nginx-lego               0.3.1                           Chart for...
 stable/gcloud-endpoints         0.1.2           1               DEPRECATED Develop...
 ...
 {{< /output >}}
+-->
+これは次のようになります:
+{{< output >}}
+NAME                            CHART VERSION   APP VERSION     DESCRIPTION
+stable/nginx-ingress            1.30.3          0.28.0          An nginx Ingress ...
+stable/nginx-ldapauth-proxy     0.1.3           1.13.5          nginx proxy ...
+stable/nginx-lego               0.3.1                           Chart for...
+stable/gcloud-endpoints         0.1.2           1               DEPRECATED Develop...
+...
+{{< /output >}}
 
+<!--
 This new list of Charts are specific to nginx, because we passed the **nginx**
 argument to the `helm search repo` command.
+-->
+このリストは、**nginx**という引数を`helm search repo`コマンドに与えているので、nginxに関連したChartのリストになっています。
 
+<!--
 Further information on the command can be found [here](https://helm.sh/docs/helm/helm_search_repo/).
+-->
+コマンドに関する詳細な情報は[こちら](https://helm.sh/docs/helm/helm_search_repo/)を参照してください。
