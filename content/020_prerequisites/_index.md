@@ -15,6 +15,10 @@ tags:
 
 <!--
 # Getting Started
+
+{{< youtube KT-Ov8cnXNY >}}
+
+
 To start the workshop, follow one of the following depending on whether you are...
 -->
 # はじめかた

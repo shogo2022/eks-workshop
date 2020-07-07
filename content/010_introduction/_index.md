@@ -14,6 +14,7 @@ tags:
 
 # Kubernetesの紹介
 
+{{< youtube nyUbmqiYLxA >}}
 <!--
 A walkthrough of basic Kubernetes concepts.
 -->
