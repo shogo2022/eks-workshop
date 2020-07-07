@@ -34,7 +34,7 @@ The intent of this workshop is to educate users about the features of Amazon EKS
 <!--
 Background in EKS, Kubernetes, Docker, and container workflows are not required, but they are recommended.
 -->
-EKSや、Kubernetes、Docker、そしてコンテナの背景は必須ではありませんが、推奨しています。
+EKSや、Kubernetes、Docker、そしてコンテナの事前知識は必須ではありませんが、推奨しています。
 
 <!--
 This chapter will introduce you to the basic workings of Kubernetes, laying the foundation for the hands-on portion of the workshop.

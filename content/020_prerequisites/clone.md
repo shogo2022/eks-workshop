@@ -1,5 +1,5 @@
 ---
-title: "Clone the Service Repos"
+title: "サービスレポジトリのクローン"
 chapter: false
 weight: 23
 ---
