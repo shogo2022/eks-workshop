@@ -21,7 +21,9 @@ mkdir -p ~/environment/healthchecks
 <!--
 Run the following code block to populate the manifest file **~/environment/healthchecks/liveness-app.yaml**. In the configuration file, the *livenessProbe* field determines how kubelet should check the container in order to consider whether it is healthy or not. kubelet uses the periodSeconds field to do frequent check on the Container. In this case, kubelet checks the liveness probe every 5 seconds. The initialDelaySeconds field is used to tell kubelet that it should wait for 5 seconds before doing the first probe. To perform a probe, kubelet sends a HTTP GET request to the server hosting this pod and if the handler for the servers /health returns a success code, then the container is considered healthy. If the handler returns a failure code, the kubelet kills the container and restarts it.
 -->
-次のコードを実行してマニフェストファイル**~/environment/healthchecks/liveness-app.yaml**を作成します。設定ファイル中の*livenessProbe*フィールドでkubeletがコンテナの健康状態を判断するときの基準を設定できます。periodSecondsフィールドでkubeletがコンテナの確認をする頻度を設定できます。この設定ではkubeletは5秒毎にライブネスプローブを確認します。initialDelaySecondsは最初の5秒待ってからプローブを使うようにkubeletに指示します。プローブでは、kubeletはHTTP GETリクエストをpodのサーバに送り、サーバの/healthハンドラが成功のコードを返してくればコンテナは健康とみなされます。もしハンドラが失敗のコードを返した場合は、kubeletはコンテナをkillし、それを再起動します。
+次のコードを実行してマニフェストファイル**~/environment/healthchecks/liveness-app.yaml**を作成します。設定ファイル中の*livenessProbe*フィールドで、kubeletがコンテナの健康状態を判断するときの基準を設定できます。
+periodSecondsフィールドでkubeletがコンテナの確認をする頻度を設定できます。この設定ではkubeletは5秒毎にライブネスプローブを確認します。
+initialDelaySecondsは最初の5秒待ってからプローブを使うようにkubeletに指示します。kubeletはHTTP GETリクエストをpodのサーバに送り、サーバの/healthハンドラが成功のコードを返してくればコンテナは健康とみなされます。もしハンドラが失敗のコードを返した場合は、kubeletはコンテナをkillし、それを再起動します。
 
 ```
 cat <<EoF > ~/environment/healthchecks/liveness-app.yaml
@@ -54,7 +56,7 @@ kubectl apply -f ~/environment/healthchecks/liveness-app.yaml
 <!--
 The above command creates a pod with liveness probe.
 -->
-上のコマンドはpodとライブネスプローブを作成します。
+上のコマンドはpodをライブネスプローブと一緒に作成しています。
 
 <!--
 ```
@@ -65,7 +67,7 @@ The output looks like below. Notice the ***RESTARTS***
 ```
 kubectl get pod liveness-app
 ```
-表示はこのようになるはずです。***RESTARTS***に注目してください。
+表示はこの通り。***RESTARTS***に注目してください。
 
 {{< output >}}
 NAME           READY     STATUS    RESTARTS   AGE
@@ -99,7 +101,7 @@ Events:
 #### Introduce a Failure
 We will run the next command to send a SIGUSR1 signal to the nodejs application. By issuing this command we will send a kill signal to the application process in the docker runtime.
 -->
-#### 障害の投入
+#### 障害実験
 次のコマンドを使い、nodejsアプリケーションにSIGUSR1シグナルを送ります。これをすることで、dockerランタイム上のアプリケーションプロセスにkillシグナルを送ることができます。
 
 ```
@@ -140,7 +142,7 @@ Events:
 <!--
 When the nodejs application entered a debug mode with SIGUSR1 signal, it did not respond to the health check pings and kubelet killed the container. The container was subject to the default restart policy.
 -->
-SIGUSR1シグナルでnodejsアプリケーションがデバッグモードに入ったため、ヘルスチェックpingに返答がなく、kubeletがコンテナをkillしたのです。コンテナはデフォルトの再起っどうポリシーに従います。
+SIGUSR1シグナルでnodejsアプリケーションがデバッグモードに入ったため、ヘルスチェックpingに返答がなく、kubeletがコンテナをkillしたのです。コンテナはデフォルトの再起動ポリシーに従います。
 
 ```
 kubectl get pod liveness-app

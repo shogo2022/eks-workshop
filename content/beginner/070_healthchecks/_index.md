@@ -15,13 +15,13 @@ tags:
 <!--
 By default, Kubernetes will restart a container if it crashes for any reason. It uses Liveness and Readiness probes which can be configured for running a robust application by identifying the healthy containers to send traffic to and restarting the ones when required.
 -->
-デフォルトで、Kubernetesは何らかの理由でコンテナがクラッシュした場合は、それを再起動するようになっています。
-それにはライブネスとレディネスプローブが使われており、コンテナの状態を識別し、必要な時には再起動をするなど頑強なアプリケーションを実行するための設定ができます。
+Kubernetesは何らかの理由でコンテナがクラッシュした場合は、それを再起動するようになっています。
+それにはライブネス、レディネスプローブが使われており、それによってコンテナの状態を識別し、必要な時には再起動をしたり頑強なアプリケーションを実行するための設定ができます。
 
 <!--
 In this section, we will understand how [liveness and readiness probes](https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-probes/) are defined and test the same against different states of a pod. Below is the high level description of how these probes work.
 -->
-このセクションでは、[ライブネスとレディネスプローブ](https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-probes/)がどのように定義されているのかを理解し、異なるステータスのpodに対してテストをします。以下はこれらプローブの概要です。
+このセクションでは、[ライブネス、レディネスプローブ](https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-probes/)がどのように定義されているのかを理解し、異なる状況のpodに対してテストをします。以下はこれらプローブの概要です。
 
 <!--
 **Liveness probes** are used in Kubernetes to know when a pod is alive or dead. A pod can be in a dead state for a variety of reasons; Kubernetes will kill and recreate the pod when a liveness probe does not pass.

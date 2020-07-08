@@ -98,7 +98,7 @@ Replicas:               3 desired | 3 updated | 3 total | 3 available | 0 unavai
 Pick one of the pods from above 3 and issue a command as below to delete the **/tmp/healthy** file which makes the readiness probe fail.
 -->
 #### 障害の投入
-上の3つからpoddを一つ選び、次のコマンドを実行してください。**/tmp/heatthy**を削除することで、レディネスプローブが失敗します。
+上の3つからpodを一つ選び、次のコマンドを実行してください。**/tmp/healthy**を削除することで、レディネスプローブが失敗します。
 
 ```
 kubectl exec -it <YOUR-READINESS-POD-NAME> -- rm /tmp/healthy
@@ -123,7 +123,7 @@ readiness-deployment-7869b5d679-vxb6g   1/1       Running   0          4m
 {{< /output >}}
 Traffic will not be routed to the first pod in the above deployment. The ready column confirms that the readiness probe for this pod did not pass and hence was marked as not ready. 
 -->
-下のように表示されるはずです:
+このように表示されます:
 {{< output >}}
 NAME                                    READY     STATUS    RESTARTS   AGE
 readiness-deployment-7869b5d679-922mx   0/1       Running   0          4m
