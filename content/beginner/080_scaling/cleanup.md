@@ -1,5 +1,5 @@
 ---
-title: "Cleanup Scaling"
+title: "スケーリングの後片付け"
 date: 2018-08-07T08:30:11-07:00
 weight: 50
 ---
