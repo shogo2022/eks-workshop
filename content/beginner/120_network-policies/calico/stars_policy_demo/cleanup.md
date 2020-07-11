@@ -1,9 +1,12 @@
 ---
-title: "Cleanup"
+title: "後片付け"
 date: 2018-08-07T08:30:11-07:00
 weight: 5
 ---
+<!--
 Clean up the demo by deleting the namespaces:
+-->
+名前空間を消してデモを削除します:
 
 ```
 kubectl delete namespace client stars management-ui

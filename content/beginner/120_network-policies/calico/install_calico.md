@@ -1,18 +1,29 @@
 ---
-title: "Install Calico"
+title: "Calicoのインストール"
 date: 2018-11-08T08:30:11-07:00
 weight: 1
 ---
 
+<!--
 Apply the Calico manifest from the [aws/amazon-vpc-cni-k8s GitHub project](https://github.com/aws/amazon-vpc-cni-k8s). This creates the daemon sets in the kube-system namespace.
+-->
+[aws/amazon-vpc-cni-k8s GitHub project](https://github.com/aws/amazon-vpc-cni-k8s)からCalicoのマニフェストを適用します。これはkube-systemの名前空間にdaemon setを作成します。
 
-
+<!--
 ```
 kubectl apply -f https://raw.githubusercontent.com/aws/amazon-vpc-cni-k8s/master/config/v1.6/calico.yaml
 ```
 Let's go over few key features of the Calico manifest:
+-->
+```
+kubectl apply -f https://raw.githubusercontent.com/aws/amazon-vpc-cni-k8s/master/config/v1.6/calico.yaml
+```
+Calicoマニフェストの代表的な機能をみてみましょう:
 
+<!--
 1) We see an annotation throughout; [annotations](https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/) are a way to attach **non-identifying** metadata to objects. This metadata is not used internally by Kubernetes, so they cannot be used to identify within k8s. Instead, they are used by external tools and libraries. Examples of annotations include build/release timestamps, client library information for debugging, or fields managed by a network policy like Calico in this case.
+-->
+1)  annotationが至る所にあります;  [annotations](https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/)はオブジェクトに **識別以外の** メタデータを割り当てます。このメタデータはKubernetes内部で使われることはないので、k8s内での識別に使うことはできません。代わりに、これらは外部のツールやライブラリによって使用されます。annotationの例としては、ビルド/リリース日時やデバッグのためのクライアントライブラリの情報、Calicoなどのネットワークポリシーが管理している項目などがあります。
 
 {{< output >}}
 kind: DaemonSet
@@ -42,30 +53,60 @@ spec:
         *scheduler**.alpha.kubernetes.io/critical-pod: ''*
         ...
 {{< /output >}}
+<!--
 In contrast, [Labels](https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/#label-selectors) in Kubernetes are intended to be used to specify **identifying** attributes for objects. They are used by selector queries or with label selectors. Since they are used internally by Kubernetes the structure of keys and values is constrained, to optimize queries.
+-->
+対照的に、[ラベル](https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/#label-selectors)は、オブジェクトの属性の **識別** のためにあり、selectorクエリやラベルselectorによって使われます。これらはKubernetesの内部で使われているため、キーとバリューペアはクエリの最適化のために制約されています。
 
-
+<!--
 2) We see that the manifest has a tolerations attribute. [Taints and tolerations](https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/) work together to ensure pods are not scheduled onto inappropriate nodes. Taints are applied to nodes, and the **only pods that can tolerate the taint are allowed to run on those nodes.** 
+-->
+2) マニフェストにtolerations属性があります。[Taintsとtolerations](https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/)は共に不適切なノードにpodが配置されないように保証し、 **ノードの汚れ(taint)に耐えられる(tolerate)podのみがそのノード上で実行されます。**
 
+<!--
 A taint consists of a key, a value for it and an effect, which can be:
+-->
+taintはキーとバリュー、そして以下の効果(effect)からなります:
 
+<!--
 * PreferNoSchedule: Prefer not to schedule intolerant pods to the tainted node
 * NoSchedule: Do not schedule intolerant pods to the tainted node
 * NoExecute: In addition to not scheduling, also evict intolerant pods that are already running on the node.
+-->
+* PreferNoSchedule: 汚れた(tainted)ノードに耐性がない(intolerant)podはできるだけ配置しない
+* NoSchedule: 汚れた(tainted)ノードに耐性がない(intolerant)podは配置しない
+* NoExecute: 配置しない上で、現在ノードで実行中の耐性がない(intolerant)podも排除する
     
+<!--
 Like taints, tolerations also have a key value pair and an effect, with the addition of operator.
 Here in the Calico manifest, we see tolerations has just one attribute: **Operator = exists**. This means the key value pair is omitted and the toleration will match any taint, ensuring it runs on all nodes.
+-->
+taintと同じように、toleranceにもキー・バリューペアとeffectがあり、加えてoperatorがあります。
+Calicoマニフェストでは、耐性(tolerations)は１種類のみ: **Operator = exists** が含まれています。キー・バリューペアが省略されtoleranceは何にでも合致するので、全てのノードで動きます。
 
+<!--
 {{< output >}}
  tolerations:
       - operator: Exists
 {{< /output >}}
 Watch the kube-system daemon sets and wait for the calico-node daemon set to have the DESIRED number of pods in the READY state.
+-->
+{{< output >}}
+ tolerations:
+      - operator: Exists
+{{< /output >}}
+kube-systemのdaemon setを注視し、calico-node  daemon setがREADY状態のpodをDESIREDの数だけ起動させるのを待ちます。
 
+<!--
 ```
 kubectl get daemonset calico-node --namespace=kube-system
 ```
 Expected Output:
+-->
+```
+kubectl get daemonset calico-node --namespace=kube-system
+```
+想定される出力:
 
 {{< output >}}
 NAME          DESIRED   CURRENT   READY   UP-TO-DATE   AVAILABLE   NODE SELECTOR   AGE
