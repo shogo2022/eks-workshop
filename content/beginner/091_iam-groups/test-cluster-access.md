@@ -19,7 +19,12 @@ Examples we will define 3 profile:
 
 <!--
 #### add in `~/.aws/config`:
-```
+
+```bash
+if [ ! -d ~/.aws ]; then
+  mkdir ~/.aws
+fi
+
 cat << EoF >> ~/.aws/config
 [profile admin]
 role_arn=arn:aws:iam::${ACCOUNT_ID}:role/k8sAdmin
@@ -56,7 +61,8 @@ EoF
 
 <!--
 #### create `~/.aws/credentials`:
-```
+
+```bash
 cat << EoF > ~/.aws/credentials
 
 [eksAdmin]
@@ -98,7 +104,7 @@ EoF
 -->
 #### devプロファイルでテスト:
 
-```
+```bash
 aws sts get-caller-identity --profile dev
 ```
 
@@ -125,7 +131,7 @@ You can test this with **integ** and **admin** also.
 <details>
   <summary>with admin:</summary>
   
-```
+```bash
 aws sts get-caller-identity --profile admin
 {
     "UserId": "AROAUD5VMKW77KXQAL7ZX:botocore-session-1582022121",
@@ -161,7 +167,7 @@ Create new KUBECONFIG file to test this:
 -->
 新しいKUBECONFIGファイルの作成:
 
-```
+```bash
 export KUBECONFIG=/tmp/kubeconfig-dev && eksctl utils write-kubeconfig eksworkshop-eksctl
 cat $KUBECONFIG | yq w - -- 'users[*].user.exec.args[+]' '--profile' | yq w - -- 'users[*].user.exec.args[+]' 'dev' | sed 's/eksworkshop-eksctl./eksworkshop-eksctl-dev./g' | sponge $KUBECONFIG
 ```
@@ -178,7 +184,8 @@ With this configuration we should be able to interract with the **development** 
 
 <!--
 let's create a pod
-```
+
+```bash
 kubectl run --generator=run-pod/v1 nginx-dev --image=nginx -n development
 ```
 -->
@@ -192,7 +199,7 @@ We can list the pods
 -->
 podをリストします
 
-```
+```bash
 kubectl get pods -n development
 ```
 
@@ -206,8 +213,8 @@ but not in other namespaces
 -->
 他の名前空間ではできません
 
-```
-kubectl get pods -n integration 
+```bash
+kubectl get pods -n integration
 ```
 
 {{<output>}}
@@ -219,14 +226,15 @@ Error from server (Forbidden): pods is forbidden: User "dev-user" cannot list re
 -->
 #### itnegプロファイルでのテスト
 
-```
+```bash
 export KUBECONFIG=/tmp/kubeconfig-integ && eksctl utils write-kubeconfig eksworkshop-eksctl
 cat $KUBECONFIG | yq w - -- 'users[*].user.exec.args[+]' '--profile' | yq w - -- 'users[*].user.exec.args[+]' 'integ' | sed 's/eksworkshop-eksctl./eksworkshop-eksctl-integ./g' | sponge $KUBECONFIG
 ```
 
 <!--
 let's create a pod
-```
+
+```bash
 kubectl run --generator=run-pod/v1 nginx-integ --image=nginx -n integration
 ```
 -->
@@ -240,7 +248,7 @@ We can list the pods
 -->
 podをリストします
 
-```
+```bash
 kubectl get pods -n integration
 ```
 
@@ -254,8 +262,8 @@ but not in other namespaces
 -->
 他の名前空間ではできません
 
-```
-kubectl get pods -n development 
+```bash
+kubectl get pods -n development
 ```
 
 {{<output>}}
@@ -267,15 +275,16 @@ Error from server (Forbidden): pods is forbidden: User "integ-user" cannot list 
 -->
 #### adminプロファイルのテスト
 
-```
+```bash
 export KUBECONFIG=/tmp/kubeconfig-admin && eksctl utils write-kubeconfig eksworkshop-eksctl
 cat $KUBECONFIG | yq w - -- 'users[*].user.exec.args[+]' '--profile' | yq w - -- 'users[*].user.exec.args[+]' 'admin' | sed 's/eksworkshop-eksctl./eksworkshop-eksctl-admin./g' | sponge $KUBECONFIG
 ```
 
 <!--
 let's create a pod in default namespace
-```
-kubectl run --generator=run-pod/v1 nginx-admin --image=nginx 
+
+```bash
+kubectl run --generator=run-pod/v1 nginx-admin --image=nginx
 ```
 -->
 デフォルトの名前空間でdpodを作りましょう
@@ -288,8 +297,8 @@ We can list the pods
 -->
 podをリストします
 
-```
-kubectl get pods 
+```bash
+kubectl get pods
 ```
 
 {{<output>}}
@@ -302,7 +311,7 @@ We can list ALL pods in all namespaces
 -->
 全ての名前空間の全てのpodをリストできます
 
-```
+```bash
 kubectl get pods -A
 ```
 
@@ -331,7 +340,7 @@ It is possible to merge several kubernetes API access in the same KUBECONFIG fil
 -->
 ひとつのKUBECONFIGファイルに複数のkuubernetes APIアクセスを統合することも可能ですし、　Kubectlに複数のファイルを見に行かせることもできます:
 
-```
+```bash
 export KUBECONFIG=/tmp/kubeconfig-dev:/tmp/kubeconfig-integ:/tmp/kubeconfig-admin
 ```
 
@@ -340,7 +349,7 @@ There is a tool [kubectx / kubens](https://github.com/ahmetb/kubectx) that will 
 -->
 [kubectx / kubens](https://github.com/ahmetb/kubectx)というツールは複数のコンテキストがあるKUBECONFIGファイルの管理に役立ちます
 
-```
+```bash
 curl -sSLO https://raw.githubusercontent.com/ahmetb/kubectx/master/kubectx && chmod 755 kubectx && sudo mv kubectx /usr/local/bin
 ```
 
@@ -349,7 +358,7 @@ I can use kubectx to quickly list or swith kubernetes contexts
 -->
 kubectxを使うと、kubernetesコンテキストを素早くリスト、変更できます
 
-```
+```bash
 kubectx
 ```
 
@@ -366,13 +375,12 @@ i-0397aa1339e238a99@eksworkshop-eksctl-integ.eu-west-2.eksctl.io
 
 <!--
 In this module, we have seen how to configure EKS to provide finer access to users combining IAM Groups and Kubernetes RBAC.
-You'll be able to create different groups depending on your needs, configure their associated RBAC access in your cluster, and simply add or remove users from 
-the group to grand or remove them access to your cluster.
+You'll be able to create different groups depending on your needs, configure their associated RBAC access in your cluster, and simply add or remove users from the group to grand or remove them access to your cluster.
 -->
 このモジュールでは、IAMグループとKubernetesのRBACを組み合わせることで、ユーザのEKSへのきめ細かなアクセスを制御する方法を見ました。
 必要に応じて異なるグループを作り、クラスタ内で紐づくRBACを設定し、あとはそのグループ2ユーザの追加や削除をすることでクラスタへのアクセスを制御できます。
 
 <!--
-Users will only have to configure their aws cli in order to automatically retrievfe their associated rights in your cluster.
+Users will only have to configure their aws cli in order to automatically retrieve their associated rights in your cluster.
 -->
 ユーザは自身のaws cliを設定するだけで、自動的にクラスタ内で紐づけられた権限が取得できます。

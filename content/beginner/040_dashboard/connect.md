@@ -16,8 +16,8 @@ Now we can access the Kubernetes Dashboard
 1. Cloud9環境で、**Tools / Preview / Preview Running Application**をクリックしてください
 1. **URLの最後までスクロールして**、以下を付け加えます
 
-```
-//api/v1/namespaces/kubernetes-dashboard/services/https:kubernetes-dashboard:/proxy/
+```text
+/api/v1/namespaces/kubernetes-dashboard/services/https:kubernetes-dashboard:/proxy/
 ```
 
 <!--
@@ -29,7 +29,8 @@ Cloud9のプレビューブラウザはtoken認証をサポートしていない
 
 <!--
 Open a New Terminal Tab  and enter
-```
+
+```bash
 aws eks get-token --cluster-name eksworkshop-eksctl | jq -r '.status.token'
 ```
 -->

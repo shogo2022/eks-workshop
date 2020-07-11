@@ -12,5 +12,7 @@ tags:
 -->
 # サンプルのマイクロサービスの一例をデプロイする
 
+{{< youtube _7S0bLyEIuI >}}
+
 ![microservices](/images/crystal.svg)
 {{% children showhidden="false" %}}

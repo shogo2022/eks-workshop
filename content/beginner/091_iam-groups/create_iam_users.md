@@ -10,7 +10,7 @@ In order to test our scenarios, we will create 3 users, one for each groups we c
 -->
 シナリオを試すためには、作成したそれぞれのグループに一つずつ、3つのユーザを作成します:
 
-```
+```bash
 aws iam create-user --user-name PaulAdmin
 aws iam create-user --user-name JeanDev
 aws iam create-user --user-name PierreInteg
@@ -18,7 +18,8 @@ aws iam create-user --user-name PierreInteg
 
 <!-->
 Add users to associated groups:
-```
+
+```bash
 aws iam add-user-to-group --group-name k8sAdmin --user-name PaulAdmin
 aws iam add-user-to-group --group-name k8sDev --user-name JeanDev
 aws iam add-user-to-group --group-name k8sInteg --user-name PierreInteg
@@ -33,7 +34,8 @@ aws iam add-user-to-group --group-name k8sInteg --user-name PierreInteg
 
 <!-->
 Check users are correctly added in their groups:
-```
+
+```bash
 aws iam get-group --group-name k8sAdmin
 aws iam get-group --group-name k8sDev
 aws iam get-group --group-name k8sInteg
@@ -48,7 +50,7 @@ aws iam get-group --group-name k8sInteg
 
 <!-->
 {{% notice note %}}
-For the sake of simplicity, in this chapter, we will save credentials to a file to make it easy to toggle back and forth between users.  Never do this in production or with credentials that have priveledged access; It is not a security best practice to store credentials on the filesystem.
+For the sake of simplicity, in this chapter, we will save credentials to a file to make it easy to toggle back and forth between users.  Never do this in production or with credentials that have priviledged access; It is not a security best practice to store credentials on the filesystem.
 {{% /notice %}}
 -->
 {{% notice note %}}
@@ -60,7 +62,7 @@ Retrieve Access Keys for our fake users:
 -->
 仮ユーザのアクセスキーを取得します:
 
-```
+```bash
 aws iam create-access-key --user-name PaulAdmin | tee /tmp/PaulAdmin.json
 aws iam create-access-key --user-name JeanDev | tee /tmp/JeanDev.json
 aws iam create-access-key --user-name PierreInteg | tee /tmp/PierreInteg.json

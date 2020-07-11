@@ -44,28 +44,53 @@ We can edit it using [eksctl](https://github.com/weaveworks/eksctl) :
 [eksctl](https://github.com/weaveworks/eksctl)で編集できます:
 
 <!--
+```bash
+eksctl create iamidentitymapping \
+  --cluster eksworkshop-eksctl \
+  --arn arn:aws:iam::${ACCOUNT_ID}:role/k8sDev \
+  --username dev-user
+
+eksctl create iamidentitymapping \
+  --cluster eksworkshop-eksctl \
+  --arn arn:aws:iam::${ACCOUNT_ID}:role/k8sInteg \
+  --username integ-user
+
+eksctl create iamidentitymapping \
+  --cluster eksworkshop-eksctl \
+  --arn arn:aws:iam::${ACCOUNT_ID}:role/k8sAdmin \
+  --username admin \
+  --group system:masters
 ```
-eksctl create iamidentitymapping --cluster eksworkshop-eksctl --arn arn:aws:iam::${ACCOUNT_ID}:role/k8sDev --username dev-user
-eksctl create iamidentitymapping --cluster eksworkshop-eksctl --arn arn:aws:iam::${ACCOUNT_ID}:role/k8sInteg --username integ-user
-eksctl create iamidentitymapping --cluster eksworkshop-eksctl --arn arn:aws:iam::${ACCOUNT_ID}:role/k8sAdmin --username admin --group system:masters
-```
-> It cal also be used to delete entries
-> `eksctl delete iamidentitymapping --cluster eksworkshop-eksctlv --arn arn:aws:iam::xxxxxxxxxx:role/k8sDev --username dev-user`
+It can also be used to delete entries
+
+`eksctl delete iamidentitymapping --cluster eksworkshop-eksctlv --arn arn:aws:iam::xxxxxxxxxx:role/k8sDev --username dev-user`
 -->
-```
-eksctl create iamidentitymapping --cluster eksworkshop-eksctl --arn arn:aws:iam::${ACCOUNT_ID}:role/k8sDev --username dev-user
-eksctl create iamidentitymapping --cluster eksworkshop-eksctl --arn arn:aws:iam::${ACCOUNT_ID}:role/k8sInteg --username integ-user
-eksctl create iamidentitymapping --cluster eksworkshop-eksctl --arn arn:aws:iam::${ACCOUNT_ID}:role/k8sAdmin --username admin --group system:masters
+```bash
+eksctl create iamidentitymapping \
+  --cluster eksworkshop-eksctl \
+  --arn arn:aws:iam::${ACCOUNT_ID}:role/k8sDev \
+  --username dev-user
+
+eksctl create iamidentitymapping \
+  --cluster eksworkshop-eksctl \
+  --arn arn:aws:iam::${ACCOUNT_ID}:role/k8sInteg \
+  --username integ-user
+
+eksctl create iamidentitymapping \
+  --cluster eksworkshop-eksctl \
+  --arn arn:aws:iam::${ACCOUNT_ID}:role/k8sAdmin \
+  --username admin \
+  --group system:masters
 ```
 > エントリを削除するのにも使えます
-> `eksctl delete iamidentitymapping --cluster eksworkshop-eksctlv --arn arn:aws:iam::xxxxxxxxxx:role/k8sDev --username dev-user`
+`eksctl delete iamidentitymapping --cluster eksworkshop-eksctlv --arn arn:aws:iam::xxxxxxxxxx:role/k8sDev --username dev-user`
 
 <!--
 you should have the config map looking something like:
 -->
 このようなconfig mapができるはずです:
 
-```
+```bash
 kubectl get cm -n kube-system aws-auth -o yaml
 ```
 
@@ -96,7 +121,7 @@ We can leverage eksctl to get a list of all identity managed in our cluster. Exa
 -->
 eksctlを使ってクラスタ内で管理しているすべてのアイデンティティのリストを取得することができます:
 
-```
+```bash
 eksctl get iamidentitymapping --cluster eksworkshop-eksctl
 ```
 

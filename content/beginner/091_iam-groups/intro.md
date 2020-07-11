@@ -16,7 +16,7 @@ If you have different teams which needs different kind of cluster access, it wou
 もし異なるチームに異なるクラスタアクセスを与える場合を想定すると、アクセスの追加と削除をそれぞれのEKSクラスターに手動で実施するのは困難です。
 
 <!--
-We can leverage on AWS [IAM Groups](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_groups.html) to easilly add or remove users and give them permission to whole cluster, or just part of it depending on which groups they belong to.
+We can leverage on AWS [IAM Groups](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_groups.html) to easily add or remove users and give them permission to whole cluster, or just part of it depending on which groups they belong to.
 -->
 AWSの[IAMグループ](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_groups.html)を使うことで、ユーザをグループに所属させ、クラスター全体や一部へのアクセスの追加と削除を簡単に行うことができます。
 

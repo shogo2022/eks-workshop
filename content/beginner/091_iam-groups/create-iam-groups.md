@@ -41,10 +41,11 @@ The **k8sAdmin** Group will be allowed to assume the **k8sAdmin** IAM Role.
 -->
 **k8sAdmin**グループは**k8sAdmin**のIAMロールを引き受け(assume)ることが許可されます。
 
-<!-->
+<!--
 ```
 aws iam create-group --group-name k8sAdmin
 ```
+
 Let's add a Policy on our group which will allow users from this group to assume our k8sAdmin Role:
 -->
 ```
@@ -52,7 +53,7 @@ aws iam create-group --group-name k8sAdmin
 ```
 このグループのユーザがk8sAdminロールを引き受けられるようにポリシーを追加しましょう:
 
-```
+```bash
 ADMIN_GROUP_POLICY=$(echo -n '{
   "Version": "2012-10-17",
   "Statement": [
@@ -82,10 +83,11 @@ The **k8sDev** Group will be allowed to assume the **k8sDev** IAM Role.
 -->
 **k8sDev**グループは**k8sDev**IAMロールの引き受け(assume)が許可されます。
 
-<!-->
+<!--
 ```
 aws iam create-group --group-name k8sDev
 ```
+
 Let's add a Policy on our group which will allow users from this group to assume our k8sDev Role:
 -->
 ```
@@ -93,7 +95,7 @@ aws iam create-group --group-name k8sDev
 ```
 このグループのユーザがk8sDevロールを引き受けられるようにポリシーを追加しましょう:
 
-```
+```bash
 DEV_GROUP_POLICY=$(echo -n '{
   "Version": "2012-10-17",
   "Statement": [
@@ -113,24 +115,22 @@ aws iam put-group-policy \
 --policy-document "$DEV_GROUP_POLICY"
 ```
 
-<!-->
+<!--
 #### Create k8sInteg IAM Group
 -->
 #### k8sInteg IAMグループの作成
 
-<!-->
 ```
 aws iam create-group --group-name k8sInteg
 ```
+
+<!--
 Let's add a Policy on our group which will allow users from this group to assume our k8sInteg Role:
 -->
-```
-aws iam create-group --group-name k8sInteg
-```
 このグループのユーザがk8sIntegロールを引き受けられるようにポリシーを追加しましょう:
 
 
-```
+```bash
 INTEG_GROUP_POLICY=$(echo -n '{
   "Version": "2012-10-17",
   "Statement": [
@@ -155,7 +155,7 @@ You now should have your 3 groups
 -->
 これで3つのグループがあるはずです
 
-```
+```bash
 aws iam list-groups
 ```
 
