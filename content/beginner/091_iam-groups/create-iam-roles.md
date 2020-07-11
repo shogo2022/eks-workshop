@@ -5,12 +5,12 @@ draft: false
 weight: 20
 ---
 
-<!-->
+<!--
 We are going to create 3 roles:
 -->
 3つのロールを作成します:
 
-<!-->
+<!--
 - a **k8sAdmin** role which will have **admin** rights in our EKS cluster
 - a **k8sDev** role which will gives access to **developers** namespace in our EKS cluster
 - a **k8sInteg** role which will gives access to **integration** namespace our EKS cluster
@@ -19,7 +19,7 @@ We are going to create 3 roles:
 - **k8sDev**ロールはEKSクラスタの**developer**名前空間へのアクセス権限を持ちます
 - **k8sInteg**ロールはEKSクラスタの**integration**名前空間へのアクセス権限を持ちます
 
-<!-->
+<!--
 Create the roles:
 -->
 ロールの作成:

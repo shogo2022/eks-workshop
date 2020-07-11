@@ -10,12 +10,12 @@ We want to have different IAM users which will be added to specific IAM groups i
 -->
 kubernetesクラスターに対して異なる権限を与えるために、異なるIAMユーザをそれぞれ別のIAMグループに加えたいと思います。
 
-<!-->
+<!--
 We will define 3 groups:
 -->
 3つのグループを定義します:
 
-<!-->
+<!--
 - **k8sAdmin** - users from this group will have admin rights on the kubernetes cluster
 - **k8sDev** - users from this group will have full access only in the development namespace of the cluster
 - **k8sInteg** - users from this group will have access to integration namespace. 
@@ -24,19 +24,19 @@ We will define 3 groups:
 - **k8sDev** - このグループのユーザはクラスターの中のdevelopmentの名前空間にのみフルアクセス権限を持つ
 - **k8sInteg** - このグループのユーザはintegrationの名前空間にアクセス権限を持つ
 
-<!-->
+<!--
 > In fact, users from **k8sDev** and **k8sInteg** groups will only have access to namespaces where we will define kubernetes RBAC access for their associated kubernetes role.
 We'll see this but first, let's creates the groups.
 -->
 **k8sDev**と**k8sInteg**グループのユーザは、後に定義するRBACで割り当てられた名前空間にのみアクセスが許されます。
 これは後で実施するとして、まずはグループを作りましょう。
 
-<!-->
+<!--
 #### Create k8sAdmin IAM Group
 -->
 #### k8sAdmin IAMグループの作成
 
-<!-->
+<!--
 The **k8sAdmin** Group will be allowed to assume the **k8sAdmin** IAM Role.
 -->
 **k8sAdmin**グループは**k8sAdmin**のIAMロールを引き受け(assume)ることが許可されます。
@@ -73,12 +73,12 @@ aws iam put-group-policy \
 --policy-document "$ADMIN_GROUP_POLICY"
 ```
 
-<!-->
+<!--
 #### Create k8sDev IAM Group
 -->
 #### k8sDev IAMグループの作成
 
-<!-->
+<!--
 The **k8sDev** Group will be allowed to assume the **k8sDev** IAM Role.
 -->
 **k8sDev**グループは**k8sDev**IAMロールの引き受け(assume)が許可されます。
@@ -150,7 +150,7 @@ aws iam put-group-policy \
 --policy-document "$INTEG_GROUP_POLICY"
 ```
 
-<!-->
+<!--
 You now should have your 3 groups
 -->
 これで3つのグループがあるはずです
