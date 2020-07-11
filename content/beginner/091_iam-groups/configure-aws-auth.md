@@ -1,26 +1,49 @@
 ---
-title: "Configure Kubernetes Role Access"
+title: "Kubernetesロールアクセスの作成"
 date: 2020-04-05T18:00:00-00:00
 draft: false
 weight: 31
 ---
 
+<!--
 #### Gives Access to our IAM Roles to EKS Cluster
+-->
+#### IAMロールにEKSクラスタへのアクセスを許可する
 
+<!--
 In order to gives access to the IAM Roles we defined previously to our EKS cluster, we need to add specific **mapRoles** to the `aws-auth` ConfigMap
+-->
+先ほど定義したIAMロールにEKSクラスタへのアクセスを与えるためには、`aws-auth` ConfigMapに特定の**mapRoles**を追加する必要があります
 
+<!--
 The Advantage of using Role to access the cluster instead of specifying directly IAM users is that it will be easier to manage: 
 we won't have to update the ConfigMap each time we want to add or remove users, we will just need to add or remove users from 
 the IAM Group and we just configure the ConfigMap to allow the IAM Role associated to the IAM Group.
+-->
+直接IAMユーザを使う代わりにロールを使ってクラスタへアクセスさせるアドバンテージは、管理が楽なことです:
+ユーザの追加や削除の度にConfigMapのアップデートをする必要がなく、IAMグループからユーザの追加と削除を行って、ConfigMapにはIAMグループに紐づいたIAMロールを許可するだけです。
 
+<!--
 ### Update the aws-auth ConfigMap to allow our IAM roles
+-->
+### aws-auth ConfigMapをアップデートし、IAMロールを許可する
 
+<!--
 The **aws-auth** ConfigMap from the kube-system namespace must be edited in order to allow or new arn Groups.
+-->
+新規のarnグループを許可するためにはkube-system名前空間上の**aws-auth** ConfigMapを編集する必要があります。
 
+<!--
 This file makes the mapping between IAM role and k8S RBAC rights. We can edit it manually:
+-->
+このファイルはIAMロールとk8s RBACの権限の割り当てを行います。手動で編集することもできます:
 
+<!--
 We can edit it using [eksctl](https://github.com/weaveworks/eksctl) :
+-->
+[eksctl](https://github.com/weaveworks/eksctl)で編集できます:
 
+<!--
 ```
 eksctl create iamidentitymapping --cluster eksworkshop-eksctl --arn arn:aws:iam::${ACCOUNT_ID}:role/k8sDev --username dev-user
 eksctl create iamidentitymapping --cluster eksworkshop-eksctl --arn arn:aws:iam::${ACCOUNT_ID}:role/k8sInteg --username integ-user
@@ -28,8 +51,19 @@ eksctl create iamidentitymapping --cluster eksworkshop-eksctl --arn arn:aws:iam:
 ```
 > It cal also be used to delete entries
 > `eksctl delete iamidentitymapping --cluster eksworkshop-eksctlv --arn arn:aws:iam::xxxxxxxxxx:role/k8sDev --username dev-user`
+-->
+```
+eksctl create iamidentitymapping --cluster eksworkshop-eksctl --arn arn:aws:iam::${ACCOUNT_ID}:role/k8sDev --username dev-user
+eksctl create iamidentitymapping --cluster eksworkshop-eksctl --arn arn:aws:iam::${ACCOUNT_ID}:role/k8sInteg --username integ-user
+eksctl create iamidentitymapping --cluster eksworkshop-eksctl --arn arn:aws:iam::${ACCOUNT_ID}:role/k8sAdmin --username admin --group system:masters
+```
+> エントリを削除するのにも使えます
+> `eksctl delete iamidentitymapping --cluster eksworkshop-eksctlv --arn arn:aws:iam::xxxxxxxxxx:role/k8sDev --username dev-user`
 
+<!--
 you should have the config map looking something like:
+-->
+このようなconfig mapができるはずです:
 
 ```
 kubectl get cm -n kube-system aws-auth -o yaml
@@ -57,7 +91,10 @@ data:
 kind: ConfigMap
 {{< /output >}}
 
+<!--
 We can leverage eksctl to get a list of all identity managed in our cluster. Example:
+-->
+eksctlを使ってクラスタ内で管理しているすべてのアイデンティティのリストを取得することができます:
 
 ```
 eksctl get iamidentitymapping --cluster eksworkshop-eksctl
@@ -70,10 +107,21 @@ arn:aws:iam::xxxxxxxxxx:role/k8sDev             dev-user
 arn:aws:iam::xxxxxxxxxx:role/k8sInteg           integ-user
 {{< /output >}}
 
+<!--
 Here we have created:
+-->
+ここではこれらを作成しました:
 
+<!--
 - a RBAC role for K8sAdmin, that we map to admin user and give access to **system:masters** kubernetes Groups (so that it has Full Admin rights)
 - a RBAC role for k8sDev that we map on dev-user in development namespace
 - a RBAC role for k8sInteg that we map on integ-user in integration namespace
+-->
+- K8sAdminのRBACロール、adminユーザが割り当てられており、kubernetesの**system:masters**グループにアクセスが与えられている(フルアドミン権限)
+- k8sDevのRBACロール、development名前空間でdev-userが割り当てられている
+- k8sIntegのRBACロール、Integration名前空間でinteg-userが割り当てられている
 
+<!--
 We will see on next section how we can test it.
+-->
+次の章ではテスト方法をみていきます。
