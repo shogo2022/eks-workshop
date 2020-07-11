@@ -26,12 +26,12 @@ In this section, we will understand how [liveness and readiness probes](https://
 <!--
 **Liveness probes** are used in Kubernetes to know when a pod is alive or dead. A pod can be in a dead state for a variety of reasons; Kubernetes will kill and recreate the pod when a liveness probe does not pass.
 -->
-**ライブネスプローブ(liveness probes)**はKubernetesがpodの生死確認に使います。podは様々な理由でdead状態になります; ライブネスプローブが成功しなかった場合、Kubernetesはpodをkillし、再作成します。
+**ライブネスプローブ(liveness probes)** はKubernetesがpodの生死確認に使います。podは様々な理由でdead状態になります; ライブネスプローブが成功しなかった場合、Kubernetesはpodをkillし、再作成します。
 
 <!--
 **Readiness probes** are used in Kubernetes to know when a pod is ready to serve traffic. Only when the readiness probe passes will a pod receive traffic from the service; if a readiness probe fails traffic will not be sent to the pod.
 -->
-**レディネスプローブ(readiness probes)**はpodがトラフィックを受け付ける状態になったかの判断に使われます。レディネスプローブが成功した時のみpodはserviceからのトラフィックを受け取ります; レディネスプローブが成功しない限りはpodにトラフィックが送られることはありません。
+**レディネスプローブ(readiness probes)** はpodがトラフィックを受け付ける状態になったかの判断に使われます。レディネスプローブが成功した時のみpodはserviceからのトラフィックを受け取ります; レディネスプローブが成功しない限りはpodにトラフィックが送られることはありません。
 
 <!--
 We will review some examples in this module to understand different options for configuring liveness and readiness probes.

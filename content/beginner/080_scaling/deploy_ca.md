@@ -90,7 +90,7 @@ Using the file browser on the left, open cluster_autoscaler.yml
 <!--
 Search for `command:` and within this block, replace the placeholder text `<AUTOSCALING GROUP NAME>` with the ASG name that you copied in the previous step.
 -->
-`command:`を探し、`<AUTOSCALING GROUP NAME>`というプレースホルダーを前の手順で控えたASGの名前に変えます。
+`command:` を探し、 `<AUTOSCALING GROUP NAME>` というプレースホルダーを前の手順で控えたASGの名前に変えます。
 
 <!--
 {{< output >}}
@@ -113,7 +113,7 @@ command:
   - --skip-nodes-with-local-storage=false
   - --nodes=2:8:eksctl-eksworkshop-eksctl-nodegroup-0-NodeGroup-SQG8QDVSR73G
 {{< /output >}}
-Cluster Autoscalerの設定は全てこのコマンドに含まれています。大事なのは`--nodes`フラグです。これには最小ノード **(2)**、最大ノード **(8)** そして **ASG Name** が含まれています。
+Cluster Autoscalerの設定は全てこのコマンドに含まれています。大事なのは `--nodes` フラグです。これには最小ノード **(2)** 、最大ノード **(8)** そして **ASG Name** が含まれています。
 
 <!--
 Although Cluster Autoscaler is the de facto standard for automatic scaling in K8s, it is not part of the main release. We deploy it like any other pod in the kube-system namespace, similar to other management pods.
@@ -134,11 +134,11 @@ test -n "$ROLE_NAME" && echo ROLE_NAME is "$ROLE_NAME" || echo ROLE_NAME is not 
 ```
 If `ROLE_NAME` is not set, please review: [/030_eksctl/test/](/030_eksctl/test/)
 -->
-環境に`ROLE_NAME`が設定されていることを確認:
+環境に `ROLE_NAME` が設定されていることを確認:
 ```
 test -n "$ROLE_NAME" && echo ROLE_NAME is "$ROLE_NAME" || echo ROLE_NAME is not set
 ```
-`ROLE_NAME`が設定されていなかったら、次を参照してください: [/030_eksctl/test/](/030_eksctl/test/)
+`ROLE_NAME` が設定されていなかったら、次を参照してください: [/030_eksctl/test/](/030_eksctl/test/)
 
 
 ```

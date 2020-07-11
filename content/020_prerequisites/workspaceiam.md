@@ -112,4 +112,4 @@ aws iam get-instance-profile --instance-profile-name $INSTANCE_PROFILE_NAME --qu
 <!--
 If the IAM role is not valid, <span style="color: red;">**DO NOT PROCEED**</span>. Go back and confirm the steps on this page.
 -->
-IAMロールが有効でない場合は、<span style="color: red;">**進まないでください**</span>。戻ってこのページの手順を確認してください。
+IAMロールが有効でない場合は、 <span style="color: red;">**進まないでください**</span> 。戻ってこのページの手順を確認してください。

@@ -17,7 +17,7 @@ Mistakes will happen during deployment, and when they do, Helm makes it easy to 
 <!--
 Open **values.yaml** and modify the image name under `nodejs.image` to **brentley/ecsdemo-nodejs-non-existing**. This image does not exist, so this will break our deployment.
 -->
-**values.yaml**を開き、`nodejs.image`の名前を**rentley/ecsdemo-nodejs-non-existing**に変更します。
+**values.yaml** を開き、 `nodejs.image` の名前を **rentley/ecsdemo-nodejs-non-existing** に変更します。
 このイメージは存在しないものなので、deploymentは動かなくなります。
 
 <!--
@@ -34,7 +34,7 @@ helm upgrade workshop ~/environment/eksdemo
 <!--
 The rolling upgrade will begin by creating a new nodejs pod with the new image. The new `ecsdemo-nodejs` Pod should fail to pull non-existing image. Run `kubectl get pods` to see the `ImagePullBackOff` error.
 -->
-新しいイメージを使った新しいnodsjsのポッドが作成され、ローリングアップグレードが始まります。新しい`ecsdemo-nodejs`podはイメージが存在しないため失敗するはずです。`kubectl get pods`を実行して、`ImagePullBackOff`エラーが出ていることを確認しましょう。
+新しいイメージを使った新しいnodsjsのポッドが作成され、ローリングアップグレードが始まります。新しい `ecsdemo-nodejs` podはイメージが存在しないため失敗するはずです。 `kubectl get pods` を実行して、 `ImagePullBackOff` エラーが出ていることを確認しましょう。
 
 ```sh
 kubectl get pods
@@ -56,7 +56,7 @@ ecsdemo-nodejs-7c6575b56c-hrrsp    0/1     ImagePullBackOff   0          15m
 <!--
 Run `helm status workshop` to verify the `LAST DEPLOYED` timestamp. 
 -->
-`helm status workshop`を実行して`LAST DEPLOYED`のタイムスタンプを確認します。
+`helm status workshop` を実行して `LAST DEPLOYED` のタイムスタンプを確認します。
 
 ```sh
 helm status workshop
@@ -72,7 +72,7 @@ STATUS: deployed
 <!--
 This should correspond to the last entry on `helm history workshop`
 -->
-これは`helm history workshop`の最後のエントリーと同じはずです
+これは `helm history workshop` の最後のエントリーと同じはずです
 
 ```sh
 helm history workshop
@@ -116,7 +116,7 @@ helm rollback workshop 1
 <!--
 Validate `workshop` release status with:
 -->
-`workshop`のリリース状況を確認:
+`workshop` のリリース状況を確認:
 
 ```sh
 helm status workshop

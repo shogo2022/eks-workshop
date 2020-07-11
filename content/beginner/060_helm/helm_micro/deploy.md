@@ -14,7 +14,7 @@ To test the syntax and validity of the Chart without actually deploying it,
 we'll use the `--dry-run` flag.
 -->
 Chartを実際にデプロイすることなく、文法や有効性をテストするのには、
-`--dry-run`フラグが使えます。
+`--dry-run` フラグが使えます。
 
 <!--
 The following command will build and output the rendered templates without

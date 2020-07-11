@@ -1,5 +1,5 @@
 ---
-title: "Kubernetesロールアクセスの作成"
+title: "Kubernetesロールのアクセス"
 date: 2020-04-05T18:00:00-00:00
 draft: false
 weight: 31
@@ -13,14 +13,14 @@ weight: 31
 <!--
 In order to gives access to the IAM Roles we defined previously to our EKS cluster, we need to add specific **mapRoles** to the `aws-auth` ConfigMap
 -->
-先ほど定義したIAMロールにEKSクラスタへのアクセスを与えるためには、`aws-auth` ConfigMapに特定の**mapRoles**を追加する必要があります
+先ほど定義したIAMロールにEKSクラスタへのアクセスを与えるためには、 `aws-auth` ConfigMapに特定の **mapRoles** を追加する必要があります
 
 <!--
 The Advantage of using Role to access the cluster instead of specifying directly IAM users is that it will be easier to manage: 
 we won't have to update the ConfigMap each time we want to add or remove users, we will just need to add or remove users from 
 the IAM Group and we just configure the ConfigMap to allow the IAM Role associated to the IAM Group.
 -->
-直接IAMユーザを使う代わりにロールを使ってクラスタへアクセスさせるアドバンテージは、管理が楽なことです:
+直接IAMユーザを使う代わりにロールを使ってクラスタへアクセスさせる利点は、管理が楽なことです:
 ユーザの追加や削除の度にConfigMapのアップデートをする必要がなく、IAMグループからユーザの追加と削除を行って、ConfigMapにはIAMグループに紐づいたIAMロールを許可するだけです。
 
 <!--
@@ -31,7 +31,7 @@ the IAM Group and we just configure the ConfigMap to allow the IAM Role associat
 <!--
 The **aws-auth** ConfigMap from the kube-system namespace must be edited in order to allow or new arn Groups.
 -->
-新規のarnグループを許可するためにはkube-system名前空間上の**aws-auth** ConfigMapを編集する必要があります。
+新規のarnグループを許可するためにはkube-system名前空間上の **aws-auth** ConfigMapを編集する必要があります。
 
 <!--
 This file makes the mapping between IAM role and k8S RBAC rights. We can edit it manually:
@@ -142,7 +142,7 @@ Here we have created:
 - a RBAC role for k8sDev that we map on dev-user in development namespace
 - a RBAC role for k8sInteg that we map on integ-user in integration namespace
 -->
-- K8sAdminのRBACロール、adminユーザが割り当てられており、kubernetesの**system:masters**グループにアクセスが与えられている(フルアドミン権限)
+- K8sAdminのRBACロール、adminユーザが割り当てられており、kubernetesの **system:masters** グループにアクセスが与えられている(フルアドミン権限)
 - k8sDevのRBACロール、development名前空間でdev-userが割り当てられている
 - k8sIntegのRBACロール、Integration名前空間でinteg-userが割り当てられている
 

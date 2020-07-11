@@ -67,7 +67,7 @@ The output looks like below. Notice the ***RESTARTS***
 ```
 kubectl get pod liveness-app
 ```
-表示はこの通り。***RESTARTS***に注目してください。
+表示はこの通り。 ***RESTARTS*** に注目してください。
 
 {{< output >}}
 NAME           READY     STATUS    RESTARTS   AGE
@@ -80,7 +80,7 @@ The `kubectl describe` command will show an event history which will show any pr
 kubectl describe pod liveness-app
 ```
 -->
-`kubectl describe`コマンドでは、プローブの失敗や再起動などのイベント履歴を確認できます。
+`kubectl describe` コマンドでは、プローブの失敗や再起動などのイベント履歴を確認できます。
 ```bash
 kubectl describe pod liveness-app
 ```
@@ -189,7 +189,7 @@ Debugger listening on [::]:5858
 ```bash
 kubectl logs liveness-app
 ```
-`kubectl logs`を使って以前のコンテナインスタンスのログを取得できます。前のコンテナがクラッシュした場合には、`--previous`フラグをつけます。
+`kubectl logs` を使って以前のコンテナインスタンスのログを取得できます。前のコンテナがクラッシュした場合には、 `--previous` フラグをつけます。
 ```bash
 kubectl logs liveness-app --previous
 ```

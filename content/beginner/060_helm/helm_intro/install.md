@@ -37,7 +37,7 @@ Homebrew on macOS.
 <!--
 Download the `stable` repository so we have something to start with:
 -->
-`stable`レポジトリをダウンロードして始めましょう:
+`stable` レポジトリをダウンロードして始めましょう:
 
 ```sh
 helm repo add stable https://kubernetes-charts.storage.googleapis.com/
@@ -55,7 +55,7 @@ helm search repo stable
 <!--
 Finally, let's configure Bash completion for the `helm` command:
 -->
-最後に、`helm`コマンドのBash completionを設定しましょう:
+最後に、 `helm` コマンドのBash completionを設定しましょう:
 
 ```sh
 helm completion bash >> ~/.bash_completion

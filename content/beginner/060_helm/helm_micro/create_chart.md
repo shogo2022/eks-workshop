@@ -21,7 +21,7 @@ Helm chartは次のような構造になっています:
 <!--
 We'll follow this template, and create a new chart called **eksdemo** with the following commands:
 -->
-このテンプレートに沿って、以下のコマンドで**eksdemo**という新しいchartを作成します:
+このテンプレートに沿って、以下のコマンドで **eksdemo** という新しいchartを作成します:
 
 ```sh
 cd ~/environment

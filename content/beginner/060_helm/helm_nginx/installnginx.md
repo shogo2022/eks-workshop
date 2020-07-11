@@ -39,10 +39,10 @@ and specify the name `mywebserver` for the Kubernetes deployment. Consult the
 documentation or run the `helm install --help` command to figure out the
 syntax.
 -->
-**ヒント:** `helm`ユーティリティの`install`で`bitnami/nginx` chartをインストールし、
-`mywebserver`という名前でKubernetes deploymentを名付けてください。
+**ヒント:**  `helm` ユーティリティの `install` で `bitnami/nginx` chartをインストールし、
+`mywebserver` という名前でKubernetes deploymentを名付けてください。
 [helm install](https://helm.sh/docs/intro/quickstart/#install-an-example-chart)
-のドキュメントを参照するか、`helm install --help`コマンドで書き方を確認してください。
+のドキュメントを参照するか、 `helm install --help` コマンドで書き方を確認してください。
 
 <!--
 {{%expand "Expand here to see the solution" %}}
@@ -99,7 +99,7 @@ the status.
 {{% /notice %}}
 -->
 {{% notice info %}}
-次の`kubectl`コマンドの例では、これらのオブジェクトの状態の`DESIRED`と`CURRENT`が一致するのに1、2分かかるかもしれません; 最初に実行して一致しなかった場合、数秒待ってから再度コマンドを実行して結果を確認してください・
+次の `kubectl` コマンドの例では、これらのオブジェクトの状態の `DESIRED` と `CURRENT` が一致するのに1、2分かかるかもしれません; 最初に実行して一致しなかった場合、数秒待ってから再度コマンドを実行して結果を確認してください・
 {{% /notice %}}
 
 <!--

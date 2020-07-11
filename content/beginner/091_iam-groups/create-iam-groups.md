@@ -39,7 +39,7 @@ We'll see this but first, let's creates the groups.
 <!--
 The **k8sAdmin** Group will be allowed to assume the **k8sAdmin** IAM Role.
 -->
-**k8sAdmin**グループは**k8sAdmin**のIAMロールを引き受け(assume)ることが許可されます。
+**k8sAdmin**グループは**k8sAdmin**のIAMロールを引き受ける(assume)ことが許可されます。
 
 <!--
 ```
@@ -153,7 +153,7 @@ aws iam put-group-policy \
 <!--
 You now should have your 3 groups
 -->
-これで3つのグループがあるはずです
+これで3つのグループができました
 
 ```bash
 aws iam list-groups

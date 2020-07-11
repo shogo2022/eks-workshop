@@ -58,7 +58,7 @@ We are going to allow specific groups to also be able to assume thoses roles.
 > check the [official documentation](https://docs.aws.amazon.com/eks/latest/userguide/iam-roles-for-service-accounts-technical-overview.html) for more informations: 
 > 
 -->
-> この例では、assume-role-policyがrootアカウントがロールを引き受けることを許可しています。
+> この例では、assume-role-policyはrootアカウントがロールを引き受けることを許可しています。
 後で、任意のグループもこれらのロールを引き受けられるように設定をします。
 > 詳しい情報は[公式ドキュメント](https://docs.aws.amazon.com/eks/latest/userguide/iam-roles-for-service-accounts-technical-overview.html)を確認してください: 
 > 

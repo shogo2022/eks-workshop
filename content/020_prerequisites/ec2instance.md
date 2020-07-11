@@ -12,7 +12,7 @@ weight: 17
 ![c9attachrole](/images/c9attachrole.png)
 -->
 1. こちらに沿って[Cloud9のEC2インスタンスを見つけます。](https://console.aws.amazon.com/ec2/v2/home?#Instances:tag:Name=aws-cloud9-.*workshop.*;sort=desc:launchTime)
-1. インスタンスを選択し、**Actions / Instance Settings / Attach/Replace IAM Role**と選びます。
+1. インスタンスを選択し、 **Actions / Instance Settings / Attach/Replace IAM Role** と選びます。
 ![c9instancerole](/images/c9instancerole.png)
-1. **IAM Role**のドロップダウンから**eksworkshop-admin**を選択し、**Apply**を選びます。
+1. **IAM Role** のドロップダウンから **eksworkshop-admin** を選択し、 **Apply** を選びます。
 ![c9attachrole](/images/c9attachrole.png)

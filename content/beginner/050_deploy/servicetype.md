@@ -24,7 +24,7 @@ spec:
 {{< /output >}}
 -->
 フロントエンドサービスを起動する前に、私たちが使うサービスタイプをみてみましょう:
-これはフロントエンドサービスの`kubernetes/service.yaml`です:
+これはフロントエンドサービスの `kubernetes/service.yaml` です:
 {{< output >}}
 apiVersion: v1
 kind: Service
@@ -44,7 +44,7 @@ spec:
 Notice `type: LoadBalancer`: This will configure an ELB to handle incoming traffic
 to this service.
 -->
-`type: LoadBalancer`に注意してください: これはサービスへのトラフィックに対してELBを使うように設定します。
+`type: LoadBalancer` に注意してください: これはサービスへのトラフィックに対してELBを使うように設定します。
 
 <!--
 Compare this to `kubernetes/service.yaml` for one of our backend services:
@@ -62,7 +62,7 @@ spec:
       targetPort: 3000
 {{< /output >}}
 -->
-これをバックエンドサービスの`kubernetes/service.yaml`と比べてください:
+これをバックエンドサービスの `kubernetes/service.yaml` と比べてください:
 {{< output >}}
 apiVersion: v1
 kind: Service
@@ -83,5 +83,5 @@ we find that the default type is `ClusterIP`. This Exposes the service on a clus
 Choosing this value makes the service only reachable from within the cluster.
 -->
 特定のサービスタイプが設定されていないことに気づきましたか。[kubernetesのドキュメント](https://kubernetes.io/docs/concepts/services-networking/service/#publishing-services-service-types)
-によるとデフォルトのタイプは`ClusterIP`となっています。これはサービスをクラスターの内部IPで公開します。
+によるとデフォルトのタイプは `ClusterIP` となっています。これはサービスをクラスターの内部IPで公開します。
 これを選ぶと、そのサービスはクラスター内からのみ接続できるようになります。

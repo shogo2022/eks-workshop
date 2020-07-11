@@ -12,7 +12,7 @@ weight: 10
 <!--
 Run the following code block to populate **~/environment/healthchecks/readiness-deployment.yaml**. The readinessProbe definition explains how a linux command can be configured as healthcheck. We create an empty file **/tmp/healthy** to configure readiness probe and use the same to understand how kubelet helps to update a deployment with only healthy pods. 
 -->
-次のコマンドを実行して、**~/environment/healthchecks/readiness-deployment.yaml**を作成します。レディネスプローブはヘルスチェックに使われるlinuxコマンドで定義されます。ここでは、空のファイル**/tmp/healthy**をレディネスプローブ用に作成し、kubeletがどのようにdeploymentをアップデートするのかを理解します。
+次のコマンドを実行して、 **~/environment/healthchecks/readiness-deployment.yaml** を作成します。レディネスプローブはヘルスチェックに使われるlinuxコマンドで定義されます。ここでは、空のファイル**/tmp/healthy**をレディネスプローブ用に作成し、kubeletがどのようにdeploymentをアップデートするのかを理解します。
 
 ```
 cat <<EoF > ~/environment/healthchecks/readiness-deployment.yaml
@@ -98,7 +98,7 @@ Replicas:               3 desired | 3 updated | 3 total | 3 available | 0 unavai
 Pick one of the pods from above 3 and issue a command as below to delete the **/tmp/healthy** file which makes the readiness probe fail.
 -->
 #### 障害の投入
-上の3つからpodを一つ選び、次のコマンドを実行してください。**/tmp/healthy**を削除することで、レディネスプローブが失敗します。
+上の3つからpodを一つ選び、次のコマンドを実行してください。  **/tmp/healthy** を削除することで、レディネスプローブが失敗します。
 
 ```
 kubectl exec -it <YOUR-READINESS-POD-NAME> -- rm /tmp/healthy
@@ -107,7 +107,7 @@ kubectl exec -it <YOUR-READINESS-POD-NAME> -- rm /tmp/healthy
 <!--
 **readiness-deployment-7869b5d679-922mx** was picked in our example cluster. The **/tmp/healthy** file was deleted. This file must be present for the readiness check to pass. Below is the status after issuing the command.
 -->
-私たちの場合は**readiness-deployment-7869b5d679-922mx**を選んでいます。**/tmp/healthy**ファイルは削除されました。レディネスチェックが成功するためにはこのファイルが必要です。次はこのコマンドが実行されたあとのステータスです。
+私たちの場合は **readiness-deployment-7869b5d679-922mx** を選んでいます。 **/tmp/healthy** ファイルは削除されました。レディネスチェックが成功するためにはこのファイルが必要です。次はこのコマンドが実行されたあとのステータスです。
 
 ```
 kubectl get pods -l app=readiness-deployment
@@ -164,7 +164,7 @@ Run the below command with the name of the pod to recreate the **/tmp/healthy** 
 #### チャレンジ: 
 **どうしたらpodをReadyに戻せるでしょうか?**
 {{%expand "答えはこちら" %}}
-次のコマンドをpodに実行し、**/tmp/healthy**を再作成します。podがプローブに成功すると、readyとなり再びトラフィックを受け取るようになります。
+次のコマンドをpodに実行し、 **/tmp/healthy** を再作成します。podがプローブに成功すると、readyとなり再びトラフィックを受け取るようになります。
 
 ```
 kubectl exec -it <YOUR-READINESS-POD-NAME> -- touch /tmp/healthy

@@ -13,8 +13,8 @@ Now we can access the Kubernetes Dashboard
 1. In your Cloud9 environment, click **Tools / Preview / Preview Running Application**
 1. Scroll to **the end of the URL** and append:
 -->
-1. Cloud9環境で、**Tools / Preview / Preview Running Application**をクリックしてください
-1. **URLの最後までスクロールして**、以下を付け加えます
+1. Cloud9環境で、 **Tools / Preview / Preview Running Application** をクリックしてください
+1. **URLの最後までスクロールして** 、以下を付け加えます
 
 ```text
 /api/v1/namespaces/kubernetes-dashboard/services/https:kubernetes-dashboard:/proxy/
@@ -24,7 +24,7 @@ Now we can access the Kubernetes Dashboard
 The Cloud9 Preview browser doesn't appear to support the token authentication, so once you have the login screen in the cloud9 preview browser tab, press the **Pop Out** button to open the login screen in a regular browser tab, like below:
 ![popout](/images/popout.png)
 -->
-Cloud9のプレビューブラウザはtoken認証をサポートしていないようなので、Cloud9のプレビューブラウザでログインが表示されたら**Pop Out**を押して、以下のように標準ブラウザでログインページを表示させます:
+Cloud9のプレビューブラウザはtoken認証をサポートしていないようなので、Cloud9のプレビューブラウザでログインが表示されたら **Pop Out** を押して、以下のように標準ブラウザでログインページを表示させます:
 ![popout](/images/popout.png)
 
 <!--

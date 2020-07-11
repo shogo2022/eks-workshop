@@ -8,8 +8,8 @@ weight: 40
 Now that we have a running service that is `type: LoadBalancer` we need to find
 the ELB's address.  We can do this by using the `get services` operation of kubectl:
 -->
-さて、`type: LoadBalancer`でサービスを動かすことができたので、ELBのアドレスを見つける必要があります。
-kubectlの`get services`を使うことでできます。
+さて、 `type: LoadBalancer` でサービスを動かすことができたので、ELBのアドレスを見つける必要があります。
+kubectlの `get services` を使うことでできます。
 
 ```
 kubectl get service ecsdemo-frontend

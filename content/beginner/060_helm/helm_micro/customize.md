@@ -7,7 +7,7 @@ weight: 20
 <!--
 If you look in the newly created **eksdemo** directory, you'll see several files and directories. Specifically, inside the /templates directory, you'll see:
 -->
-新しく作成された**eksdemo**ディレクトリには、いくつかのファイルとディレクトリがあります。
+新しく作成された **eksdemo** ディレクトリには、いくつかのファイルとディレクトリがあります。
 具体的には、/templatesディレクトリの中には次のようなものがあります:
 
 <!--
@@ -19,13 +19,13 @@ If you look in the newly created **eksdemo** directory, you'll see several files
 * `service.yaml`: A basic manifest for creating a service endpoint for your deployment
 * `tests/`: A folder which contains tests for chart
 -->
-* `deployment.yaml`: Kubernetes deploymentを作成する基本的なマニフェスト
-* `_helpers.tpl`: chartの中で横断的に使えるテンプレートヘルパーを置く場所
-* `ingress.yaml`: serviceのためのKubernetes ingressオブジェクトを作成する基本的なマニフェスト
-* `NOTES.txt`: chartの"ヘルプテキスト"。ユーザがhelm installを実行した時に表示される
-* `serviceaccount.yaml`: サービスアカウントを作成する基本的なマニフェスト
-* `service.yaml`: deploymentのサービスエンドポイントを作成する基本的なマニフェスト
-* `tests/`: chartのテスト用のフォルダ
+* `deployment.yaml` : Kubernetes deploymentを作成する基本的なマニフェスト
+* `_helpers.tpl` : chartの中で横断的に使えるテンプレートヘルパーを置く場所
+* `ingress.yaml` : serviceのためのKubernetes ingressオブジェクトを作成する基本的なマニフェスト
+* `NOTES.txt` : chartの"ヘルプテキスト"。ユーザがhelm installを実行した時に表示される
+* `serviceaccount.yaml` : サービスアカウントを作成する基本的なマニフェスト
+* `service.yaml` : deploymentのサービスエンドポイントを作成する基本的なマニフェスト
+* `tests/` : chartのテスト用のフォルダ
 
 <!--
 We're actually going to create our own files, so we'll delete these boilerplate files
@@ -105,7 +105,7 @@ All files in the templates directory are sent through the template engine. These
 Let's replace some of the values with `template directives` to enable more customization by removing hard-coded values.
 -->
 ## ハードコードされている値をテンプレート表現に置き換える
-カスタマイズをするためにハードコードされた値を削除して、`テンプレート表現`に置き換えましょう。
+カスタマイズをするためにハードコードされた値を削除して、 `テンプレート表現` に置き換えましょう。
 
 <!--
 Open ~/environment/eksdemo/templates/deployment/frontend.yaml in your Cloud9 editor.
@@ -118,13 +118,13 @@ The following steps should be completed seperately for **frontend.yaml**, **crys
 {{% /notice %}}
 -->
 {{% notice info %}}
-次のステップは**frontend.yaml**、 **crystal.yaml**そして**nodejs.yaml**のそれぞれで完了させてください。
+次のステップは **frontend.yaml** 、  **crystal.yaml** そして **nodejs.yaml** のそれぞれで完了させてください。
 {{% /notice %}}
 
 <!--
 Under `spec`, find **replicas: 1**  and replace with the following:
 -->
-`spec`の下の**replicas: 1**を以下のように変更します:
+`spec`の下の **replicas: 1** を以下のように変更します:
 
 ```yaml
 replicas: {{ .Values.replicas }}
@@ -133,7 +133,7 @@ replicas: {{ .Values.replicas }}
 <!--
 Under `spec.template.spec.containers.image`, replace the image with the correct template value from the table below:
 -->
-`spec.template.spec.containers.image`の下の、imageを下の表の通りに変更します:
+`spec.template.spec.containers.image` の下の、imageを下の表の通りに変更します:
 
 |Filename | Value |
 |---|---|
@@ -149,7 +149,7 @@ Under `spec.template.spec.containers.image`, replace the image with the correct 
 <!--
 Run the following code block to populate our `template directives` with default values.
 -->
-次のコードを実行して、`テンプレート表現`にデフォルト値が入るようにします。
+次のコードを実行して、 `テンプレート表現` にデフォルト値が入るようにします。
 
 ```sh
 cat <<EoF > ~/environment/eksdemo/values.yaml

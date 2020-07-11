@@ -13,7 +13,7 @@ weight: 80
 In this chapter, we will demonstrate how to deploy microservices using a custom
 Helm Chart, instead of doing everything manually using `kubectl`.
 -->
-このチャプターでは、`kubectl`で全てをマニュアルでやる代わりに、カスタムHelm Chartを使ってマイクロサービスを
+このチャプターでは、 `kubectl` で全てをマニュアルでやる代わりに、カスタムHelm Chartを使ってマイクロサービスを
 デプロイする方法をお見せします。
 
 <!--

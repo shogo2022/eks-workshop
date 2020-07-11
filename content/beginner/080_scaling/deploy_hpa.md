@@ -9,7 +9,7 @@ weight: 10
 Metrics Server is a cluster-wide aggregator of resource usage data. These metrics will drive the scaling behavior of the [deployments](https://kubernetes.io/docs/concepts/workloads/controllers/deployment/). We will deploy the metrics server using `Helm` configured in a previous [module](/beginner/060_helm/helm_intro/install/index.html)
 -->
 ### メトリクスサーバのデプロイ
-メトリクスサーバはクラスター全体のリソース使用量データをまとめます。これらのメトリクスは[deployments](https://kubernetes.io/docs/concepts/workloads/controllers/deployment/)のスケーリングに影響を及ぼします。以前の[モジュール](/beginner/060_helm/helm_intro/install/index.html)で設定した`Helm`を使ってメトリクスサーバをでデプロイします。
+メトリクスサーバはクラスター全体のリソース使用量データをまとめます。これらのメトリクスは[deployments](https://kubernetes.io/docs/concepts/workloads/controllers/deployment/)のスケーリングに影響を及ぼします。以前の[モジュール](/beginner/060_helm/helm_intro/install/index.html)で設定した `Helm` を使ってメトリクスサーバをでデプロイします。
 
 <!--
 ```sh

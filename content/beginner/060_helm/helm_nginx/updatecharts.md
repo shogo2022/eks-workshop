@@ -26,7 +26,7 @@ Instead of installing Kubernetes resources manually via `kubectl`, one can use
 Helm to install pre-defined Charts faster, with less chance of typos or other
 operator errors.
 -->
-Kubernetesリソースを`kubectl`でマニュアルにインストールする代わりに、Helmを使って事前に定義されたChartを使うことで
+Kubernetesリソースを `kubectl` でマニュアルにインストールする代わりに、Helmを使って事前に定義されたChartを使うことで
 より早くインストールでき、誤字やエラーを減らすことができます。
 
 <!--

@@ -14,7 +14,7 @@ weight: 40
 It is possible to automate the retrieval of temporary credentials for the assumed role by configuring the aws cli using `.aws/config`and `.aws/credentials` files.
 Examples we will define 3 profile:
 -->
-`.aws/config`と`.aws/credentials`ファイルを編集することでaws cliを使い、引き受けたロール(assume role)の一時的なクレデンシャルの取得を自動化することができます。
+`.aws/config` と `.aws/credentials`  ファイルを編集することでaws cliを使い、引き受けたロール(assume role)の一時的なクレデンシャルの取得を自動化することができます。
 3つのプロファイルを定義します:
 
 <!--
@@ -125,8 +125,8 @@ aws sts get-caller-identity --profile dev
 When specifying the **--profile dev** parameter we automatically ask for temporary credentials for the role k8sDev
 You can test this with **integ** and **admin** also.
 -->
-**--profile dev**パラメータをつけると、k8sDevロールのクレデンシャルを自動的に使います。
-これは**integ**と**adamin**でも試すことができます。
+**--profile dev** パラメータをつけると、k8sDevロールのクレデンシャルを自動的に使います。
+これは **integ** と **adamin** でも試すことができます。
 
 <details>
   <summary>with admin:</summary>
@@ -144,7 +144,7 @@ aws sts get-caller-identity --profile admin
 > When specifying the **--profile admin** parameter we automatically ask for temporary credentials for the role k8sAdmin
 </details>
 -->
-**--profile admin**パラメータをつけると、k8sAdminロールのクレデンシャルを自動的に使います。
+**--profile admin** パラメータをつけると、k8sAdminロールのクレデンシャルを自動的に使います。
 </details>
 
 <!--
@@ -155,7 +155,7 @@ aws sts get-caller-identity --profile admin
 <!--
 It is also possible to specify the AWS_PROFILE to uses with the aws-iam-authenticator in the `.kube/config` file, so that it will uses the appropriate profile.
 -->
-適切なプロファイルを使うために、`.kube/config`ファイルのAWS_PROFILEをaws-iam-authnticatorと連携させることも可能です。
+適切なプロファイルを使うために、 `.kube/config` ファイルのAWS_PROFILEをaws-iam-authnticatorと連携させることも可能です。
 
 <!--
 ### with dev profile 
@@ -175,12 +175,12 @@ cat $KUBECONFIG | yq w - -- 'users[*].user.exec.args[+]' '--profile' | yq w - --
 <!--
 We added the `--profile dev` parameter to our kubectl config file, so that this will ask kubectl to use our IAM role associated to our dev profile, and we rename the context using suffix **-dev**.
 -->
-kubectlコンフィグファイルに`--profile dev`を追加し、kubectlがdevプロファイルに紐づいたIAMロールを使うようにしました。このコンテキストは、末尾に**-dev**をつけて保存されています。
+kubectlコンフィグファイルに `--profile dev` を追加し、kubectlがdevプロファイルに紐づいたIAMロールを使うようにしました。このコンテキストは、末尾に **-dev** をつけて保存されています。
 
 <!--
 With this configuration we should be able to interract with the **development** namespace, because it as our RBAC role defined.
 -->
-これらの設定が整い、RBACロールも定義されたので**development**名前空間にアクセスできるはずです。
+これらの設定が整い、RBACロールも定義されたので **development** 名前空間にアクセスできるはずです。
 
 <!--
 let's create a pod
@@ -378,7 +378,7 @@ In this module, we have seen how to configure EKS to provide finer access to use
 You'll be able to create different groups depending on your needs, configure their associated RBAC access in your cluster, and simply add or remove users from the group to grand or remove them access to your cluster.
 -->
 このモジュールでは、IAMグループとKubernetesのRBACを組み合わせることで、ユーザのEKSへのきめ細かなアクセスを制御する方法を見ました。
-必要に応じて異なるグループを作り、クラスタ内で紐づくRBACを設定し、あとはそのグループ2ユーザの追加や削除をすることでクラスタへのアクセスを制御できます。
+必要に応じて異なるグループを作り、クラスタ内で紐づくRBACを設定し、あとはそのグループにユーザの追加や削除をすることでクラスタへのアクセスを制御できます。
 
 <!--
 Users will only have to configure their aws cli in order to automatically retrieve their associated rights in your cluster.

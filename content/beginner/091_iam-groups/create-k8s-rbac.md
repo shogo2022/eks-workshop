@@ -19,8 +19,8 @@ Kubernetes RBACの基礎を理解するには[RBACの紹介](/beginner/090_rbac/
 * **development** namespace will be accessible for IAM users from **k8sDev** group
 * **integration** namespace will be accessible for IAM users from **k8sInteg** group
 -->
-* **development**名前空間は**k8sDev** IAMグループのユーザがアクセスできる
-* **integration**名前空間は**k8sInteg** IAMグループのユーザがアクセスできる
+* **development** 名前空間は **k8sDev** IAMグループのユーザがアクセスできる
+* **integration** 名前空間は **k8sInteg** IAMグループのユーザがアクセスできる
 
 ```bash
 kubectl create namespace integration
@@ -35,7 +35,7 @@ kubectl create namespace development
 <!--
 We create a kubernetes `role` and `rolebinding` in the development namespace giving full access to the kubernetes user **dev-user**
 -->
-kubernetesユーザの**dev-user**にdevelopment名前空間へのフルアクセス権限を与えるために、kubernetesの`role`と`rolebinding`を作成します
+kubernetesユーザの **dev-user** にdevelopment名前空間へのフルアクセス権限を与えるために、kubernetesの `role` と `rolebinding` を作成します
 
 ```bash
 cat << EOF | kubectl apply -f - -n development
@@ -89,7 +89,7 @@ EOF
 <!--
 The role we define will give full access to everything in that namespace. It is a Role, and not a ClusterRole, so it is going to be applied only in the **development** namespace.
 -->
-ここで定義したロールはその名前空間内の全てに対してフルアクセス権限を与えます。これはRoleであって、ClusterRoleではないので、**development**名前空間にのみ適用されます。
+ここで定義したロールはその名前空間内の全てに対してフルアクセス権限を与えます。これはRoleであって、ClusterRoleではないので、 **development** 名前空間にのみ適用されます。
 
 <!--
 > feel free to adapt or duplicate to any namespace you prefer.
@@ -104,7 +104,7 @@ The role we define will give full access to everything in that namespace. It is 
 <!--
 We create a kubernetes `role` and `rolebinding` in the integration namespace for full access with the kubernetes user **integ-user**
 -->
-kubernetesユーザの**integ-user**にintegration名前空間へのフルアクセス権限を与えるために、kubernetesの`role`と`rolebinding`を作成します
+kubernetesユーザの **integ-user** にintegration名前空間へのフルアクセス権限を与えるために、kubernetesの `role` と `rolebinding` を作成します
 
 ```bash
 cat << EOF | kubectl apply -f - -n integration
@@ -158,5 +158,5 @@ EOF
 <!--
 The role we define will give full access to everything in that namespace. It is a `Role`, and not a `ClusterRole`, so it is going to be applied only in the **integration** namespace.
 -->
-ここで定義したロールはその名前空間内の全てに対してフルアクセス権限を与えます。これは`Role`であって、`ClusterRole`ではないので、**integration**名前空間にのみ適用されます。
+ここで定義したロールはその名前空間内の全てに対してフルアクセス権限を与えます。これは `Role` であって、 `ClusterRole` ではないので、 **integration** 名前空間にのみ適用されます。
 

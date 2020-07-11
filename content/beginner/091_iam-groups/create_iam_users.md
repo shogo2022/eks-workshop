@@ -54,7 +54,7 @@ For the sake of simplicity, in this chapter, we will save credentials to a file 
 {{% /notice %}}
 -->
 {{% notice note %}}
-このチャプターでは、ユーザの切替をシンプルにするためにクレデンシャルをファイルに保存します。商用環境、または権限が大きいユーザでは決してやってはいけません; クレデンシャルをファイルに保存するのはセキュリティのベストプラクティスとは言えません。
+このチャプターでは、ユーザの切替をシンプルにするためにクレデンシャルをファイルに保存します。商用環境、または権限が大きいユーザでは決してやってはいけません; クレデンシャルをファイルに保存するのはセキュリティのベストプラクティスではありません。
 {{% /notice %}}
 
 <!--
@@ -95,6 +95,6 @@ Recap:
 - **JeanDev** is in **k8sDev** Group and will be able to assume IAM role **k8sDev**
 - **PierreInteg** is in **k8sInteg** group and will be able to assume IAM role **k8sInteg**
 -->
-- **PaulAdmin**は**k8sAdmin**グループに属し、**k8sAdmin**ロールを引き受けることができる。
-- **JeanDev**は**k8sDev**グループに属し、**k8sDev** IAMロールを引き受けることができる。
-- **PierreInteg**は**k8sInteg**グループに属し、**k8sInteg** IAMロールを引き受けることができる。
+- **PaulAdmin** は **k8sAdmin** グループに属し、 **k8sAdmin** ロールを引き受けることができる。
+- **JeanDev** は **k8sDev** グループに属し、 **k8sDev** IAMロールを引き受けることができる。
+- **PierreInteg** は **k8sInteg** グループに属し、 **k8sInteg** IAMロールを引き受けることができる。

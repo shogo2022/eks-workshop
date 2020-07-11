@@ -44,7 +44,7 @@ keyword argument.  So next, we'll search just for `nginx`:
 -->
 みてわかるように、追加した全てのChartが表示されています。
 これが役に立つこともありますが、ひとつキーワードをつけるだけでより使いやすくなります。
-次は`nginx`で検索してみます。
+次は `nginx` で検索してみます。
 
 ```sh
 helm search repo nginx
@@ -75,7 +75,7 @@ stable/gcloud-endpoints         0.1.2           1               DEPRECATED Devel
 This new list of Charts are specific to nginx, because we passed the **nginx**
 argument to the `helm search repo` command.
 -->
-このリストは、**nginx**という引数を`helm search repo`コマンドに与えているので、nginxに関連したChartのリストになっています。
+このリストは、 **nginx** という引数を `helm search repo` コマンドに与えているので、nginxに関連したChartのリストになっています。
 
 <!--
 Further information on the command can be found [here](https://helm.sh/docs/helm/helm_search_repo/).

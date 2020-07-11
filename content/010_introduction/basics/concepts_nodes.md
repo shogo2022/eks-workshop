@@ -8,7 +8,7 @@ weight: 40
 <!--
 The machines that make up a Kubernetes cluster are called **nodes**.
 -->
-Kubernetesクラスタを構成している機器を**ノード**と呼びます。
+Kubernetesクラスタを構成している機器を **ノード** と呼びます。
 
 <!--
 Nodes in a Kubernetes cluster may be physical, or virtual.  

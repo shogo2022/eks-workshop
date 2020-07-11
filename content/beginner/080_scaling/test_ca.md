@@ -12,7 +12,7 @@ weight: 40
 <!--
 We will deploy an sample nginx application as a `ReplicaSet` of 1 `Pod`
 -->
-サンプルのnginxアプリを`ReplicaSet`として`Pod`1つでデプロイします
+サンプルのnginxアプリを `ReplicaSet` として `Pod` 1つでデプロイします
 
 ```
 cat <<EoF> ~/environment/cluster-autoscaler/nginx.yaml
@@ -62,7 +62,7 @@ Some pods will be in the `Pending` state, which triggers the cluster-autoscaler 
 ```
 kubectl scale --replicas=10 deployment/nginx-to-scaleout
 ```
-いくつかのpodが`Pending`状態になり、それがcluster-autoscalerを起動し、EC2フリートをスケールアウトします。
+いくつかのpodが `Pending` 状態になり、それがcluster-autoscalerを起動し、EC2フリートをスケールアウトします。
 
 ```
 kubectl get pods -o wide --watch

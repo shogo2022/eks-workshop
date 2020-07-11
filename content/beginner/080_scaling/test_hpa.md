@@ -35,7 +35,7 @@ kubectl autoscale deployment php-apache --cpu-percent=50 --min=1 --max=10
 <!--
 View the HPA using kubectl. You probably will see `<unknown>/50%` for 1-2 minutes and then you should be able to see `0%/50%`
 -->
-kubectlでHPAをみましょう。1-2分は`<unknown>/50%`という表示かもしれませんが、いずれ`0%/50%`という表示に変わります。
+kubectlでHPAをみましょう。1-2分は `<unknown>/50%` という表示かもしれませんが、いずれ `0%/50%` という表示に変わります。
 
 <!--
 ```

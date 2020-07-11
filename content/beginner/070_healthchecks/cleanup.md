@@ -1,5 +1,5 @@
 ---
-title: "クリーニング"
+title: "後片付け"
 chapter: false
 weight: 25
 ---

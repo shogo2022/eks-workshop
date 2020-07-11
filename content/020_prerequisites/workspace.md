@@ -63,10 +63,10 @@ https://docs.aws.amazon.com/cloud9/latest/user-guide/troubleshooting.html#troubl
 and **lower work area**, and opening a new **terminal** tab in the main work area:
 ![c9before](/images/c9before.png)
 -->
-- **Create environment**を選択
-- **eksworkshop**と名前をつけ、Nextをクリック
-- インスタンスタイプに**"t3.small"**を選択し、デフォルトのまま**Create environment**をクリック
-- 起動したら、環境をカスタマイズします。**welcome tab**と**下部のワークエリア**を閉じ、新しく**terminal**タブをワークエリアに開きます:
+- **Create environment** を選択
+- **eksworkshop**  と名前をつけ、Nextをクリック
+- インスタンスタイプに **"t3.small"** を選択し、デフォルトのまま **Create environment** をクリック
+- 起動したら、環境をカスタマイズします。 **welcome tab** と **下部のワークエリア** を閉じ、新しい **terminal** タブをワークエリアに開きます:
 ![c9before](/images/c9before.png)
 
 <!--
@@ -81,4 +81,4 @@ and **lower work area**, and opening a new **terminal** tab in the main work are
 - If you like this theme, you can choose it yourself by selecting **View / Themes / Solarized / Solarized Dark**
 in the Cloud9 workspace menu.
 -->
-- このテーマが気に入ったら、Cloud9のワークスペースメニューから**View / Themes / Solarized / Solarized Dark**と選択することで選ぶことができます。
+- このテーマが気に入ったら、Cloud9のワークスペースメニューから **View / Themes / Solarized / Solarized Dark** と選択することで選ぶことができます。

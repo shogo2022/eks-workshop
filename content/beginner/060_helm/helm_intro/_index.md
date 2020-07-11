@@ -15,7 +15,7 @@ for Kubernetes that packages multiple Kubernetes resources into a single logical
 deployment unit called a **Chart**.
 -->
 [Helm](https://helm.sh/)はKubernetes用のパッケージマネージャおよびアプリケーションマネージャで、
-複数のKubernetesリソースを**Chart**と呼ばれる単一の設定単位にパッケージします。
+複数のKubernetesリソースを **Chart** と呼ばれる単一の設定単位にパッケージします。
 
 <!--
 Helm helps you to:

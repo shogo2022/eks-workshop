@@ -38,7 +38,7 @@ Heml v2からv3に移行するには[ここをクリックして公式のドキ�
 multiple Kubernetes resources into a single logical deployment unit called
 a **Chart**. Charts are easy to create, version, share, and publish.
 -->
-[Helm](https://helm.sh/)はKubernetes用のパッケージマネージャで、複数のKubernetesリソースを**Chart**と呼ばれる
+[Helm](https://helm.sh/)はKubernetes用のパッケージマネージャで、複数のKubernetesリソースを **Chart** と呼ばれる
 単一の設定単位にパッケージします。Chartは作成やバージョン管理、共有、そして公開が簡単です。
 
 <!--
