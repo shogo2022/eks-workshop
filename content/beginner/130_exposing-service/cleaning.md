@@ -1,13 +1,19 @@
 ---
-title: "Clean Up"
+title: "後片付け"
 date: 2019-04-09T00:00:00-03:00
 weight: 15
 draft: false
 ---
 
+<!--
 ### Cleaning up
+-->
+### 後片付け
 
+<!--
 To delete the resources used in this chapter:
+-->
+この章で使ったリソースを削除します:
 
 ```bash
 kubectl delete -f ~/environment/run-my-nginx.yaml
