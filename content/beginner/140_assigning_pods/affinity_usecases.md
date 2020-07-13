@@ -1,17 +1,28 @@
 ---
-title: "More Practical use-cases"
+title: "実践的な使い方"
 date: 2019-04-09T00:00:00-03:00
 weight: 12
 draft: false
 ---
 
+<!--
 More Practical Use-cases
 AntiAffinity can be even more useful when they are used with higher level collections such as ReplicaSets, StatefulSets, Deployments, etc. One can easily configure that a set of workloads should be co-located in the same defined topology, eg., the same node.
+-->
+実践的な使い方
+AntiAffinityはReplicaSetやStatefulSet、Deploymentなどの高次レベルの集合と使われることでより効果を発揮します。単一ノード上など、同じトポロジー上にワークロードを同居させたい場合などに、簡単に設定できます。
 
+<!--
 ### Always co-located in the same node
 In a three node cluster, a web application has in-memory cache such as redis. We want the web-servers to be co-located with the cache as much as possible.
+-->
+### 常に同じノードに同居させる
+3ノードクラスタで、WEBアプリケーションがredisなどインメモリのキャッシュを使っていたとします。この場合、WEBサーバとキャッシュはできるだけ同居させるべきです。
 
+<!--
 Here is the yaml snippet of a simple redis deployment with three replicas and selector label app=store. The deployment has PodAntiAffinity configured to ensure the scheduler does not co-locate replicas on a single node.
+-->
+これは3つのレプリカからなるredis deploymentのYAMLファイル抜粋で、セレクタラベルとしてapp=storeがついています。deploymentにはPodAntiAffinityが設定されていて、スケジューラが単一のノードにレプリカを配置しないようになっています。
 
 ```
 cat <<EoF > ~/environment/redis-with-node-affinity.yaml
@@ -45,7 +56,10 @@ spec:
 EoF
 ```
 
+<!--
 The below yaml snippet of the webserver deployment has podAntiAffinity and podAffinity configured. This informs the scheduler that all its replicas are to be co-located with pods that have selector label app=store. This will also ensure that each web-server replica does not co-locate on a single node.
+-->
+以下のWEBサーバdeploymentのYAML抜粋はpodAntiAffinityとpodAffinityが設定されています。これは全てのpodがapp=storeというラベルのあるpodと同じノードに配置されるように指示しています。また、それぞれのWEBサーバレプリカが単一のノードに配置されないように設定されています。
 
 ```
 cat <<EoF > ~/environment/web-with-node-affinity.yaml
@@ -87,13 +101,19 @@ spec:
         image: nginx:1.12-alpine
 EoF
 ```
+<!--
 Let's apply this Deployments
+-->
+このdeploymentを適用しましょう
 ```
 kubectl apply -f ~/environment/redis-with-node-affinity.yaml
 kubectl apply -f ~/environment/web-with-node-affinity.yaml
 ```
 
+<!--
 If we create the above two deployments, our three node cluster should look like below.
+-->
+上の2つのdepliymentを作成すると、3ノードクラスタ上ではこのようになるはずです。
 
 ` node-1 - webserver-1 - cache-1 `
 
@@ -101,7 +121,10 @@ If we create the above two deployments, our three node cluster should look like 
 
 ` node-3 - webserver-3 - cache-3 `
   
+<!--
 As you can see, all the 3 replicas of the web-server are automatically co-located with the cache as expected.
+-->
+みて分かる通り、想定通りにWEBサーバの3つのレプリカがキャッシュと同じノード上で実行されています。
 
 ```
 kubectl get pods -o wide

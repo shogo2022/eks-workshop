@@ -1,12 +1,16 @@
 ---
-title: "Clean Up"
+title: "後片付け"
 date: 2019-04-09T00:00:00-03:00
 weight: 13
 draft: false
 ---
 
+<!--
 ### Cleaning up
 To delete the resources used in this chapter: 
+-->
+### 後片付け
+この章で使ったリソースを削除するには次を実行します:
 ```
 kubectl delete -f ~/environment/pod-nginx.yaml 
 kubectl delete -f ~/environment/pod-with-node-affinity.yaml
