@@ -1,19 +1,28 @@
 ---
-title: "Test Scaling"
+title: "スケーリングのテスト"
 date: 2018-08-07T08:30:11-07:00
 weight: 35
 ---
+<!--
 More followers can be added to the MySQL Cluster to increase read capacity. This can be done by following command.
+-->
+読み取り性能をあげるために、MySQLクラスターのフォロワを増やすこともできます。次のコマンドを実行します。
 ```sh
 kubectl -n mysql scale statefulset mysql --replicas=5
 ```
 
+<!--
 You can see the message that `StatefulSet` "mysql" scaled.
+-->
+"msql"の `StatefulSet` がスケールしたメッセージが見えます。
 {{< output >}}
 statefulset "mysql" scaled
 {{< /output >}}
 
+<!--
 Watch the progress of ordered and graceful scaling.
+-->
+徐々にスケーリングが順番に進んでいくのを観察します。
 ```sh
 kubectl -n mysql rollout status statefulset mysql
 ```
@@ -23,17 +32,28 @@ Waiting for 1 pods to be ready...
 partitioned roll out complete: 5 new pods have been updated...
 {{< /output >}}
 
+<!--
 {{% notice note %}}
 It may take few minutes to launch all the pods.
 {{% /notice %}}
+-->
+{{% notice note %}}
+すべてのpodが起動するには数分かかるかもしれません。
+{{% /notice %}}
 
+<!--
 Open another terminal to check loop if you closed it.
+-->
+閉じていたら、別のターミナルを開きループを確認します。
 ```sh
 kubectl -n mysql run mysql-client-loop --image=mysql:5.7 -i -t --rm --restart=Never --\
    bash -ic "while sleep 1; do mysql -h mysql-read -e 'SELECT @@server_id,NOW()'; done"
 ```
 
+<!--
 You will see 5 servers are running.
+-->
+5つのサーバが動いているのが見えます。
 {{< output >}}
 +-------------+---------------------+
 | @@server_id | NOW()               |
@@ -67,13 +87,19 @@ You will see 5 servers are running.
 +-------------+---------------------+
 {{< /output >}}
 
+<!--
 Verify if the newly deployed follower (mysql-3) have the same data set by following command.
+-->
+次のコマンドを実行し、新しくデプロイされたフォロワ(mysql-3)が同じデータを保持しているか確認します。
 ```sh
 kubectl -n mysql run mysql-client --image=mysql:5.7 -i -t --rm --restart=Never --\
  mysql -h mysql-3.mysql -e "SELECT * FROM test.messages"
 ```
 
+<!--
 It will show the same data that leader has.
+-->
+リーダーと同じデータが表示されます。
 {{< output >}}
 +--------------------------+
 | message                  |
@@ -82,20 +108,32 @@ It will show the same data that leader has.
 +--------------------------+
 {{< /output >}}
 
+<!--
 Scale down replicas to 3 by following command.
+-->
+次のコマンドを実行し、レプリカを3にスケールダウンします。
 ```sh
 kubectl -n mysql  scale statefulset mysql --replicas=3
 ```
 
+<!--
 You can see StatefulSet "mysql" scaled
+-->
+"mysql"の `StatefulSet` がスケールしたのが確認できます
 {{< output >}}
 statefulset "mysql" scaled
 {{< /output >}}
 
+<!--
 {{% notice warning %}}
 Note that scale in doesn't delete the data or PVCs attached to the pods. You have to delete them manually.
 {{% /notice %}}
 Check scale in is completed by following command.
+-->
+{{% notice warning %}}
+スケールダウンはpodに紐づいていたデータやPVCは削除しないので、手動で消す必要があります。
+{{% /notice %}}
+次のコマンドでスケールダウンが完了したことを確認します。
 ```sh
 kubectl -n mysql get pods -l app=mysql
 ```
@@ -106,7 +144,10 @@ mysql-1   2/2       Running   0          1d
 mysql-2   2/2       Running   0          35m
 {{< /output >}}
 
+<!--
 Check `data-mysql-3`, `data-mysql-4` PVCs still exist by following command.
+-->
+次のコマンドで、 `data-mysql-3`、 `data-mysql-4` のPVCがまだ存在することを確認します。
 ```sh
 kubectl -n mysql  get pvc -l app=mysql
 ```
@@ -120,11 +161,19 @@ data-mysql-4   Bound     pvc-e916c3ec-e812-11e8-86c5-069628ef0c9c   10Gi       R
 {{< /output >}}
 
 
+<!--
 #### Challenge
 By default, deleting a `PersistentVolumeClaim` will delete its associated persistent volume. What if you wanted to keep the volume?
+-->
+#### チャレンジ
+デフォルトでは、 `PersistentVolumeClaim` を削除すると紐づいていたpersistent volumeも削除されます。volumeを残しておきたい場合はどうすれば良いのでしょう?
 
+<!--
 Change the reclaim policy of the `PersistentVolume` associated with `PersistentVolumeClaim` called "data-mysql-3" to "Retain". Please see [Kubernetes documentation](https://kubernetes.io/docs/tasks/administer-cluster/change-pv-reclaim-policy/) for help
+-->
+`PersistentVolumeClaim` に紐づく"data-mysql-3"の `PersistentVolume` のreclaimポリシーを"Retain"にします。詳しくは[Kubernetesドキュメント](https://kubernetes.io/docs/tasks/administer-cluster/change-pv-reclaim-policy/)を確認してください
 
+<!--
 {{% expand "Expand here to see the solution"%}}
 Change the reclaim policy:
 
@@ -161,8 +210,48 @@ kubectl patch pv ${pv} -p '{"spec":{"persistentVolumeReclaimPolicy":"Delete"}}'
 unset pv
 ```
 {{% /expand %}}
+-->
+{{% expand "答えはこちら"%}}
+reclaimポリシーを変更します:
 
+PersistentVolumeClaim `data-mysql-3` に紐づいているPersistentVolumeを見つけます
+```sh
+export pv=$(kubectl -n mysql  get pvc data-mysql-3 -o json | jq --raw-output '.spec.volumeName')
+echo data-mysql-3 PersistentVolume name: ${pv}
+```
+
+ReclaimPolicyをアップデートします
+```sh
+kubectl -n mysql patch pv ${pv} -p '{"spec":{"persistentVolumeReclaimPolicy":"Retain"}}'
+```
+
+このコマンドでReclaimPolicyを確認します
+```sh
+kubectl get persistentvolume
+```
+```text
+NAME                                       CAPACITY   ACCESS MODES   RECLAIM POLICY   STATUS   CLAIM                STORAGECLASS   REASON   AGE
+pvc-93799c6d-3fd4-11ea-94be-0aff3e98c5a0   10Gi       RWO            Retain           Bound    mysql/data-mysql-3   mysql-gp2               19m
+pvc-a4a40181-3fd4-11ea-94be-0aff3e98c5a0   10Gi       RWO            Delete           Bound    mysql/data-mysql-4   mysql-gp2               19m
+pvc-c3d09831-3fca-11ea-94be-0aff3e98c5a0   10Gi       RWO            Delete           Bound    mysql/data-mysql-0   mysql-gp2               89m
+pvc-e17bef75-3fca-11ea-94be-0aff3e98c5a0   10Gi       RWO            Delete           Bound    mysql/data-mysql-1   mysql-gp2               88m
+pvc-f22aed7c-3fca-11ea-94be-0aff3e98c5a0   10Gi       RWO            Delete           Bound    mysql/data-mysql-2   mysql-gp2               88m
+```
+
+
+これで、PersistentVolumeClaim data-mysql-3を消しても、AWS EC2コンソールでEBSボリュームが"available"な状態で確認できます。
+
+参照されないボリュームができないように、reclaimポリシーを"Delete"に戻します:
+```sh
+kubectl patch pv ${pv} -p '{"spec":{"persistentVolumeReclaimPolicy":"Delete"}}'
+unset pv
+```
+{{% /expand %}}
+
+<!--
 Delete `data-mysql-3` and `data-mysql-4` with following commands.
+-->
+次のコマンドで `data-mysql-3` と `data-mysql-4` を削除します。
 ```sh
 kubectl -n mysql delete pvc data-mysql-3
 kubectl -n mysql delete pvc data-mysql-4

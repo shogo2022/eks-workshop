@@ -1,8 +1,9 @@
 ---
-title: "Cleanup"
+title: "後片付け"
 date: 2018-08-07T08:30:11-07:00
 weight: 40
 ---
+<!--
 ```sh
 # Delete the mysql namespace 
 kubectl delete namespace mysql
@@ -22,3 +23,23 @@ aws iam delete-policy \
   --policy-arn ${EBS_CNI_POLICY_ARN}
 ```
 ## Congratulation! You've finished the StatefulSets lab.
+-->
+```sh
+# mysql 名前空間の削除
+kubectl delete namespace mysql
+
+# ワーカーノードのインスタンスプロファイルからIAM Amazon_EBS_CSI_Driver ポリシーをはずす
+export EBS_CNI_POLICY_NAME="Amazon_EBS_CSI_Driver"
+export EBS_CNI_POLICY_ARN=$(aws --region ${AWS_REGION} iam list-policies --query 'Policies[?PolicyName==`'${EBS_CNI_POLICY_NAME}'`].Arn' --output text)
+
+aws iam detach-role-policy \
+  --region ${AWS_REGION} \
+  --policy-arn ${EBS_CNI_POLICY_ARN} \
+  --role-name ${ROLE_NAME}
+
+# IAM Amazon_EBS_CSI_Driver ポリシーの削除
+aws iam delete-policy \
+  --region ${AWS_REGION} \
+  --policy-arn ${EBS_CNI_POLICY_ARN}
+```
+## おめでとうございます! StatefulSetのラボが完了しました

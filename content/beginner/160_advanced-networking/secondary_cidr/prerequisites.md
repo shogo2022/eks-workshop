@@ -1,24 +1,41 @@
 ---
-title: "Prerequisites"
+title: "前提条件"
 date: 2019-02-08T00:35:29-05:00
 weight: 20
 ---
 
+<!--
 Before we configure EKS, we need to enable secondary CIDR blocks in your VPC and make sure they have proper tags and route table configurations
+-->
+EKSを設定する前に、VPCでセカンダリCIDRを有効にし、適切なタグとルートテーブルが設定されていなければなりません。
 
+<!--
 ### Add secondary CIDRs to your VPC
+-->
+### VPCにセカンダリCIDRを追加
 
+<!--
 {{% notice info %}}
 There are restrictions on the range of secondary CIDRs you can use to extend your VPC. For more info, see [IPv4 CIDR Block Association Restrictions](https://docs.aws.amazon.com/vpc/latest/userguide/VPC_Subnets.html#add-cidr-block-restrictions)
 {{% /notice %}}
+-->
+{{% notice info %}}
+VPCの拡張に使えるセカンダリCIDRのレンジには制限があります。詳しい情報は[IPv4 CIDR Block Association Restrictions](https://docs.aws.amazon.com/vpc/latest/userguide/VPC_Subnets.html#add-cidr-block-restrictions)を参照してください
+{{% /notice %}}
 
+<!--
 You can use below commands to add 100.64.0.0/16 to your EKS cluster VPC. Please note to change the Values parameter to EKS cluster name if you used different name than eksctl-eksworkshop
+-->
+以下のコマンドで100.64.0.0/16をEKSクラスタのVPCに追加できます。eksctl-eksworkshop以外の名前でEKSクラスタを使っている場合は値を変更してください。
 ```
 VPC_ID=$(aws ec2 describe-vpcs --filters Name=tag:Name,Values=eksctl-eksworkshop* | jq -r '.Vpcs[].VpcId')
 
 aws ec2 associate-vpc-cidr-block --vpc-id $VPC_ID --cidr-block 100.64.0.0/16
 ```
+<!--
 Next step is to create subnets. Before we do this step, let's check how many subnets we are consuming. You can run this command to see EC2 instance and AZ details
+-->
+次はサブネットを作ります。その前に、現在幾つのサブネットを使っているかを確認してみましょう。次のコマンドでEC2とAZの詳細を見ることができます。
 
 ```
 aws ec2 describe-instances --filters "Name=tag-key,Values=eks:cluster-name" "Name=tag-value,Values=eksworkshop*" --query 'Reservations[*].Instances[*].[PrivateDnsName,Tags[?Key==`eks:nodegroup-name`].Value|[0],Placement.AvailabilityZone,PrivateIpAddress,PublicIpAddress]' --output table   
@@ -33,7 +50,11 @@ aws ec2 describe-instances --filters "Name=tag-key,Values=eks:cluster-name" "Nam
 +-----------------------------------------------+---------------------------------------+-------------+-----------------+----------------+
 {{< /output >}}
 
+<!--
 I have 3 instances and using 3 subnets in my environment. For simplicity, we will use the same AZ's and create 3 secondary CIDR subnets but you can certainly customize according to your networking requirements. Remember to change the AZ names according to your environment
+-->
+この環境では3つのサブネットに3つのインスタンスがあります。シンプルにするために、同じAZを使い、3つのセカンダリCIDRを作ることにします。もちろん、自身のネットワーク要件に応じて変更してください。環境に合わせて、AZの名前の変更は忘れないでください
+
 ```
 export AZ1=us-east-2a
 export AZ2=us-east-2b
@@ -42,11 +63,17 @@ CGNAT_SNET1=$(aws ec2 create-subnet --cidr-block 100.64.0.0/19 --vpc-id $VPC_ID 
 CGNAT_SNET2=$(aws ec2 create-subnet --cidr-block 100.64.32.0/19 --vpc-id $VPC_ID --availability-zone $AZ2 | jq -r .Subnet.SubnetId)
 CGNAT_SNET3=$(aws ec2 create-subnet --cidr-block 100.64.64.0/19 --vpc-id $VPC_ID --availability-zone $AZ3 | jq -r .Subnet.SubnetId)
 ```
+<!--
 Next step is to add Kubernetes tags on newer Subnets. You can check these tags by querying your current subnets
+-->
+次は新しいサブネットにKubernetesのタグをつけます。これらのタグは既存のサブネットで確認できます
 ```
 aws ec2 describe-subnets --filters Name=cidr-block,Values=192.168.0.0/19 --output text
 ```
+<!--
 Output shows similar to this
+-->
+以下のような表示がでるはずです
 {{< output >}}
 TAGS    aws:cloudformation:logical-id   SubnetPublicUSEAST2C
 TAGS    kubernetes.io/role/elb  1
@@ -56,7 +83,10 @@ TAGS    aws:cloudformation:stack-name   eksctl-eksworkshop-eksctl-cluster
 TAGS    kubernetes.io/cluster/eksworkshop-eksctl        shared
 TAGS    aws:cloudformation:stack-id     arn:aws:cloudformation:us-east-2:012345678901:stack/eksctl-eksworkshop-eksctl-cluster/8da51fc0-2b5e-11e9-b535-022c6f51bf82
 {{< /output >}}
+<!--
 Here are the commands to add tags to both the subnets
+-->
+両方のサブネットにタグを追加します
 ```
 aws ec2 create-tags --resources $CGNAT_SNET1 --tags Key=eksctl.cluster.k8s.io/v1alpha1/cluster-name,Value=eksworkshop-eksctl
 aws ec2 create-tags --resources $CGNAT_SNET1 --tags Key=kubernetes.io/cluster/eksworkshop-eksctl,Value=shared
@@ -68,7 +98,10 @@ aws ec2 create-tags --resources $CGNAT_SNET3 --tags Key=eksctl.cluster.k8s.io/v1
 aws ec2 create-tags --resources $CGNAT_SNET3 --tags Key=kubernetes.io/cluster/eksworkshop-eksctl,Value=shared
 aws ec2 create-tags --resources $CGNAT_SNET3 --tags Key=kubernetes.io/role/elb,Value=1
 ```
+<!--
 As next step, we need to associate three new subnets into a route table. Again for simplicity, we chose to add new subnets to the Public route table that has connectivity to Internet Gateway
+-->
+次の手順では、3つのサブネットをルートテーブルに割り当てます。再びシンプルにするために、Internet Gatewayに接続されているパブリックなルートテーブルを使います。
 ```
 SNET1=$(aws ec2 describe-subnets --filters Name=cidr-block,Values=192.168.0.0/19 | jq -r '.Subnets[].SubnetId')
 RTASSOC_ID=$(aws ec2 describe-route-tables --filters Name=association.subnet-id,Values=$SNET1 | jq -r '.RouteTables[].RouteTableId')

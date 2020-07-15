@@ -1,23 +1,39 @@
 ---
-title: "Amazon EBS CSI Driver"
+title: "Amazon EBS CSI ドライバー"
 
 date: 2020-02-23T13:57:00-08:00
 weight: 4
 ---
 
+<!--
 ## About the Amazon EBS CSI Driver
+-->
+## Amazon EBS CSIドライバーについて
 
+<!--
 On Amazon EKS, the open-source [EBS Container Storage Interface (CSI)
 driver](https://github.com/kubernetes-sigs/aws-ebs-csi-driver) is used to manage
 the attachment of Amazon EBS block storage volumes to Kubernetes Pods.
+--->
+Amazon EKSでは、オープンソースの[EBS Container Storage Interface (CSI)
+driver](https://github.com/kubernetes-sigs/aws-ebs-csi-driver)がAmazon EBSブロックストレージボリュームをKubernetesのpodにアタッチするのに使われます。
 
+<!--
 ## Configure IAM Policy
+-->
+## IAMポリシーの設定
 
+<!--
 The CSI driver is deployed as set of Kubernetes Pods. These Pods must have
 permission to perform EBS API operations, such as creating and deleting volumes,
 and attaching volumes to the EC2 worker nodes that comprise the cluster.
+-->
+CSIドライバーはKubernetesのpodとしてデプロイされます。これらのpodはEBS APIの操作、例えばボリュームの作成や削除、クラスタを構成するEC2ワーカーノードへのボリュームのアタッチ等が許可されている必要があります。
 
+<!--
 First, let's download the policy JSON document, and create an IAM Policy from it:
+-->
+まずはポリシーのjsonドキュメントをダウンロードし、IAMポリシーを作成しましょう:
 
 ```sh
 mkdir ~/environment/ebs_csi_driver
@@ -34,11 +50,18 @@ aws iam create-policy \
 export EBS_CNI_POLICY_ARN=$(aws --region ${AWS_REGION} iam list-policies --query 'Policies[?PolicyName==`'$EBS_CNI_POLICY_NAME'`].Arn' --output text)
 ```
 
+<!--
 ## Configure IAM Role for Service Account
+-->
+## サービスアカウントようのIAMロールの作成
 
+<!--
 Next, we'll ask `eksctl` to create an IAM Role that contains the IAM Policy we
 created, and associate it with a Kubernetes Service Account called
 `ebs-csi-controller-irsa` that will be used by the CSI Driver:
+-->
+次に `eksctl` を使って、今作ったIAMポリシーを含むIAMロールを作成し、CSIドライバーが使用する `ebs-csi-controller-irsa` 
+というKubernetesのサービスアカウントに紐づけます:
 
 ```sh
 eksctl utils associate-iam-oidc-provider --region=$AWS_REGION --cluster=eksworkshop-eksctl --approve
@@ -51,11 +74,20 @@ eksctl create iamserviceaccount --cluster eksworkshop-eksctl \
   --approve
 ```
 
+<!--
 ## Deploy EBS CSI Driver
+-->
+## EBS CSIドライバーのデプロイ
 
+<!--
 Finally, we can deploy the driver.
+-->
+最後に、ドライバーをデプロイします。
 
+<!--
 First, we'll need to download a few files.  Run:
+-->
+まずはいくつかのファイルをダウンロードします:
 
 ```sh
 cd ~/environment/ebs_csi_driver
@@ -64,7 +96,10 @@ for file in kustomization.yml deployment.yml attacher-binding.yml provisioner-bi
 done
 ```
 
+<!--
 To complete the deployment:
+-->
+デプロイメント完了します:
 
 ```sh
 kubectl apply -k ~/environment/ebs_csi_driver
