@@ -20,6 +20,7 @@ tags:
 * Ordered, automated rolling updates
 -->
 [StatefulSet](https://kubernetes.io/docs/concepts/workloads/controllers/statefulset/)はPodのデプロイとスケーリングを管理し、これらpodの順番と一意性を保証するので、以下のいずれかを必要とするアプリケーションにむいています。
+
 * 安定した、一意のネットワーク識別子
 * 安定した、永続的なストレージ
 * 規則に従ったグレースフルなデプロイメントとスケーリング
@@ -28,4 +29,4 @@ tags:
 <!--
 In this Chapter, we will review how to deploy MySQL database using `StatefulSet` and `Amazon Elastic Block Store` (EBS) as [PersistentVolume](https://kubernetes.io/docs/concepts/storage/persistent-volumes/). The example is a MySQL single leader topology with multiple followers running asynchronous replication.
 -->
-この章では、`StatefulSet` とPersistentVolume](https://kubernetes.io/docs/concepts/storage/persistent-volumes/)として `Amazon Elastic Block Store` (EBS)を使い、MySQLデータベースをデプロイします。この例は、一つのMySQLリーダーと、非同期のレプリケーションが走っている複数のフォロワーで構成されています。
+この章では、`StatefulSet` と[PersistentVolume](https://kubernetes.io/docs/concepts/storage/persistent-volumes/)として `Amazon Elastic Block Store` (EBS)を使い、MySQLデータベースをデプロイします。この例は、一つのMySQLリーダーと、非同期のレプリケーションが走っている複数のフォロワーで構成されています。
