@@ -1,18 +1,28 @@
 ---
-title: "Create IAM Role"
+title: "IAMロールの作成"
 date: 2018-10-087T08:30:11-07:00
 weight: 10
 draft: false
 ---
 
+<!--
 In an AWS CodePipeline, we are going to use AWS CodeBuild to deploy a sample Kubernetes service.
 This requires an [AWS Identity and Access Management](https://aws.amazon.com/iam/) (IAM) role capable of interacting
 with the EKS cluster.
+-->
+AWS CodePipelineの中で、サンプルのKubernetesサービスをデプロイするのにAWS CodeBuildを使います。
+これにはEKSクラスタとやりとりをするための[AWS Identity and Access Management](https://aws.amazon.com/iam/) (IAM)ロールが必要です。
 
+<!--
 In this step, we are going to create an IAM role and add an inline policy that we will use in the CodeBuild stage
 to interact with the EKS cluster via kubectl.
+-->
+ここでは、インラインポリシーでIAMロールを作成し、CodeBuildの中でkubectlがEKSクラスタとやりとりをする際に使うよう設定します。
 
+<!--
 Create the role:
+-->
+ロールの作成:
 
 ```
 cd ~/environment
