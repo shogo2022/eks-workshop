@@ -1,8 +1,8 @@
 ---
-title: "Intermediate"
+title: "中級者"
 chapter: true
 weight: 60
 tags:
   - intermediate
 ---
-# Intermediate
+# 中級者

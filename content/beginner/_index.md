@@ -1,9 +1,9 @@
 ---
-title: "Beginner"
+title: "初心者"
 chapter: true
 weight: 50
 tags:
   - beginner
 ---
 
-# Beginner
+# 初心者

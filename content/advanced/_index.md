@@ -1,8 +1,8 @@
 ---
-title: "Advanced"
+title: "上級者"
 chapter: true
 weight: 70
 tags:
   - advanced
 ---
-# Advanced
+# 上級者
