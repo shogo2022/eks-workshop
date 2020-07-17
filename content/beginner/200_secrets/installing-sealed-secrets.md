@@ -1,30 +1,44 @@
 ---
-title: "Installing Sealed Secrets"
+title: "Sealed Secretsのインストール"
 date: 2019-04-09T00:00:00-03:00
 weight: 13
 draft: false
 ---
 
+<!--
 #### Installing the kubeseal Client
 For Linux x86_64 systems, the client-tool may be installed into /usr/local/bin with the following command:
+-->
+#### kubesealクライアントのインストール
+Linux x86_64システムでは、次のコマンドでクライアントツールを/usr/local/binにインストールします:
 ```
 wget https://github.com/bitnami-labs/sealed-secrets/releases/download/v0.10.0/kubeseal-linux-amd64 -O kubeseal
 sudo install -m 755 kubeseal /usr/local/bin/kubeseal
 ```
+<!--
 For MacOS systems, the client-tool is installed as follows:
+-->
+MacOSは、次のようにクライアントツールをインストールします:
 ```
 brew install kubeseal
 ```
 
+<!--
 #### Installing the Custom Controller and CRD for SealedSecret
 Install the SealedSecret CRD, controller and RBAC artifacts on your EKS cluster as follows:
+-->
+#### SealedSecret用のカスタムコントローラとCRDをインストールする
+EKSクラスタにSealedSecret CRD、コントローラとRBACファイルをインストールします:
 ```
 cd ~/environment/secrets
 wget https://eksworkshop.com/beginner/200_secrets/secrets.files/controller.yaml
 kubectl apply -f controller.yaml
 ```
 
+<!--
 Check the status of the controller pod.
+-->
+コントローラpodの状態を確認します:
 ```
 kubectl get pods -n kube-system | grep sealed-secrets-controller
 ```
@@ -33,7 +47,10 @@ Output:
 sealed-secrets-controller-7b98b688db-tgx28            1/1     Running   0          41s
 {{< /output >}}
 
+<!--
 The logs printed by the controller reveal the name of the Secret that it created in its namespace, *kube-system*, and which contais the private key pair used by the controller for unsealing SealedSecrets deployed to the cluster. Note that the name of the controller pod will be different in your cluster.
+-->
+コントローラのログを見ると、名前空間( *kube-system* )内で作成したSecretの名前と、クラスタ内にデプロイされたSealedSecretを復号化するのに使われた秘密鍵ペアが含まれています。あなたのクラスタではコントローラpodの名前は異なるので、注意してください。
 ```
 kubectl logs sealed-secrets-controller-84fcdcd5fd-9qb5j -n kube-system
 ```
@@ -55,7 +72,10 @@ XA==
 2020/03/07 22:11:23 HTTP server serving on :8080
 {{< /output >}}
 
+<!--
 As seen from the logs of the controller, it searches for a Secret with the label *sealedsecrets.bitnami.com/sealed-secrets-key* in its namespace. If it does not find one, it creates a new one in its namespace and prints the public key portion of the key pair to its output logs. View the contents of the Secret which contais the public/private key pair in YAML format as follows:
+-->
+コントローラログからわかるように、自身の名前空間の中で *sealedsecrets.bitnami.com/sealed-secrets-key* というラベルのSecretを探しています。見つからない場合は、自身の名前空間で新規に作成し、公開鍵をログに出力します。公開/秘密鍵ペアを含むSecretをYAMLで表示します:
 ```
 kubectl get secret -n kube-system -l sealedsecrets.bitnami.com/sealed-secrets-key -o yaml
 ```
