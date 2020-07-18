@@ -1,23 +1,40 @@
 ---
-title: "Configure IAM Policy for Worker Nodes"
+title: "ワーカーノードのIAMポリシー設定"
 date: 2018-08-07T08:30:11-07:00
 weight: 10
 ---
 
+<!--
 We will be deploying Fluentd as a DaemonSet, or one pod per worker node. The fluentd log daemon will collect logs and forward to CloudWatch Logs. This will require the nodes to have permissions to send logs and create log groups and log streams. This can be accomplished with an IAM user, IAM role, or by using a tool like `Kube2IAM`.
+-->
+Fluentdは各ワーカーノードに一つずつ、DaaemonSetでデプロイされます。fluentdログデーモンはログを収集し、CloudWatchログに転送します。これにはノードが、ログ送信と、ロググループ及びログストリームの作成を許可されている必要があります。これはIAMユーザ、IAMロールもしくは `Kube2IAM` のようなツールを使うことでできます。
 
+<!--
 In our example, we will create an IAM policy and attach it the the Worker node role.
+-->
+この例では、IAMポリシーを作成し、ワーカーノードのロールにアタッチします。
 
+<!--
 First, we will need to ensure the Role Name our workers use is set in our environment:
+-->
+まず、ワーカーノードが使っているRole Nameが自身の環境に設定されているか確認します:
 
 ```bash
 test -n "$ROLE_NAME" && echo ROLE_NAME is "$ROLE_NAME" || echo ROLE_NAME is not set
 ```
 
+<!--
 If you receive an error or empty response, expand the steps below to export.
+-->
+エラーもしくは何も応答がない場合は、下の手順を実施してください。
 
+<!--
 {{%expand "Expand here if you need to export the Role Name" %}}
 If `ROLE_NAME` is not set, please review: [/030_eksctl/test/](/030_eksctl/test/)
+{{% /expand %}}
+-->
+{{%expand "Role Nameをエクスポートする場合はここを展開します" %}}
+`ROLE_NAME` が設定されていない場合は、次を参照してください: [/030_eksctl/test/](/030_eksctl/test/)
 {{% /expand %}}
 
 ```
@@ -44,7 +61,10 @@ EoF
 aws iam put-role-policy --role-name $ROLE_NAME --policy-name Logs-Policy-For-Worker --policy-document file://~/environment/iam_policy/k8s-logs-policy.json
 ```
 
+<!--
 Validate that the policy is attached to the role
+-->
+ポリシーがロールにアタッチされたことを確認します
 ```
 aws iam get-role-policy --role-name $ROLE_NAME --policy-name Logs-Policy-For-Worker
 ```
