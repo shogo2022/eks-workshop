@@ -1,14 +1,23 @@
 ---
-title: "Running the Load Test"
+title: "負荷試験の実施"
 chapter: false
 weight: 8
 ---
 
+<!--
 #### Run Siege to Load Test your Wordpress Site
+-->
+#### WordpressサイトにSiegeで負荷試験を実施
 
+<!--
 Now that Siege has been installed, we're going to generate some load to our Wordpress site and see the metrics change in CloudWatch Container Insights.
+-->
+Siegeがインストールされたので、Wordpressサイトに負荷をかけて、CloudWatch Container Insightsでのメトリクスの変化をみます。
 
+<!--
 From your terminal window, run the following command.
+-->
+ターミナルウインドウから、次のコマンドを実行します。
 
 ```bash
 export WP_ELB=$(kubectl -n wordpress-cwi get svc understood-zebu-wordpress -o jsonpath="{.status.loadBalancer.ingress[].hostname}")
@@ -16,9 +25,15 @@ export WP_ELB=$(kubectl -n wordpress-cwi get svc understood-zebu-wordpress -o js
 siege -q -t 15S -c 200 -i http://${WP_ELB}
 ```
 
+<!--
 This command tells Siege to run 200 concurrent connections to your Wordpress site at varying URLS for 15 seconds.
+-->
+このコマンドは、Wordpressサイトの異なるURLに15秒の間、200の同時接続をします。
 
+<!--
 After the 15 seconds, you should see an output like the one below.
+-->
+15秒後、下のような表示が出るはずです。
 
 {{< output >}}
 Lifting the server siege...      done.
@@ -42,4 +57,7 @@ the .siegerc file in your home directory; change
 the directive 'show-logfile' to false.
 {{< /output >}}
 
+<!--
 ### Now let's go view our newly collected metrics!
+-->
+### 新たに収集したメトリクスを確認しましょう!
