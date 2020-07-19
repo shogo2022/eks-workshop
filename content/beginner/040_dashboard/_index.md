@@ -2,6 +2,7 @@
 title: "Kubernetesダッシュボード"
 chapter: true
 weight: 40
+pre: '<i class="fa fa-film" aria-hidden="true"></i> '
 tags:
   - beginner
   - CON203

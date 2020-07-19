@@ -2,6 +2,7 @@
 title: "サービスの公開"
 chapter: true
 weight: 130
+pre: '<i class="fa fa-film" aria-hidden="true"></i> '
 tags:
   - beginner
   - CON203

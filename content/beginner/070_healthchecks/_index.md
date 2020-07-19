@@ -2,6 +2,7 @@
 title: "ヘルスチェック"
 chapter: true
 weight: 70
+pre: '<i class="fa fa-film" aria-hidden="true"></i> '
 tags:
   - beginner
   - CON206
@@ -11,6 +12,8 @@ tags:
 # Health Checks
 -->
 # ヘルスチェック
+
+{{< youtube J5fgguK8Bok >}}
 
 <!--
 By default, Kubernetes will restart a container if it crashes for any reason. It uses Liveness and Readiness probes which can be configured for running a robust application by identifying the healthy containers to send traffic to and restarting the ones when required.

@@ -3,6 +3,7 @@ title: "イントロダクション"
 weight: 10
 chapter: true
 draft: false
+pre: '<i class="fa fa-film" aria-hidden="true"></i> '
 tags:
   - beginner
   - kubeflow
@@ -14,8 +15,8 @@ tags:
 
 # Kubernetesの紹介
 
-{{< youtube nyUbmqiYLxA >}}
-<!--
+{{< youtube -zmUxsrYw2I >}}
+
 A walkthrough of basic Kubernetes concepts.
 -->
 基本的なKubernetesのコンセプトを説明します。
