@@ -9,7 +9,7 @@ weight: 5
 [Dynamic Volume Provisioning](https://kubernetes.io/docs/concepts/storage/dynamic-provisioning/) allows storage volumes to be created on-demand. [StorageClass](https://kubernetes.io/docs/concepts/storage/storage-classes/) should be pre-created to define which provisioner should be used and what parameters should be passed when dynamic provisioning is invoked.
 -->
 #### 紹介
-[Dynamic Volume Provisioning](https://kubernetes.io/docs/concepts/storage/dynamic-provisioning/)を使えば、オンデマンドでストレージボリュームを作成できます。動的なプロビジョニングが呼び出された時に必要な、provisioner情報とパラメータについて定義された[StorageClass](https://kubernetes.io/docs/concepts/storage/storage-classes/)が事前に作成されている必要があります。
+[Dynamic Volume Provisioning](https://kubernetes.io/docs/concepts/storage/dynamic-provisioning/)を使うことで、オンデマンドでストレージボリュームを作成できます。動的なプロビジョニングが呼び出された時に必要な、provisioner情報とパラメータについて定義された[StorageClass](https://kubernetes.io/docs/concepts/storage/storage-classes/)が事前に作成されている必要があります。
 
 <!--
 #### Define Storage Class

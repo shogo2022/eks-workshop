@@ -1,17 +1,23 @@
 ---
-title: "Deploy Prometheus"
+title: "Prometheusのデプロイ"
 date: 2018-10-14T20:33:02-04:00
 weight: 10
 draft: false
 ---
 
+<!--
 #### Deploy Prometheus
+-->
+#### Prometheusのデプロイ
 
+<!--
 First we are going to install Prometheus. In this example, we are primarily going to use the standard configuration, but we do override the
 storage class. We will use [gp2 EBS volumes](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/EBSVolumeTypes.html) for
 simplicity and demonstration purpose. When deploying in production, you would use
 [io1](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/EBSVolumeTypes.html) volumes
 with desired IOPS and increase the default storage size in the manifests to get better performance. Run the following command:
+-->
+最初にPrometheusをインストールします。この例では、ほぼ標準の設定を使いますが、storage classは変更します。シンプルでデモをしやすいので[gp2 EBSボリューム](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/EBSVolumeTypes.html)を使用します。商用にデプロイする時には、IOPSが保証される[io1](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/EBSVolumeTypes.html)ボリュームを使い、マニフェストのストレージサイズを変更して要件に合うようにしてください。次のコマンドを実行します:
 
 ```
 kubectl create namespace prometheus
@@ -21,20 +27,29 @@ helm install prometheus stable/prometheus \
     --set server.persistentVolume.storageClass="gp2"
 ```
 
+<!--
 Make note of the prometheus endpoint in helm response (you will need this later). It should look similar to below:
+-->
+helmの出力に出るprometheusのエンドポイントは、あとで使うので覚えておきます。イメージは次の通りです:
 
 ```text
 The Prometheus server can be accessed via port 80 on the following DNS name from within your cluster:
 prometheus-server.prometheus.svc.cluster.local
 ```
 
+<!--
 Check if Prometheus components deployed as expected
+-->
+Prometheusが想定通りにデプロイされたか確認します
 
 ```sh
 kubectl get all -n prometheus
 ```
 
+<!--
 You should see response similar to below. They should all be Ready and Available
+-->
+次のように表示が出るはずです。全てがReadyでAvailableであれば問題ありません
 
 ```text
 NAME                                                 READY     STATUS    RESTARTS   AGE
@@ -69,19 +84,29 @@ replicaset.apps/prometheus-pushgateway-d5fdc4f5b           1         1         1
 replicaset.apps/prometheus-server-6d665b876                1         1         1         1m
 ```
 
+<!--
 In order to access the Prometheus server URL, we are going to use the [kubectl port-forward](https://kubernetes.io/docs/tasks/access-application-cluster/port-forward-access-application-cluster/) command to access the application. In Cloud9, run:
+-->
+PrometheusサーバのURLにアクセスするためには、[kubectl port-forward](https://kubernetes.io/docs/tasks/access-application-cluster/port-forward-access-application-cluster/)コマンドを使います。Cloud9で次を実行します:
 
 ```
 kubectl port-forward -n prometheus deploy/prometheus-server 8080:9090
 ```
 
+<!--
 In your Cloud9 environment, click **Tools / Preview / Preview Running Application**.
 Scroll to the end of the URL and append:
+-->
+Cloud9で、 **Tools / Preview / Preview Running Application** とクリックします。
+URLの最後に次を付け加えます:
 
 ```
 /targets
 ```
 
+<!--
 In the web UI, you can see all the targets and metrics being monitored by Prometheus:
+-->
+このWebUIでは、Prometheusで監視されている全てのターゲットとメトリクスを見ることができます:
 
 ![prometheus-targets](/images/prometheus-targets.png)

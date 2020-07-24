@@ -1,16 +1,22 @@
 ---
-title: "Logging In"
+title: "ログイン"
 date: 2018-08-07T08:30:11-07:00
 weight: 30
 draft: false
 ---
 
+<!--
 Now that we have the ELB address of your `jenkins` instance we can go an
 navigate to that address in another window.
+-->
+`jenkins` インスタンスのELBアドレスがわかったので、別のWindowを開きます。
 
 ![Jenkins Login](/images/jenkins-login.png)
 
+<!--
 From here we can log in using:
+-->
+ログインします:
 
 | Username | Password             |
 |----------|----------------------|
@@ -21,5 +27,8 @@ From here we can log in using:
 printf $(kubectl get secret --namespace default cicd-jenkins -o jsonpath="{.data.jenkins-admin-password}" | base64 --decode);echo
 ```
 
+<!--
 The output of this command will give you the default password for your `admin`
 user. Log into the `jenkins` login screen using these credentials.
+-->
+`admin` ユーザのデフォルトパスワードが表示されます。このクレデンシャルを使って `jenkins` にログインしてください。

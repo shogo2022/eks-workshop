@@ -2,6 +2,7 @@
 title: "eksctlを使って起動する"
 chapter: true
 weight: 30
+pre: '<i class="fa fa-film" aria-hidden="true"></i> '
 tags:
   - beginner
   - kubeflow

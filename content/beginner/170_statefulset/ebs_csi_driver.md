@@ -53,7 +53,7 @@ export EBS_CNI_POLICY_ARN=$(aws --region ${AWS_REGION} iam list-policies --query
 <!--
 ## Configure IAM Role for Service Account
 -->
-## サービスアカウントようのIAMロールの作成
+## サービスアカウント用のIAMロールの作成
 
 <!--
 Next, we'll ask `eksctl` to create an IAM Role that contains the IAM Policy we
@@ -99,7 +99,7 @@ done
 <!--
 To complete the deployment:
 -->
-デプロイメント完了します:
+デプロイメントを完了します:
 
 ```sh
 kubectl apply -k ~/environment/ebs_csi_driver

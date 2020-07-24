@@ -2,6 +2,7 @@
 title: "マイクロサービスの一例をデプロイする"
 chapter: true
 weight: 50
+pre: '<i class="fa fa-film" aria-hidden="true"></i> '
 tags:
   - beginner
   - CON203
