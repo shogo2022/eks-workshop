@@ -9,7 +9,10 @@ tags:
 ---
 
 # Custom Resource Definition
+<!--
 ### Introduction
+-->
+### 紹介
 
 In this Chapter, we will review the Custom Resource Definition (CRD) concept, and some examples of usage.
 
