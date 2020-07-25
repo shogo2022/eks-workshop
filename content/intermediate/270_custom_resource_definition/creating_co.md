@@ -1,12 +1,18 @@
 ---
-title: "Create Custom Objects"
+title: "カスタムオブジェクトの作成"
 date: 2019-04-09T00:00:00-03:00
 weight: 11
 draft: false
 ---
+<!--
 After the CustomResourceDefinition object has been created, you can create custom objects. Custom objects can contain custom fields. These fields can contain arbitrary JSON. In the following example, the cronSpec and image custom fields are set in a custom object of kind CronTab. The kind CronTab comes from the spec of the CustomResourceDefinition object you created above.
+-->
+CustomResourceDefinitionオブジェクトが作成されたら、カスタムオブジェクトを作成できます。カスタムオブジェクトはカスタムフィールドを持ちます。フィールドは任意のJSONを保持することができます。次の例では、CronTabの種類(kind)のカスタムオブジェクトにcronSpecとimageというカスタムフィールドが設定されています。CronTabは先ほど作成したCustomResourceDefinitionオブジェクトのspecから来ています。
 
+<!--
 If you save the following YAML to my-crontab.yaml:
+-->
+次のYAMLをmy-crontab.yamlとして保存します:
 
 ```
 cat <<EoF > ~/environment/my-crontab.yaml
@@ -20,35 +26,52 @@ spec:
 EoF
 ```
 
+<!--
 and create it:
+-->
+作成します:
 
 ```
 kubectl apply -f my-crontab.yaml
 ```
 
+<!--
 You can then manage your CronTab objects using kubectl. For example:
+-->
+kubectlでCronTabオブジェクトを管理することができます:
 
 ```
 kubectl get crontab
 ```
 
+<!--
 Should print a list like this:
+-->
+これは次のようなリストを表示します:
 
 ```
 NAME                 AGE
 my-new-cron-object   6s
 ```
 
+<!--
 Resource names are not case-sensitive when using kubectl, and you can use either the singular or plural forms defined in the CRD, as well as any short names.
+-->
+kubectl上ではリソース名は大文字と小文字が区別されません。また、CRDに定義されている単数形(singular)、複数形(plural)そして省略形は同じように使えます
 
+<!--
 You can also view the raw YAML data:
+-->
+YAMLデータを見ることもできます:
 
 ```
 kubectl get ct -o yaml
 ```
 
+<!--
 You should see that it contains the custom cronSpec and image fields from the yaml you used to create it:
-
+-->
+yaml内に、作成時に指定したcronSpecとimageがあるのが確認できます:
 ```
 apiVersion: v1
 items:
@@ -70,11 +93,17 @@ metadata:
   resourceVersion: ""
   selfLink: ""
 ```
+<!--
 We can also describe the custom object with kubectl:
+-->
+kubectlでカスタムオブジェクトの詳細を確認します:
 ```
 kubectl describe crontab
 ```
+<!--
 The output being something like this:
+-->
+出力はこの通り:
 ```
 Name:         my-new-cron-object
 Namespace:    default
@@ -93,17 +122,25 @@ Spec:
   Image:      my-awesome-cron-image
 Events:       <none>
 ```
+<!--
 Or we can check the resource directly from the Kubernetes API. First, we start the proxy in one tab of the Cloud9 environment:
-
+-->
+Kubernetes APiを直接叩くことも可能です。CLoud9の別ターミナルでプロキシを起動します:
 ```
 kubectl proxy --port=8080 --address='0.0.0.0' --disable-filter=true
 ```
  
+<!--
 And in another tab we check the existance of the Custom Resource
+-->
+別のタブでカスタムリソースを確認します
 ```
 curl -i 127.0.0.1:8080/apis/stable.example.com/v1/namespaces/default/crontabs/my-new-cron-object
 ```
+<!--
 With the output:
+-->
+出力:
 ```
 HTTP/1.1 200 OK
 Audit-Id: 04c5ce6e-5a45-4064-8139-6c2b848bc467

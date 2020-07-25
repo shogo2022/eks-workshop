@@ -15,7 +15,6 @@ For example, if you save the following CustomResourceDefinition to resourcedefin
 -->
 例として、以下のCustomResourceDefinitionをresourecdefinition.yamlとして作成します:
 
-<!--
 ```
 cat <<EoF > ~/environment/resourcedefinition.yaml
 apiVersion: apiextensions.k8s.io/v1beta1
@@ -47,35 +46,51 @@ spec:
     - ct
 EoF
 ```
--->
 
-
+<!--
 And create it:
+-->
+作成します:
 
 ```
 kubectl apply -f ~/environment/resourcedefinition.yaml
 ```
 
+<!--
 It might take a few seconds for the endpoint to be created. You can also watch the Established condition of your CustomResourceDefinition to be true or watch the discovery information of the API server for your resource to show up.
+-->
+エンドポイントが作成されるまで数秒かかります。状況は、CustomResourceDefinitionのEstablishコンディションか APIサーバにリソース情報を見ることでも確認できます。
 
+<!--
 Now, let's check the recently created CRD.
+-->
+では、作成したばかりのCRDを確認しましょう。
 
 ```
 kubectl get crd crontabs.stable.example.com
 ```
 
+<!--
 The result will be something like this:
+-->
+このような表示が出ているはずです:
 ```
 NAME                          CREATED AT
 crontabs.stable.example.com   2019-05-09T16:50:55Z
 ```
 
+<!--
 Now, let's see the Custom Resource in detail:
+-->
+では、詳細にCustom Resourceを見てみましょう:
 ```
 kubectl describe crd crontabs.stable.example.com
 ```
 
+<!--
 The output:
+-->
+出力:
 ```
 Name:         crontabs.stable.example.com
 Namespace:    
@@ -134,18 +149,27 @@ Status:
     v1
 Events:  <none>
 ```
+<!--
 Or we can check the resource directly from the Kubernetes API. First, we start the proxy in one tab of the Cloud9 environment:
+-->
+Kubernetes APIから直接確認することもできます。まずは、Cloud9環境でタブを開いてプロキシを起動します:
 
 ```
 kubectl proxy --port=8080 --address='0.0.0.0' --disable-filter=true
 ```
 
+<!--
 And in another tab we check the existance of the Custom Resource
+-->
+別のタブで、Custom Resourceを確認します
 ```
 curl -i 127.0.0.1:8080/apis/apiextensions.k8s.io/v1beta1/customresourcedefinitions/crontabs.stable.example.com
 ```
 
+<!--
 The response being something like this:
+-->
+このように表示されます:
 ```
 HTTP/1.1 200 OK
 Audit-Id: ec046098-8373-4c74-8ce7-a6a43951df6e
