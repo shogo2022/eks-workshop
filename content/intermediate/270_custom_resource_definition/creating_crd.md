@@ -1,14 +1,21 @@
 ---
-title: "Creating a CRD"
+title: "CRDの作成"
 date: 2019-04-09T00:00:00-03:00
 weight: 10
 draft: false
 ---
 
+<!--
 When you create a new CustomResourceDefinition (CRD), the Kubernetes API Server creates a new RESTful resource path for each version you specify. The CRD can be either namespaced or cluster-scoped, as specified in the CRD’s scope field. As with existing built-in objects, deleting a namespace deletes all custom objects in that namespace. CustomResourceDefinitions themselves are non-namespaced and are available to all namespaces.
+-->
+新しくCustomResourceDefinition (CRD)を作成すると、APIサーバはそれぞれのバージョンに対して新しくRESTfulなリソースパスを作成します。CRDはスコープに定義されている通りに、名前空間もしくはクラスタ全体をスコープとして定義出来ます。ビルトインのオブジェクトと同じように、名前空間を消すと、その中のカスタムオブジェクトも削除されます。CustomResourceDefinition自体は名前空間ではなく、クラスタ全体で使用可能です。
 
+<!--
 For example, if you save the following CustomResourceDefinition to resourcedefinition.yaml:
+-->
+例として、以下のCustomResourceDefinitionをresourecdefinition.yamlとして作成します:
 
+<!--
 ```
 cat <<EoF > ~/environment/resourcedefinition.yaml
 apiVersion: apiextensions.k8s.io/v1beta1
@@ -40,6 +47,9 @@ spec:
     - ct
 EoF
 ```
+-->
+
+
 And create it:
 
 ```
