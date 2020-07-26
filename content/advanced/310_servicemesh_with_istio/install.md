@@ -1,30 +1,47 @@
 ---
-title: "Install Istio"
+title: "Istioのインストール"
 date: 2019-03-20T13:36:55+01:00
 weight: 30
 draft: false
 ---
 
+<!--
 We will install all the Istio components using the built-in demo configuration profile. This installation lets you quickly get started evaluating Istio.
+-->
+ここでは、Istioの評価を素早く行うためにビルトインのデモ設定プロファイルを使って、全てのIstioコンポーネントをインストールします。
 
 {{% notice info %}}
+<!--
 The demo configuration profile is not suitable for performance evaluation. It is designed to showcase Istio functionality with high levels of tracing and access logging.
 For more information about Istio profile, [click here](https://istio.io/docs/setup/additional-setup/config-profiles/).
+-->
+このデモプロファイルは性能試験には適していません。これは、Istioのハイレベルなトレースとアクセスログを見せるようなデザインになっています。
+Istioのプロファイルについての詳しい情報は[こちら](https://istio.io/docs/setup/additional-setup/config-profiles/)を参照してください。
+
 {{% /notice %}}
 
+<!--
 Istio will be installed in the `istio-system` namespace.
+-->
+Istioは `istio-system` という名前空間にインストールされます。
 
 ```bash
 istioctl manifest apply --set profile=demo
 ```
 
+<!--
 We can verify all the services have been installed.
+-->
+全てのserviceがインストールされたことを確認します。
 
 ```bash
 kubectl -n istio-system get svc
 ```
 
+<!--
 The output should look like this
+-->
+出力は以下の通りです
 
 {{< output >}}
 NAME                        TYPE           CLUSTER-IP       EXTERNAL-IP                                                              PORT(S)                                                                                                                                      AGE
@@ -44,7 +61,10 @@ zipkin                      ClusterIP      10.100.247.224   <none>              
 
 {{< /output >}}
 
+<!--
 and check the corresponding pods with
+-->
+それぞれのpodを確認します
 
 ```bash
 kubectl -n istio-system get pods
