@@ -9,8 +9,8 @@
 This is how I set up my environment:
 (I am using gitpod.io for editing)
 -->
-私はこのように環境を構築しました。
-(編集にはgitpod.ioを使っています)
+環境の構築方法:
+(gitpod.ioを使った編集)
 
 <!--
 1. fork the repo to your own github account
@@ -19,8 +19,8 @@ This is how I set up my environment:
 This will install the dependencies and clone the theme submodule.
 -->
 1. 自分のgithubアカウントにリポジトリをフォークします。
-2. あなたのgithub urlの前に`gitpod.io#`をつけます。私の場合は、`https://gitpod.io#github.com/brentley/eks-workshop`になります。
-3. gitpodが起動したら、ターミナルで`npm install && npm run theme`と入力します。
+2. 自身のgithub urlの前に `gitpod.io#` をつけます。私の場合は、 `https://gitpod.io#github.com/brentley/eks-workshop` になります。
+3. gitpodが起動したら、ターミナルで `npm install && npm run theme` と入力します。
 これは依存パッケージのインストールとテーマサブモジュールのクローンを行います。
 
 <!--
@@ -29,8 +29,8 @@ If you want to preview your edits, in the terminal, run:
 `npx hugo server`.
 That will start the local hugo server.
 -->
-これでオンラインIDEを使って/content/chapter/filename.mdを編集できるようになりました。
-編集のプレビューをみるときは、ターミナルで以下を実行します:
+オンラインIDEを使って/content/chapter/filename.mdを編集できるようになりました。
+編集後にプレビューをみるときは、ターミナルで以下を実行します:
 `npx hugo server`
 ローカルのhugoサーバが起動します。
 
