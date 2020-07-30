@@ -1,12 +1,14 @@
 ---
-title: "Deploy from Manifests"
+title: "マニフェストでのデプロイ"
 date: 2018-10-087T08:30:11-07:00
 weight: 25
 draft: false
 ---
 
+<!--
 Now we are ready to use Weave Flux to deploy the hello world application into our Amazon EKS cluster.  To do this we will clone our GitHub config repository (k8s-config) and then commit Kubernetes manifests to deploy. 
-
+-->
+これで、Weave FLuxを使ってAmazon EKS クラスタにhello worldアプリケーションをデプロイする準備が整いました。GitHubのコンフィグレポジトリ(k8s-config)をクローンして、マニフェストをコミットしてデプロイします。
 
 ```
 cd ..
@@ -15,7 +17,10 @@ cd k8s-config
 mkdir charts namespaces releases workloads
 ```
 
+<!--
 Create a namespace Kubernetes manifest. 
+-->
+名前空間用のマニフェストファイルを作成します。
 
 ```
 cat << EOF > namespaces/eks-example.yaml
@@ -28,10 +33,18 @@ metadata:
 EOF
 ```
 
+<!--
 Create a deployment Kubernetes manifest.  
+-->
+deployment用のマニフェストファイルを作成します。
 
+<!--
 {{% notice info %}}
 Update the image below to point to your ECR repository and image tag (**Do NOT use latest**).  You can find your Image URI from the [Amazon ECR Console](https://console.aws.amazon.com/ecr/repositories/eks-example/).  Replace YOURACCOUNT and YOURTAG)
+{{% /notice %}}
+-->
+{{% notice info %}}
+下のimageを自身のECRレポジトリに変更し、タグ( **latestは使わない** )も変更してください。自身のイメージURIは[Amazon ECRコンソール](https://console.aws.amazon.com/ecr/repositories/eks-example/)から確認できます。YOURACCOUNTとYOURTAGを変更すること。
 {{% /notice %}}
 
 ```
@@ -78,12 +91,22 @@ spec:
 EOF
 ```
 
+<!--
 Above you see 2 Kubernetes annotations for Flux.  
+-->
+ここではFluxに関わるannotationが2つあるのが確認できます。
 
+<!--
 * flux.weave.works/automated tells Flux whether the container image should be automatically updated.  
 * flux.weave.works/ignore is commented out, but could be used to tell Flux to temporarily ignore the deployment.  
+-->
+* flux.weave.works/automated はコンテナイメージが自動的にアップデートされるかをFluxに指示します。
+* flux.weave.works/ignore はここではコメントアウトされていますが、デプロイメントを一時的に無視するようにFluxに指示する時に使えます。
 
+<!--
 Finally, create a service manifest to enable a load balancer to be created.
+-->
+さあ以後にロードバランサーを作成するためのserviceマニフェストを作成します。
 
 ```
 cat << EOF > workloads/eks-example-svc.yaml
@@ -106,7 +129,10 @@ spec:
 EOF
 ```
 
+<!--
 Now commit the changes and push to your repository.  
+-->
+変更をコミットしてレポジトリにpushします。
 
 ```
 git add . 
@@ -114,7 +140,10 @@ git commit -am "eks-example-deployment"
 git push 
 ```
 
+<!--
 Check the logs of your Flux pod.  It will pull config from the k8s-config repository every 5 minutes.  Ensure you replace the pod name below with the name in your deployment.  
+-->
+
 
 ```
 kubectl get pods -n flux
