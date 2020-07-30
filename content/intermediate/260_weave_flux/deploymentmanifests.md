@@ -143,7 +143,7 @@ git push
 <!--
 Check the logs of your Flux pod.  It will pull config from the k8s-config repository every 5 minutes.  Ensure you replace the pod name below with the name in your deployment.  
 -->
-
+Flux podのログを確認します。5分ごとにk8s-configレポジトリからコンフィグをpullしています。pod名は自身のdeploymentに合わせてpod名を変更してください。
 
 ```
 kubectl get pods -n flux
@@ -151,14 +151,21 @@ kubectl get pods -n flux
 kubectl logs flux-5bd7fb6bb6-4sc78 -n flux
 ```
 
+<!--
 Now get the URL for the load balancer (LoadBalancer Ingress) and connect via your browser (this may take a couple minutes for DNS).
+-->
+ロードバランサー(LoadBalancer Ingress)のURLを確認して、ブラウザから接続してみましょう(DNSでアクセスできるようになるまで数分かかるかもしれません)。
 
 ```
 kubectl describe service eks-example -n eks-example
 ```
 
+<!--
 Make a change to the eks-example source code and push a new change.  
+-->
+eks-exampleのソースコードを変更して、pushしてみます。
 
+<!--
 ```
 cd ../eks-example
 vi src/index.html
@@ -167,13 +174,32 @@ vi src/index.html
 git commit -am "v2 Updating home page"
 git push
 ```
+-->
+```
+cd ../eks-example
+vi src/index.html
+   # <title>と<h>を"Hello World Version 2"に変更します
 
+git commit -am "v2 Updating home page"
+git push
+```
+
+<!--
 Now you can watch in the [CodePipeline console](https://console.aws.amazon.com/codesuite/codepipeline/pipelines) for the new image build to complete.  This will take a couple minutes.  Once complete, you will see a new image land in your [Amazon ECR repository](https://console.aws.amazon.com/ecr/repositories/eks-example/). 
 Monitor the **kubectl logs** for the Flux pod and you should see it update the configuration within five minutes.  
+-->
+新しいイメージのビルドは[CodePipeline console](https://console.aws.amazon.com/codesuite/codepipeline/pipelines)で確認できます。これには数分かかりますが、完了すると[Amazon ECR repository](https://console.aws.amazon.com/ecr/repositories/eks-example/)に新しいイメージが出てきます。
+Flux podの **kubectl logs** を見ると、5分以内にコンフィグがアップデートされるのが見えるはずです。
 
+<!--
 Verify the web page has updated by refreshing the page in your browser.  
+-->
+ブラウザ上でページを更新して、アップデートされていることを確認します。
 
+<!--
 Your boss calls you late at night and tells you that people are complaining about the deployment.  We need to back it out immediately!  We could modify the code in eks-example and trigger a new image build and deploy.  However, we can also use git to revert the config change in k8s-config.  Lets take that approach.
+-->
+上司が深夜に電話をかけてきました。デプロイメントに問題があるようです。すぐにでもロールバックしなければなりません!eks-exampleのコードを編集し、新しいイメージのビルドとデプロイをすることもできますが、gitを使ってk8s-configへの変更を戻すことができます。やってみましょう。
 
 ```
 cd ../k8s-config
@@ -189,8 +215,13 @@ git log --oneline
 git push
 ```
 
+<!--
 You should now be able to watch logs for the Flux pod and it will pull the config change and roll out the previous image.  Check your URL in the browser to ensure it is reverted.  
+-->
+Flux podのログを見ると、コンフィグをpullして以前のイメージがロールアウトされるのが見えるはずです。ブラウザで戻っていることを確認します。
 
+<!--
 Phew!  Disaster averted.  
-
+-->
+ふぅ! 大障害は免れたようです。
 
