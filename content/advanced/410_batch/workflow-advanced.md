@@ -1,15 +1,24 @@
 ---
-title: "Advanced Batch Workflow"
+title: "複雑なバッチワークフロー"
 date: 2018-11-18T00:00:00-05:00
 weight: 70
 draft: false
 ---
 
+<!--
 ### Advanced Batch Workflow
+-->
+### 複雑なバッチワークフロー
 
+<!--
 Let's take a look at a more complex workflow, involving passing artifacts between jobs, multiple dependencies, etc.
+-->
+ジョブ間でアーティファクトを渡したり、複数の依存があるような複雑なワークフローをみてみましょう。
 
+<!--
 Create  `teardrop.yaml` using the command below:
+-->
+次のコマンドで `teardrop.yaml` を作成します:
 
 ```bash
 cat <<EoF > ~/environment/batch_policy/teardrop.yaml
@@ -139,11 +148,20 @@ spec:
 EoF
 ```
 
+<!--
 This workflow uses a [Directed Acyclic Graph](https://en.wikipedia.org/wiki/Directed_acyclic_graph) (DAG) to explicitly define job dependencies. Each job in the workflow calls a `whalesay` template and passes a parameter with a unique name. Some jobs call a `whalesay-reduce` template which accepts multiple artifacts and combines them into a single artifact.
+-->
+このワークフローは[Directed Acyclic Graph](https://en.wikipedia.org/wiki/Directed_acyclic_graph) (DAG、有向非巡回グラフ)を使ってジョブの依存関係を定義しています。ワークフロー中のそれぞれのジョブは `whalesay` テンプレートを呼び、一意の名前をパラメータとして渡します。いくつかのジョブは `whalesay-reduce` テンプレートを呼び、複数のアーティファクトを統合して一つのアーティファクトにします。
 
+<!--
 Each job in the workflow pulls the artifact(s) and lists them in the "Chain", then calls `whalesay` for the current job. Each job will then have a list of the previous job dependency chain (list of all jobs that had to complete before current job could run).
+-->
+ワークフロー中のそれぞれのジョブはアーティファクトを"Chain"にリストし、 `whalesay` を呼び出します。そうすることで、それぞれのジョブは以前のジョブの依存関係チェーン(現在のジョブが走る前に完了している全てのジョブのリスト)を持つことになります。
 
+<!--
 Run the workflow.
+-->
+ワークフローを実行します。
 
 ```bash
 argo -n argo submit --watch ~/environment/batch_policy/teardrop.yaml
@@ -175,4 +193,7 @@ STEP               TEMPLATE         PODNAME                    DURATION  MESSAGE
  └-✔ Golf          whalesay-reduce  teardrop-vqbmb-1766004759  8s
 {{< /output >}}
 
+<!--
 Continue to the [Argo Dashboard](/advanced/410_batch/dashboard/) to explore this model further.
+-->
+[Argoダッシュボード](/advanced/410_batch/dashboard/)に進んで、このモデルをさらに掘り下げましょう。
