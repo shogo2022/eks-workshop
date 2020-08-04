@@ -1,6 +1,7 @@
 ---
 title: "環境の準備"
 weight: 20
+draft: true
 ---
 
 <!--

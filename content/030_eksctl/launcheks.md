@@ -57,6 +57,15 @@ If you do see the correct role, proceed to next step to create an EKS cluster.
 ### EKSクラスターの作成
 
 <!--
+{{% notice warning %}}
+`eksclt` version must be 0.24.0 or above to deploy EKS 1.17, [click here](/030_eksctl/prerequisites) to get the latest version.
+{{% /notice %}}
+-->
+{{% notice warning %}}
+EKS 1.17をデプロイするには、 `eksclt` のバージョンが0.24.0以上である必要があります、[ここをクリック](/030_eksctl/prerequisites)して最新版をデプロイしてください。
+{{% /notice %}}
+
+<!--
 Create an eksctl deployment file (eksworkshop.yaml) use in creating your cluster using the following syntax:
 -->
 次のように、クラスターを作成するためのeksctlのデプロイメントファイル(eksworkshop.yaml)を作成します:
@@ -70,10 +79,14 @@ kind: ClusterConfig
 metadata:
   name: eksworkshop-eksctl
   region: ${AWS_REGION}
+  version: "1.17"
 
 managedNodeGroups:
 - name: nodegroup
   desiredCapacity: 3
+  ssh:
+    allow: true
+    publicKeyName: eksworkshop
 
 # To enable all of the control plane logs, uncomment below:
 # cloudWatch:

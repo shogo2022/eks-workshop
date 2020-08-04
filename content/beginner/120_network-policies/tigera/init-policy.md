@@ -1,6 +1,7 @@
 ---
 title: "nえっとワークポリシーの初期化"
 weight: 200
+draft: true
 ---
 
 <!--

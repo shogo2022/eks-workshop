@@ -1,6 +1,7 @@
 ---
 title: "TSCEを使ってVPCセキュリティグループとKubernetesのネットワークポリシーを連携"
 weight: 100
+draft: true
 ---
 
 <!--

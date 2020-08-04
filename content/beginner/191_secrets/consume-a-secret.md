@@ -7,12 +7,13 @@ draft: false
 
 <!--
 #### Deploy a Pod to Consume the Secret
+
 Create a YAML file (podconsumingsecret.yaml) with the following pod definition:
 -->
 #### Secretを使用するためのpodのデプロイ
 次の定義で、YAMLファイル (podconsumingsecret.yaml) を作成します:
 
-```
+```bash
 cat << EOF > podconsumingsecret.yaml
 ---
 apiVersion: v1
@@ -42,11 +43,14 @@ EOF
 Deploy the pod on your EKS cluster:
 -->
 EKSクラスタにpodをデプロイします:
+
 ```bash
 kubectl --namespace secretslab \
         apply -f podconsumingsecret.yaml
 ```
-Output: 
+
+Output:
+
 {{< output >}}
 pod/consumesecret created
 {{< /output >}}
@@ -56,10 +60,13 @@ Attach to the pod and attempt to access the secret:
 -->
 podに接続し、secretを確認します:
 ```
+
+```bash
 kubectl --namespace secretslab exec -it consumesecret -- cat /tmp/test-creds
 ```
 
-Output: 
+Output:
+
 {{< output >}}
 am i safe?
 {{< /output >}}

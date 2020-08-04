@@ -29,10 +29,10 @@ aws iam attach-role-policy --role-name $ROLE_NAME --policy-arn arn:aws:iam::aws:
 
 <!--
 #### Create Jupyter notebook server
-Create new notebook server by following [Jupyter notebook chapter] (/advanced/420_kubeflow/jupyter). Before you jump to the link, take a note of custom image (**seedjeffwan/tensorflow-1.13.1-notebook-cpu:awscli-v2**) that you will use for **eks-kubeflow-workshop** notebook server. Below screenshot depicts how to use custom image
+Create new notebook server by following [Jupyter notebook chapter] (/advanced/420_kubeflow/jupyter). Before you jump to the link, take a note of custom image (**527798164940.dkr.ecr.us-west-2.amazonaws.com/tensorflow-1.15.2-notebook-cpu:1.0.0**) that you will use for **eks-kubeflow-workshop** notebook server. Below screenshot depicts how to use custom image
 -->
 #### Jupyter notebook サーバの作成
-[Jupyter notebookの章] (/advanced/420_kubeflow/jupyter)に沿って新しいnotebookを作成します。リンクに行く前に、 **eks-kubeflow-workshop** のnotebookサーバに使うカスタムイメージ　(**seedjeffwan/tensorflow-1.13.1-notebook-cpu:awscli-v2**) をメモしておいてください。次の図ではカスタムイメージの使い方を示しています。
+[Jupyter notebookの章] (/advanced/420_kubeflow/jupyter)に沿って新しいnotebookを作成します。リンクに行く前に、 **eks-kubeflow-workshop** のnotebookサーバに使うカスタムイメージ　(**527798164940.dkr.ecr.us-west-2.amazonaws.com/tensorflow-1.15.2-notebook-cpu:1.0.0**) をメモしておいてください。次の図ではカスタムイメージの使い方を示しています。
 
 ![dashboard](/images/kubeflow/eks-kubeflow-workshop-notebook-server.png)
 

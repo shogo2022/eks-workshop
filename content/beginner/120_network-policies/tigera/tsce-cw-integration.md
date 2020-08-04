@@ -1,6 +1,7 @@
 ---
 title: "CloudwatchのフローログとKubernetesネットワークフローログの連携"
 weight: 150
+draft: true
 ---
 <!--
 Now that we have policies installed, and traffic being generated in the cluster, we can look at the [CloudWatch](https://aws.amazon.com/cloudwatch/) integration that TSCE provides.

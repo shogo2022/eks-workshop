@@ -30,4 +30,8 @@ You will need to have completed the [Start the Workshop...](/020_prerequisites/)
 [ワークショップの始め方...](/020_prerequisites/)から[eksctlを使って起動する](/030_eksctl/)、そして[Helm CLIのインストール](/beginner/060_helm/helm_intro/install/)を完了させておいてください。
 {{% /notice %}}
 
+{{% notice tip%}}
+To learn all about our Observability features using Amazon CloudWatch and AWS X-Ray, take a look at our [One Observability Workshop](https://observability.workshop.aws)
+{{% /notice%}}
+
 ![alt text](/images/ekscwci/insights.png "CW Insights")

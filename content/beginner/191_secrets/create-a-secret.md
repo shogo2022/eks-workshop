@@ -19,7 +19,9 @@ Create a namespace for this exercise:
 ```bash
 kubectl create ns secretslab
 ```
-Output: 
+
+Output:
+
 {{< output >}}
 namespace/secretslab created
 {{< /output >}}
@@ -28,6 +30,7 @@ namespace/secretslab created
 Create a text file containing your secret:
 -->
 secretを含んだテキストファイルを作成します:
+
 ```bash
 echo -n "am i safe?" > ./test-creds
 ```
@@ -36,13 +39,16 @@ echo -n "am i safe?" > ./test-creds
 Create your secret
 -->
 secretの作成
+
 ```bash
 kubectl create secret \
         generic test-creds \
         --from-file=test-creds=./test-creds \
         --namespace secretslab
 ```
+
 Output: 
+
 {{< output >}}
 secret/test-creds created
 {{< /output >}}
@@ -58,7 +64,7 @@ kubectl get secret test-creds \
   base64 --decode
 ```
 
-Output: 
+Output:
 {{< output >}}
 am i safe?
 {{< /output >}}

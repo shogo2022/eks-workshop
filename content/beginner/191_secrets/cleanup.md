@@ -5,7 +5,6 @@ weight: 12
 draft: false
 ---
 
-
 <!--
 #### Remove The Namespace
 -->
@@ -21,7 +20,9 @@ rm -f test-creds
 rm -f podconsumingsecret.yaml
 kubectl delete ns secretslab
 ```
-Output: 
+
+Output:
+
 {{< output >}}
 namespace "secretslab" deleted
 {{< /output >}}

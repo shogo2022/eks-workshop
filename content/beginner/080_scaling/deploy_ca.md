@@ -9,12 +9,12 @@ Cluster Autoscaler for AWS provides integration with Auto Scaling groups. It ena
 AWSのCluster Autoscalerはオートスケーリンググループと統合されています。導入には4つの方法があります:
 
 <!--
-* **One Auto Scaling group** - This is what we will use
+* One Auto Scaling group
 * Multiple Auto Scaling groups
 * Auto-Discovery
 * Control-plane Node setup
 -->
-* **オートスケーリンググループがひとつ** - 今回はこれを使います
+* オートスケーリンググループがひとつ
 * オートスケーリンググループが複数
 * オートディスカバリ
 * コントロールプレーンノード設定
@@ -24,170 +24,212 @@ AWSのCluster Autoscalerはオートスケーリンググループと統合さ�
 We have provided a manifest file to deploy the CA. Copy the commands below into your Cloud9 Terminal.
 -->
 ### Cluster Autoscaler (CA)の設定
-CAをで絵プロイするためのマニフェストファイルを用意してあります。次のコマンドをCloud9のターミナルにコピーしてください。
+CAをデプロイするためのマニフェストファイルを用意してあります。次のコマンドをCloud9のターミナルにコピーしてください。
 
-```
-mkdir ~/environment/cluster-autoscaler
-cd ~/environment/cluster-autoscaler
-wget https://eksworkshop.com/beginner/080_scaling/deploy_ca.files/cluster_autoscaler.yml
-```
+<!--
+Auto-Discovery is the preferred method to configure Cluster Autoscaler. Click [here](https://github.com/kubernetes/autoscaler/tree/master/cluster-autoscaler/cloudprovider/aws) for more information.
+-->
+クラスタのAutoscalerでは、オートディスカバリが推奨されています。詳細は[こちら](https://github.com/kubernetes/autoscaler/tree/master/cluster-autoscaler/cloudprovider/aws)を参照してください。
+
+<!--
+Cluster Autoscaler will attempt to determine the CPU, memory, and GPU resources provided by an Auto Scaling Group based on the instance type specified in its Launch Configuration or Launch Template.
+-->
+クラスタAutoscalerは起動設定や起動テンプレートに指定されているインスタンスタイプに基づいて、オートスケーリンググループで提供されるCPUやメモリ、GPUのリソースを決定します。
 
 <!--
 Populate the manifest file with the most-up-to-date Cluster Autoscaler image version for the actual Kubernetes version in EKS.
 -->
 マニフェストファイルを実際のEKSのKubernetesバージョンで最新のCluster Autoscalerイメージバージョンに書き換えます。
 
+<!--
+## Configure the ASG
+-->
+## ASGの設定
+
+<!--
+You configure the size of your Auto Scaling group by setting the minimum, maximum, and desired capacity. When we created the cluster we set these settings to 3.
+-->
+
+
+```bash
+aws autoscaling \
+    describe-auto-scaling-groups \
+    --query "AutoScalingGroups[? Tags[? (Key=='eks:cluster-name') && Value=='eksworkshop-eksctl']].[AutoScalingGroupName, MinSize, MaxSize,DesiredCapacity]" \
+    --output table
 ```
-export K8S_VERSION=$(kubectl version --short | grep 'Server Version:' | sed 's/[^0-9.]*\([0-9.]*\).*/\1/' | cut -d. -f1,2)
-export AUTOSCALER_VERSION=$(curl -s "https://api.github.com/repos/kubernetes/autoscaler/releases" | grep '"tag_name":' | sed -s 's/.*-\([0-9][0-9\.]*\).*/\1/' | grep -m1 ${K8S_VERSION})
-echo "$(envsubst < cluster_autoscaler.yml)" > cluster_autoscaler.yml
-```
 
-<!--
-### Configure the ASG
-We will need to provide the name of the Autoscaling Group that we want CA to manipulate. Collect the name of the Auto Scaling Group (ASG) containing your worker nodes. Record the name somewhere. We will use this later in the manifest file.
--->
-### ASGの設定
-CAが変更するオートスケーリンググループの名前を入れる必要があります。ワーカーノードがあるオートスケーリンググループ(ASG)の名前を確認して、どこかに記録します。これはあとでマニフェストファイルに使用します。
-
-<!--
-You can find it in the console by following this [link](https://console.aws.amazon.com/ec2/autoscaling/home?#AutoScalingGroups:id=eksctl-eksworkshop-eksctl-nodegroup-0-NodeGroup-SQG8QDVSR73G;view=details;filter=eksworkshop).
--->
-この[リンク](https://console.aws.amazon.com/ec2/autoscaling/home?#AutoScalingGroups:id=eksctl-eksworkshop-eksctl-nodegroup-0-NodeGroup-SQG8QDVSR73G;view=details;filter=eksworkshop)に沿ってコンソールで確認できます。
-
-![ASG](/images/scaling-asg.png)
-
-<!--
-Check the box beside the ASG and click `Actions` and `Edit`
--->
-ASGの横にチェックを入れ、`Actions`と`Edit`をクリックします
-
-<!--
-Change the following settings:
--->
-次の設定を変更します:
-
-* Min: **2**
-* Max: **8**
-
-![ASG Config](/images/scaling-asg-config.png)
-
-<!--
-Click `Save`
--->
-`Save`をクリックします
-
-<!--
-### Configure the Cluster Autoscaler
--->
-### Cluster Autoscalerの設定
-
-<!--
-Using the file browser on the left, open cluster_autoscaler.yml
--->
-左のファイルブラウザを使い、cluster_autoscaler.ymlを開きます
-
-<!--
-Search for `command:` and within this block, replace the placeholder text `<AUTOSCALING GROUP NAME>` with the ASG name that you copied in the previous step.
--->
-`command:` を探し、 `<AUTOSCALING GROUP NAME>` というプレースホルダーを前の手順で控えたASGの名前に変えます。
-
-<!--
 {{< output >}}
-command:
-  - ./cluster-autoscaler
-  - --v=4
-  - --stderrthreshold=info
-  - --cloud-provider=aws
-  - --skip-nodes-with-local-storage=false
-  - --nodes=2:8:eksctl-eksworkshop-eksctl-nodegroup-0-NodeGroup-SQG8QDVSR73G
+-------------------------------------------------------------
+|                 DescribeAutoScalingGroups                 |
++-------------------------------------------+----+----+-----+
+|  eks-1eb9b447-f3c1-0456-af77-af0bbd65bc9f |  3 |  3 |  3  |
++-------------------------------------------+----+----+-----+
 {{< /output >}}
-This command contains all of the configuration for the Cluster Autoscaler. The primary config is the `--nodes` flag. This specifies the minimum nodes **(2)**, max nodes **(8)** and **ASG Name**.
--->
-{{< output >}}
-command:
-  - ./cluster-autoscaler
-  - --v=4
-  - --stderrthreshold=info
-  - --cloud-provider=aws
-  - --skip-nodes-with-local-storage=false
-  - --nodes=2:8:eksctl-eksworkshop-eksctl-nodegroup-0-NodeGroup-SQG8QDVSR73G
-{{< /output >}}
-Cluster Autoscalerの設定は全てこのコマンドに含まれています。大事なのは `--nodes` フラグです。これには最小ノード **(2)** 、最大ノード **(8)** そして **ASG Name** が含まれています。
+
+Now, increase the maximum capacity to 4 instances
+
+```bash
+# we need the ASG name
+export ASG_NAME=$(aws autoscaling describe-auto-scaling-groups --query "AutoScalingGroups[? Tags[? (Key=='eks:cluster-name') && Value=='eksworkshop-eksctl']].AutoScalingGroupName" --output text)
+
+# increase max capacity up to 4
+aws autoscaling \
+    update-auto-scaling-group \
+    --auto-scaling-group-name ${ASG_NAME} \
+    --min-size 3 \
+    --desired-capacity 3 \
+    --max-size 4
+
+# Check new values
+aws autoscaling \
+    describe-auto-scaling-groups \
+    --query "AutoScalingGroups[? Tags[? (Key=='eks:cluster-name') && Value=='eksworkshop-eksctl']].[AutoScalingGroupName, MinSize, MaxSize,DesiredCapacity]" \
+    --output table
+```
+
+## IAM roles for service accounts
 
 <!--
-Although Cluster Autoscaler is the de facto standard for automatic scaling in K8s, it is not part of the main release. We deploy it like any other pod in the kube-system namespace, similar to other management pods.
+{{% notice note %}}
+[Click here](/beginner/110_irsa/) if you are not familiar wit IAM Roles for Service Accounts (IRSA).
+{{% /notice %}}
 -->
-Cluster AutoscalerはK8sのオートスケーリングでデファクトスタンダードですが、メインリリースには含まれていません。ここでは、他の管理podと同じように、kube-systemの名前空間にデプロイします。
+{{% notice note %}}
+IAM Roles for Service Accounts (IRSA)についての説明が必要な時は[ここをクリック](/beginner/110_irsa/)してください。
+{{% /notice %}}
 
 <!--
-### Create an IAM Policy
-We need to configure an inline policy and add it to the EC2 instance profile of the worker nodes
+With IAM roles for service accounts on Amazon EKS clusters, you can associate an IAM role with a [Kubernetes service account](https://kubernetes.io/docs/tasks/configure-pod-container/configure-service-account/). This service account can then provide AWS permissions to the containers in any pod that uses that service account. With this feature, you no longer need to provide extended permissions to the node IAM role so that pods on that node can call AWS APIs.
 -->
-### IAMポリシーの作成
-インラインポリシーを作成し、ワーカーノードのEC2インスタンスプロファイルに入れる必要があります
+Amazon EKSクラスタでIAM roles for service accountsを使うことで、KubernetesのサービスアカウントにIAMロールを紐づけることができます。これでpod内のコンテナにAWS権限を与えることができるようになります。これにより、ノード内のpodがAWS APIを呼び出すためにノードのIAMロールに権限をつける必要がなくなります。
 
 <!--
-Ensure `ROLE_NAME` is set in your environment:
-```
-test -n "$ROLE_NAME" && echo ROLE_NAME is "$ROLE_NAME" || echo ROLE_NAME is not set
-```
-If `ROLE_NAME` is not set, please review: [/030_eksctl/test/](/030_eksctl/test/)
+Enabling IAM roles for service accounts on your cluster
 -->
-環境に `ROLE_NAME` が設定されていることを確認:
-```
-test -n "$ROLE_NAME" && echo ROLE_NAME is "$ROLE_NAME" || echo ROLE_NAME is not set
-```
-`ROLE_NAME` が設定されていなかったら、次を参照してください: [/030_eksctl/test/](/030_eksctl/test/)
+クラスタのサービスアカウントのIAMロール有効化
 
-
+```bash
+eksctl utils associate-iam-oidc-provider \
+    --cluster eksworkshop-eksctl \
+    --approve
 ```
-mkdir ~/environment/asg_policy
-cat <<EoF > ~/environment/asg_policy/k8s-asg-policy.json
+
+<!--
+Creating an IAM policy for your service account that will allow your CA pod to interact with the autoscaling groups.
+-->
+CA podがオートスケーリンググループとやりとりができるようにサービスアカウント用のIAMポリシーを作成します。
+
+```bash
+mkdir ~/environment/cluster-autoscaler
+
+cat <<EoF > ~/environment/cluster-autoscaler/k8s-asg-policy.json
 {
-  "Version": "2012-10-17",
-  "Statement": [
-    {
-      "Effect": "Allow",
-      "Action": [
-        "autoscaling:DescribeAutoScalingGroups",
-        "autoscaling:DescribeAutoScalingInstances",
-        "autoscaling:SetDesiredCapacity",
-        "autoscaling:TerminateInstanceInAutoScalingGroup",
-        "autoscaling:DescribeTags"
-      ],
-      "Resource": "*"
-    }
-  ]
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Action": [
+                "autoscaling:DescribeAutoScalingGroups",
+                "autoscaling:DescribeAutoScalingInstances",
+                "autoscaling:DescribeLaunchConfigurations",
+                "autoscaling:DescribeTags",
+                "autoscaling:SetDesiredCapacity",
+                "autoscaling:TerminateInstanceInAutoScalingGroup",
+                "ec2:DescribeLaunchTemplateVersions"
+            ],
+            "Resource": "*",
+            "Effect": "Allow"
+        }
+    ]
 }
 EoF
-aws iam put-role-policy --role-name $ROLE_NAME --policy-name ASG-Policy-For-Worker --policy-document file://~/environment/asg_policy/k8s-asg-policy.json
+
+aws iam create-policy   \
+  --policy-name k8s-asg-policy \
+  --policy-document file://~/environment/cluster-autoscaler/k8s-asg-policy.json
 ```
 
 <!--
-Validate that the policy is attached to the role
-```
-aws iam get-role-policy --role-name $ROLE_NAME --policy-name ASG-Policy-For-Worker
-```
+Finally, create an IAM role for the cluster-autoscaler Service Account in the kube-system namespace.
 -->
-ポリシーがロールにアタッチされたことを確認します
-```
-aws iam get-role-policy --role-name $ROLE_NAME --policy-name ASG-Policy-For-Worker
+最後に、cluster-autoscalerサービスアカウントのIAMロールをkube-system名前空間で作成します。
+
+```bash
+eksctl create iamserviceaccount \
+    --name cluster-autoscaler \
+    --namespace kube-system \
+    --cluster eksworkshop-eksctl \
+    --attach-policy-arn "arn:aws:iam::${ACCOUNT_ID}:policy/k8s-asg-policy" \
+    --approve \
+    --override-existing-serviceaccounts
 ```
 
 <!--
-### Deploy the Cluster Autoscaler
+Make sure your service account with the ARN of the IAM role is annotated
 -->
-### Cluster Autoscalerのデプロイ
+サービスアカウントがIAMロールのARNでannotateされていることを確認してください
 
+```bash
+kubectl -n kube-system describe sa cluster-autoscaler
 ```
-kubectl apply -f ~/environment/cluster-autoscaler/cluster_autoscaler.yml
+
+Output
+
+{{< output >}}
+Name:                cluster-autoscaler
+Namespace:           kube-system
+Labels:              <none>
+Annotations:         eks.amazonaws.com/role-arn: arn:aws:iam::197520326489:role/eksctl-eksworkshop-eksctl-addon-iamserviceac-Role1-12LNPCGBD6IPZ
+Image pull secrets:  <none>
+Mountable secrets:   cluster-autoscaler-token-vfk8n
+Tokens:              cluster-autoscaler-token-vfk8n
+Events:              <none>
+{{< /output >}}
+
+<!--
+## Deploy the Cluster Autoscaler (CA)
+-->
+## Cluster Autoscaler (CA)のデプロイ
+
+<!--
+Deploy the Cluster Autoscaler to your cluster with the following command.
+-->
+次のコマンドでCluster Autoscalerをクラスタにデプロイします。
+
+```bash
+kubectl apply -f https://www.eksworkshop.com/beginner/080_scaling/deploy_ca.files/cluster-autoscaler-autodiscover.yaml
+```
+
+<!--
+To prevent CA from removing nodes where its own pod is running, we will add the `cluster-autoscaler.kubernetes.io/safe-to-evict` annotation to its deployment with the following command
+-->
+CAが自身のpodがあるノードを削除するのを防ぐため、 `cluster-autoscaler.kubernetes.io/safe-to-evict` のannotationをdeploymentに含めます
+
+```bash
+kubectl -n kube-system \
+    annotate deployment.apps/cluster-autoscaler \
+    cluster-autoscaler.kubernetes.io/safe-to-evict="false"
+```
+
+<!--
+Finally let's update the autoscaler image
+-->
+最後に、autoscalerのイメージをアップデートします
+
+```bash
+# we need to retrieve the latest docker image available for our EKS version
+export K8S_VERSION=$(kubectl version --short | grep 'Server Version:' | sed 's/[^0-9.]*\([0-9.]*\).*/\1/' | cut -d. -f1,2)
+export AUTOSCALER_VERSION=$(curl -s "https://api.github.com/repos/kubernetes/autoscaler/releases" | grep '"tag_name":' | sed -s 's/.*-\([0-9][0-9\.]*\).*/\1/' | grep -m1 ${K8S_VERSION})
+
+kubectl -n kube-system \
+    set image deployment.apps/cluster-autoscaler \
+    cluster-autoscaler=us.gcr.io/k8s-artifacts-prod/autoscaling/cluster-autoscaler:v${AUTOSCALER_VERSION}
 ```
 
 <!--
 Watch the logs
-```
-kubectl logs -f deployment/cluster-autoscaler -n kube-system
+
+```bash
+kubectl -n kube-system logs -f deployment/cluster-autoscaler
 ```
 -->
 ログの確認
@@ -196,8 +238,8 @@ kubectl logs -f deployment/cluster-autoscaler -n kube-system
 ```
 
 <!--
-#### We are now ready to scale our cluster
+**We are now ready to scale our cluster**
 -->
-#### クラスターをスケールする準備が整いました
+**これでクラスタをスケールする準備が整いました**
 
-{{%attachments title="Related files" pattern=".yml"/%}}
+{{%attachments title="Related files" pattern=".yaml"/%}}

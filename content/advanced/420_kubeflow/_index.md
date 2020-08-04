@@ -2,6 +2,7 @@
 title: "Kubeflowを使った機械学習"
 chapter: true
 weight: 420
+pre: '<i class="fa fa-film" aria-hidden="true"></i> '
 draft: false
 aliases:
     - /kubeflow/
@@ -16,6 +17,8 @@ tags:
 # Machine Learning using [Kubeflow](https://kubeflow.org/)
 -->
 # [Kubeflow](https://kubeflow.org/)を使った機械学習
+
+{{< youtube NC7hLibMZnk >}}
 
 <!--
 [Kubeflow](https://kubeflow.org) provides a simple, portable, and scalable way of running Machine Learning workloads on Kubernetes.

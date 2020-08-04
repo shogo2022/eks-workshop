@@ -1,6 +1,8 @@
 ---
 title: "Calico Enterpriseを使ったネットワークセキュリティと可視化"
 weight: 20
+draft: true
+hidden: true
 ---
 
 <!--

@@ -5,49 +5,95 @@ weight: 20
 ---
 
 <!--
-This example creates a two instance Amazon Elasticsearch cluster named kubernetes-logs. This cluster is created in the same region as the Kubernetes cluster and CloudWatch log group. 
+This example creates an one instance Amazon Elasticsearch cluster named eksworkshop-logging. This cluster will be created in the same region as the EKS Kubernetes cluster.
 -->
-この例では、kubernetes-logsという2インスタンスのAmazon Elasticsearchクラスタを作成します。このクラスタはKubernetesクラスタやCloudWatchロググループと同じリージョンに作成されます。
+この例では、eksworkshop-loggingという名前の1インスタンスのAmazon Elasticsearchクラスタを作成します。このクラスタはEKS Kubernetesクラスタと同じリージョンに作成されます。
 
 <!--
-{{% notice warning %}}
-Note that this cluster has an open access policy which will need to be locked down in production environments.
-{{% /notice %}}
+The Elasticsearch cluster will have [Fine-Grained Access Control](https://docs.aws.amazon.com/elasticsearch-service/latest/developerguide/fgac.html) enabled.
 -->
-{{% notice warning %}}
-このクラスタはアクセスは公開されていますが、商用環境では閉じるようにしてください。
-{{% /notice %}}
+Elasticsearchクラスタは[Fine-Grained Access Control(細かいアクセス制御)](https://docs.aws.amazon.com/elasticsearch-service/latest/developerguide/fgac.html)が有効にされています。
 
+<!--
+[Fine-grained access control](https://docs.aws.amazon.com/elasticsearch-service/latest/developerguide/fgac.html) offers two forms of authentication and authorization:
+-->
+[Fine-grained access control](https://docs.aws.amazon.com/elasticsearch-service/latest/developerguide/fgac.html)は2通りの認証及び承認を提供します:
+
+<!--
+* A built-in user database, which makes it easy to configure usernames and passwords inside of Elasticsearch.
+* AWS Identity and Access Management (IAM) integration, which lets you map IAM principals to permissions.
+-->
+* ビルトインのユーザデータベースで、Elasticsearch内でユーザ名とパスワードを簡単に設定できる
+* AWS Identity and Access Management (IAM)連携は、IAMプリンシパルと権限を紐付けられる
+
+<!--
+We will create a public access domain with fine-grained access control enabled, an access policy that doesn't use IAM principals, and a master user in the internal user database.
+-->
+ここでは、fine-grained access controlを有効にした状態でパブリックなアクセスドメインを作成します。IAMプリンシパルは使わず、内部のユーザデータベースにマスターユーザが登録されます。
+
+<!--
+First let's create some variables
+-->
+まずはいくつかの変数を設定します
+
+```bash
+# name of our elasticsearch cluster
+export ES_DOMAIN_NAME="eksworkshop-logging"
+
+# Elasticsearch version
+export ES_VERSION="7.4"
+
+# kibana admin user
+export ES_DOMAIN_USER="eksworkshop"
+
+# kibana admin password
+export ES_DOMAIN_PASSWORD="$(openssl rand -base64 12)_Ek1$"
 ```
+
+<!--
+We are ready to create the Elasticsearch cluster
+-->
+これでElasticsearchクラスタの作成準備ができました
+
+```bash
+# Download and update the template using the variables created previously
+curl -sS https://www.eksworkshop.com/intermediate/230_logging/deploy.files/es_domain.json \
+  | envsubst > ~/environment/logging/es_domain.json
+
+# Create the cluster
 aws es create-elasticsearch-domain \
-  --domain-name kubernetes-logs \
-  --elasticsearch-version 6.3 \
-  --elasticsearch-cluster-config \
-  InstanceType=m5.large.elasticsearch,InstanceCount=2 \
-  --ebs-options EBSEnabled=true,VolumeType=standard,VolumeSize=100 \
-  --access-policies '{"Version":"2012-10-17","Statement":[{"Effect":"Allow","Principal":{"AWS":["*"]},"Action":["es:*"],"Resource":"*"}]}'
+  --cli-input-json  file://~/environment/logging/es_domain.json
 ```
 
 <!--
-It takes a little while for the cluster to be created and arrive at an active state. The AWS Console should show the following status when the cluster is ready. 
+{{% notice info %}}
+It takes a little while for the cluster to be in an active state. The AWS Console should show the following status when the cluster is ready.
+{{% /notice %}}
 -->
-クラスタが作成されアクティブになるまでは少し時間がかかります。クラスタが準備出来ると、AWSコンソールが以下のような表示になるはずです。
+{{% notice info %}}
+クラスタがアクティブになるまでには少し時間がかかります。クラスタ何準備完了になると、AWSコンソールで以下のように見えるはずです。{{% /notice %}}
 
-![Elasticsearch Dashboard](/images/logging_es_dashboard.png)
+![Elasticsearch Dashboard](/images/logging/logging_es_dashboard.png)
 
 <!--
-You could also check this via AWS CLI:
+You could also check this via AWS CLI
 -->
-AWS CLIでも確認できます:
+AWS CLI経由でも確認できます
+
+```bash
+if [ $(aws es describe-elasticsearch-domain --domain-name ${ES_DOMAIN_NAME} --query 'DomainStatus.Processing') == "false" ]
+  then
+    tput setaf 2; echo "The Elasticsearch cluster is ready"
+  else
+    tput setaf 1;echo "The Elasticsearch cluster is NOT ready"
+fi
 ```
-aws es describe-elasticsearch-domain --domain-name kubernetes-logs --query 'DomainStatus.Processing'
-```
-<!--
-If the output value is false that means the domain has been processed and is now available to use.
--->
-falseが返ってくれば、ドメインが処理され使用可能になっています。
 
 <!--
-Feel free to move on to the next section for now.
+{{% notice warning %}}
+It is important to wait for the cluster to be available before moving to the next section.
+{{% /notice %}}
 -->
-次のセクションにいきましょう。
+{{% notice warning %}}
+次のセクションに移る前に、クラスタが準備完了していることを確認してください。
+{{% /notice %}}

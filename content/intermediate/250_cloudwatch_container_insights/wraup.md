@@ -87,3 +87,12 @@ aws iam detach-role-policy \
 ## Thank you for using CloudWatch Container Insights!
 -->
 ## CloudWatch Container Insightsのご利用ありがとうございました!
+
+<!--
+{{% notice tip%}}
+There is a lot more to learn about our Observability features using Amazon CloudWatch and AWS X-Ray. Take a look at our [One Observability Workshop](https://observability.workshop.aws)
+{{% /notice%}}
+-->
+{{% notice tip%}}
+Amazon CLoudWatchとAWS X-Rayを使ったオブザーバビリティには学ぶことがたくさんあります。[One Observability Workshop](https://observability.workshop.aws)をみてみてください
+{{% /notice%}}
