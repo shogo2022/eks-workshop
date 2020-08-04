@@ -1,40 +1,71 @@
 ---
-title: "Install"
+title: "インストール"
 date: 2019-08-22T00:00:00-08:00
 weight: 10
 draft: false
 ---
 
+<!--
 In this chapter, we will install Kubeflow on Amazon EKS cluster. If you don't have an EKS cluster, please follow instructions from [getting started guide](/020_prerequisites) and then launch your EKS cluster using [eksctl](/030_eksctl) chapter
+-->
+この章では、Amazon EKSクラスタにKubeflowをインストールします。EKSクラスタが準備できていない場合は、[getting started guide](/020_prerequisites)に従って、[eksctl](/030_eksctl)の章にある通りにEKSクラスタを立ち上げてください。
 
+<!--
 ### Increase cluster size
+-->
+### クラスタサイズの増強
 
+<!--
 We need more resources for completing the Kubeflow chapter of the EKS Workshop.
 First, we'll increase the size of our cluster to 6 nodes
+-->
+このKubeflowの章を実行するためには、リソースを追加する必要があります。
+まずは、クラスタを6ノードに増強します。
 
 ```
 export NODEGROUP_NAME=$(eksctl get nodegroups --cluster eksworkshop-eksctl -o json | jq -r '.[0].Name')
 eksctl scale nodegroup --cluster eksworkshop-eksctl --name $NODEGROUP_NAME --nodes 6
 ```
+<!--
 {{% notice info %}}
 Scaling the nodegroup will take 2 - 3 minutes.
 {{% /notice %}}
+-->
+{{% notice info %}}
+nodegroupのスケールには2、3分かかります。
+{{% /notice %}}
 
+<!--
 ### Install Kubeflow on Amazon EKS
+-->
+### Amazon EKSにKubeflowをインストールする
 <div data-proofer-ignore>
+<!--
 Download 1.0.1 release of `kfctl`. This binary will allow you to install Kubeflow on Amazon EKS
 If you use OSX, download darwin version at "https://github.com/kubeflow/kfctl/releases/download/v1.0.1/kfctl_v1.0.1-0-gf3edb9b_darwin.tar.gz"() instead of linux version below. Please read a release document at https://github.com/kubeflow/kfctl/releases/tag/v1.0.1 for further information.
+-->
+`kfctl` の1.0.1をダウンロードします。Amazon EKSにKubeflowをインストールするにはこのバイナリを使います。
+OSXを使っている場合は、下のLinux版ではなく、"https://github.com/kubeflow/kfctl/releases/download/v1.0.1/kfctl_v1.0.1-0-gf3edb9b_darwin.tar.gz"()のdarwin版をダウンロードします。詳細は https://github.com/kubeflow/kfctl/releases/tag/v1.0.1 のリリース文書を参照してください。
 </div>
 
 ```
 curl --silent --location "https://github.com/kubeflow/kfctl/releases/download/v1.0.1/kfctl_v1.0.1-0-gf3edb9b_linux.tar.gz" | tar xz -C /tmp
 sudo mv -v /tmp/kfctl /usr/local/bin
 ```
+<!--
 #### Setup your configuration
+-->
+#### コンフィグの設定
 
+<!--
 Next step is to export environment variables needed for Kubeflow install.
 {{% notice note %}}
 We chose default kfctl configuration file for simplicity of workshop experience. However, we recommend to install Cognito configuration and add authentication and SSL (via ACM) for production. For additional steps needed to enable Cognito, please follow [Kubeflow documentation](https://www.kubeflow.org/docs/aws/deploy/install-kubeflow/)
+{{% /notice %}}
+-->
+次はKubeflowのインストールに必要な環境変数をexportします。
+{{% notice note %}}
+ワークショップではシンプルにするためにデフォルトのkfctl設定ファイルを使います。しかし商用環境では、Cognitoをインストールして認証と(ACMでの)SSLを追加することをおすすめします。Cognitoを有効にする方法の詳細は[Kubeflowドキュメント](https://www.kubeflow.org/docs/aws/deploy/install-kubeflow/)を参照してください。
 {{% /notice %}}
 
 ```
@@ -53,16 +84,25 @@ EoF
 
 source kf-install.sh
 ```
+<!--
 Create Kubeflow setup directory
+-->
+Kubeflowの設定用のディレクトリを作成します
 ```
 mkdir -p ${KF_DIR}
 cd ${KF_DIR}
 ```
+<!--
 Download configuration file
+-->
+設定ファイルのダウンロード
 ```
 wget -O kfctl_aws.yaml $CONFIG_URI
 ```
+<!--
 We will use [IAM Roles for Service Account](https://docs.aws.amazon.com/eks/latest/userguide/iam-roles-for-service-accounts.html) in our configuration. IAM Roles for Service Account offers fine grained access control so that when Kubeflow interacts with AWS resources (such as ALB creation), it will use roles that are pre-defined by kfctl. kfctl will setup OIDC Identity Provider for your EKS cluster and create two IAM roles (**kf-admin-${AWS_CLUSTER_NAME}** and **kf-user-${AWS_CLUSTER_NAME}**) in your account. kfctl will then build trust relationship between OIDC endpoint and Kubernetes Service Accounts (SA) so that only SA can perform actions that are defined in the IAM role. Because we are using this feature, we will disable using IAM roles defined at the Worker nodes. In addition, we will replace EKS Cluster Name and AWS Region in your $(CONFIG_FILE).
+-->
+設定の中では[サービスアカウント用のIAM Roles](https://docs.aws.amazon.com/eks/latest/userguide/iam-roles-for-service-accounts.html)を使います。サービスアカウント用のIAM Roleを使うことで、Kubeflowが(ALB作成などで)AWSリソースとやりとりをする時に詳細なアクセス制御を行えます。kfctlはEKSクラスタ用のOIDCアイデンティティプロバイダを設定し、IAM Roleを二つ(**kf-admin-${AWS_CLUSTER_NAME}** と **kf-user-${AWS_CLUSTER_NAME}**)を作成します。その後にkfctlはOIDCエンドポイントとKubernetes Service Account(SA)の間で信頼関係を構築し、SAがIAM roleで定義されたアクションのみができるようにします。この理由から、ワーカーノードに設定されているIAMroleは無効化します。また、${CONFIG_FILE}のEKSクラスタ名とAWSリージョンも変更します。
 ```
 sed -i '/region: us-west-2/ a \      enablePodIamPolicy: true' ${CONFIG_FILE}
 
@@ -73,26 +113,43 @@ sed -i "s@roles:@#roles:@" ${CONFIG_FILE}
 sed -i "s@- eksctl-eksworkshop-eksctl-nodegroup-ng-a2-NodeInstanceRole-xxxxxxx@#- eksctl-eksworkshop-eksctl-nodegroup-ng-a2-NodeInstanceRole-xxxxxxx@" ${CONFIG_FILE}
 ```
 
+<!--
 Until https://github.com/kubeflow/kubeflow/issues/3827 is fixed, install aws-iam-authenticator
+-->
+https://github.com/kubeflow/kubeflow/issues/3827 の問題があるので、aws-iam-authenticatorをインストールします
 ```
 curl -o aws-iam-authenticator https://amazon-eks.s3.us-west-2.amazonaws.com/1.15.10/2020-02-22/bin/linux/amd64/aws-iam-authenticator
 chmod +x aws-iam-authenticator
 sudo mv aws-iam-authenticator /usr/local/bin
 ```
+<!--
 #### Deploy Kubeflow
+-->
+#### Kubeflowのデプロイ
 
+<!--
 Apply configuration and deploy Kubeflow on your cluster:
+-->
+クラスタへのコンフィグ適用とKubeflowのデプロイ
 
 ```
 cd ${KF_DIR}
 kfctl apply -V -f ${CONFIG_FILE}
 ```
+<!--
 Run below command to check the status
+-->
+下のコマンドでステータスを確認します
 ```
 kubectl -n kubeflow get all
 ```
+<!--
 {{% notice info %}}
 Installing Kubeflow and its toolset may take 2 - 3 minutes. Few pods may initially give Error or CrashLoopBackOff status. Give it some time, they will auto-heal and will come to Running state
+{{% /notice %}}
+-->
+{{% notice info %}}
+Kubeflowとツールのインストールには2、3分かかります。いくつかのpodはErrorやCrashLoopBackOffになるかもしれませんが、少し時間が経てば自動で修復され、Runningになります
 {{% /notice %}}
 
 {{%expand "Expand here to see the output" %}}

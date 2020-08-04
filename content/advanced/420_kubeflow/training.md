@@ -1,27 +1,51 @@
 ---
-title: "Model training"
+title: "モデルトレーニング"
 date: 2019-08-27T00:00:00-08:00
 weight: 40
 draft: false
 ---
 
+<!--
 ### Model Training
+-->
+### モデルトレーニング
 
+<!--
 While Jupyter notebook is good for interactive model training, you may like to package the training code as Docker image and run it in Amazon EKS cluster.
+-->
+Jupyter notebookは対話的なモデルトレーニングには向いていますが、トレーニングコードをDockerのパッケージにしてAmazon EKSクラスタで実行する場合もあります。
 
+<!--
 This chapter explains how to build a training model for [Fashion-MNIST](https://github.com/zalandoresearch/fashion-mnist) dataset using TensorFlow and Keras on Amazon EKS. This dataset contains 70,000 grayscale images in 10 categories and is meant to be a drop-in replace of [MNIST](https://en.wikipedia.org/wiki/MNIST_database).
+-->
+この章ではAmazon EKS上のTensorFlowとKerasを使って、[Fashion-MNIST](https://github.com/zalandoresearch/fashion-mnist)データセットを使ったトレーニングモデルのビルド方法を説明します。このデータセットは10のカテゴリの70,000のグレイスケール画像を含んでいて、[MNIST](https://en.wikipedia.org/wiki/MNIST_database)の代替として使われています。
 
+<!--
 #### Docker image
+-->
+#### Docker イメージ
 
+<!--
 We will use a pre-built Docker image `seedjeffwan/mnist_tensorflow_keras:1.13.1` for this exercise. This image uses `tensorflow/tensorflow:1.13.1` as the base image. The image has training code and downloads training and test data sets. It also stores the generated model in an S3 bucket.
+-->
+ここではビルド済みの `seedjeffwan/mnist_tensorflow_keras:1.13.1` のDockerイメージを使います。このイメージはベースに `tensorflow/tensorflow:1.13.1` を使っています。トレーニングコードを含んでいて、トレーニングデータセット及びテストデータセットをダウンロードします。また、生成されたモデルをS3バケットに保存します。
 
+<!--
 Alternatively, you can use [Dockerfile](/advanced/420_kubeflow/kubeflow.files/Dockerfile.txt) to build the image by using the command below. We will skip this step for now
+-->
+代わりに次のコードで[Dockerfile](/advanced/420_kubeflow/kubeflow.files/Dockerfile.txt)を使って、イメージをビルドすることもできます。ここでは、この手順はスキップします
 
 `docker build -t <dockerhub_username>/<repo_name>:<tag_name> .`
 
+<!--
 #### Create S3 bucket
+-->
+#### S3バケットの作成
 
+<!--
 Create an S3 bucket where training model will be saved:
+-->
+トレーニングモデルが保存されるS3バケットを作成:
 
 ```
 export HASH=$(< /dev/urandom tr -dc a-z0-9 | head -c6)
@@ -29,28 +53,49 @@ export S3_BUCKET=$HASH-eks-ml-data
 aws s3 mb s3://$S3_BUCKET --region $AWS_REGION
 ```
 
+<!--
 This name will be used in the pod specification later. This bucket is also used for serving the model.
+-->
+後でこの名前をpodのspecに使います。
 
+<!--
 If you want to use an existing bucket in a different region, then make sure to specify the exact region as the value of `AWS_REGION` environment variable in `mnist-training.yaml`.
+-->
+別のリージョンの既存バケットを使う場合は、 `mnist-training.yaml` の `AWS_REGION` 環境変数に正確なリージョンを指定するのを忘れないでください。
 
+<!--
 #### Setup AWS credentials in EKS cluster
+-->
+#### EKSクラスタのAWSクレデンシャル設定
 
+<!--
 AWS credentials are required to save model on S3 bucket. These credentials are stored in EKS cluster as Kubernetes secrets.
+-->
+S3バケットにモデルを保存するためには、AWSクレデンシャルが必要です。これらのクレデンシャルはKubernetesのsecretとしてEKSクラスタに保存されます。
 
+<!--
 Create an IAM user 's3user', attach S3 access policy and retrieve temporary credentials
+-->
+IAMユーザ's3user'を作成し、S3アクセスポリシーを紐づけたら、クレデンシャルを保存します
 ```
 aws iam create-user --user-name s3user
 aws iam attach-user-policy --user-name s3user --policy-arn arn:aws:iam::aws:policy/AmazonS3FullAccess
 aws iam create-access-key --user-name s3user > /tmp/create_output.json
 ```
 
+<!--
 Next, record the new user's credentials into environment variables:
+-->
+次に、ユーザのクレデンシャルを環境変数に設定します:
 ```
 export AWS_ACCESS_KEY_ID_VALUE=$(jq -j .AccessKey.AccessKeyId /tmp/create_output.json | base64)
 export AWS_SECRET_ACCESS_KEY_VALUE=$(jq -j .AccessKey.SecretAccessKey /tmp/create_output.json | base64)
 ```
 
+<!--
 Apply to EKS cluster:
+-->
+EKSクラスタに適用します:
 
 ```
 cat <<EOF | kubectl apply -f -
@@ -65,36 +110,56 @@ data:
 EOF
 ```
 
+<!--
 #### Run training using pod
+-->
+#### podを使ってのトレーニング
 
+<!--
 Create pod:
+-->
+podの作成:
 
 ```
 curl -LO https://eksworkshop.com/advanced/420_kubeflow/kubeflow.files/mnist-training.yaml
 envsubst < mnist-training.yaml | kubectl create -f -
 ```
 
+<!--
 This will start a pod which will start the training and save the generated model in S3 bucket. Check status:
+-->
+これは、トレーニングを実施し、生成されたモデルをS3バケットに保存するpodを起動します。ステータスを確認します:
 
 ```
 kubectl get pods
 ```
+<!--
 You'll see similar output
+-->
+同じような表示が見えるはずです
 ```
 NAME              READY   STATUS    RESTARTS   AGE
 mnist-training    1/1     Running   0          2m45s
 ```
+<!--
 {{% notice note %}}
 Note: If your `mnist-training` fail for some reason, please copy our trained model by running the command under 'Expand here to copy trained model'. This will unblock your inference experiment in the next chapter.
 {{% /notice %}}
+-->
+{{% notice note %}}
+Note: `mnist-training` が何らかの理由で失敗した場合は、'トレーニング済みモデルのコピー'の中のコマンドを実行し、トレーニング済みのモデルをコピーしてください。これで次の章の予測ハンズオンができます。
+{{% /notice %}}
 
-{{%expand "Expand here to copy trained model" %}}
+{{%expand "トレーニング済みモデルのコピー" %}}
 ```
 aws s3 sync s3://reinvent-opn401/mnist/tf_saved_model  s3://$S3_BUCKET/mnist/tf_saved_model
 ```
 {{% /expand %}}
 
+<!--
 {{%expand "Expand here to see logs from successful run" %}}
+-->
+{{%expand "成功した場合のログ" %}}
 ```
 kubectl logs mnist-training -f
 Downloading data from https://storage.googleapis.com/tensorflow/tf-keras-datasets/train-labels-idx1-ubyte.gz
@@ -616,4 +681,7 @@ Saved model: s3://eks-ml-data/mnist/tf_saved_model/1
 ```
 {{% /expand %}}
 
+<!--
 The last line shows that the exported model is saved to S3 bucket.
+-->
+最後の行でエクスポートされたモデルがS3バケットに保存されたことがわかります。
