@@ -51,4 +51,4 @@ Copy the output of this command and then click the radio button next to
 <!--
 Then press *Sign In*.
 -->
-そして、*Sign In*を押します。
+そして、 *Sign In* を押します。

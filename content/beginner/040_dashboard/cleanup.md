@@ -1,5 +1,5 @@
 ---
-title: "Cleanup"
+title: "後片付け"
 date: 2020-07-08T09:36:58-04:00
 draft: false
 weight: 90
@@ -8,7 +8,10 @@ tags:
   - CON203
 ---
 
+<!--
 Stop the proxy and delete the dashboard deployment
+-->
+プロキシを止め、ダッシュボードdeploymentを削除します
 
 ```bash
 # kill proxy

@@ -19,6 +19,6 @@ tags:
 In this Chapter, we will deploy the official Kubernetes dashboard, and connect
 through our Cloud9 Workspace.
 -->
-このチャプターでは、公式のKubernetesダッシュボードをデプロイし、、Cloud9のワークスペースから接続します。
+この章では、公式のKubernetesダッシュボードをデプロイし、Cloud9のワークスペースから接続します。
 
 ![dashboard](/images/dashboard.png)

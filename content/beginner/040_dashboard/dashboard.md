@@ -20,8 +20,10 @@ kubectl apply -f https://raw.githubusercontent.com/kubernetes/dashboard/${DASHBO
 ```
 -->
 ダッシュボードは以下のコマンドでデプロイできます:
-```
-kubectl apply -f https://raw.githubusercontent.com/kubernetes/dashboard/v2.0.0/aio/deploy/recommended.yaml
+```bash
+export DASHBOARD_VERSION="v2.0.0"
+
+kubectl apply -f https://raw.githubusercontent.com/kubernetes/dashboard/${DASHBOARD_VERSION}/aio/deploy/recommended.yaml
 ```
 
 <!--
