@@ -13,7 +13,7 @@ Kubernetesクラスタを構成している機器を **ノード** と呼びま�
 <!--
 Nodes in a Kubernetes cluster may be physical, or virtual.  
 -->
-Kubernetesクラスタのノードは物理も仮想でもありえます。
+Kubernetesクラスタのノードには物理も仮想もありえます。
 
 <!--
 There are two types of nodes:

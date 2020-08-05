@@ -27,6 +27,19 @@ Cloud9のIDEで使用されている[IAMロールを確認する](/020_prerequis
 <!--
 {{%expand "Expand here to see the solution" %}}
 Run `aws sts get-caller-identity` and validate that your _Arn_ contains `eksworkshop-admin`and an Instance Id.
+
+```output
+{
+    "Account": "123456789012",
+    "UserId": "AROA1SAMPLEAWSIAMROLE:i-01234567890abcdef",
+    "Arn": "arn:aws:sts::123456789012:assumed-role/eksworkshop-admin/i-01234567890abcdef"
+}
+```
+
+If you do not see the correct role, please go back and [validate the IAM role](/020_prerequisites/workspaceiam/#validate-the-iam-role) for troubleshooting.
+
+If you do see the correct role, proceed to next step to create an EKS cluster.
+{{% /expand %}}
 -->
 {{%expand "答えはこちら" %}}
 `aws sts get-caller-identity`を実行して、_Arn_に`eksworkshop-admin`とインスタンスIDが含まれていることを確認します。
@@ -39,15 +52,8 @@ Run `aws sts get-caller-identity` and validate that your _Arn_ contains `ekswork
 }
 ```
 
-<!--
-If you do not see the correct role, please go back and [validate the IAM role](/020_prerequisites/workspaceiam/#validate-the-iam-role) for troubleshooting.
--->
 正しいロールでない場合は、戻って[IAMロールを確認](/020_prerequisites/workspaceiam/#validate-the-iam-role)して調査してください。
 
-<!--
-If you do see the correct role, proceed to next step to create an EKS cluster.
-{{% /expand %}}
--->
 正しいロールの場合は、次のステップに進みEKSクラスターを作成します。
 {{% /expand %}}
 

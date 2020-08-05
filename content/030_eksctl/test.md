@@ -22,7 +22,7 @@ kubectl get nodes # ノードが3つあれば、認証は成功です
 <!--
 #### Export the Worker Role Name for use throughout the workshop:
 -->
-#### ワークショップを通じて使うワーカーロールネームをエクスポートします:
+#### ワーカーロールネームをエクスポート:
 
 ```bash
 STACK_NAME=$(eksctl get nodegroup --cluster eksworkshop-eksctl -o json | jq -r '.[].StackName')
@@ -38,4 +38,4 @@ echo "export ROLE_NAME=${ROLE_NAME}" | tee -a ~/.bash_profile
 <!--
 You now have a fully working Amazon EKS Cluster that is ready to use!
 -->
-これで完全に動く使用可能なAmazon EKS クラスターができました!
+これでAmazon EKS クラスターができました!

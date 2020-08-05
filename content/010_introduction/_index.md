@@ -17,6 +17,7 @@ tags:
 
 {{< youtube -zmUxsrYw2I >}}
 
+<!--
 A walkthrough of basic Kubernetes concepts.
 -->
 基本的なKubernetesのコンセプトを説明します。
@@ -26,7 +27,7 @@ A walkthrough of basic Kubernetes concepts.
 <!--
 Welcome to the Amazon EKS Workshop!
 -->
-Amazon EKSSワークショップへようこそ！
+Amazon EKSワークショップへようこそ！
 
 <!--
 The intent of this workshop is to educate users about the features of Amazon EKS.

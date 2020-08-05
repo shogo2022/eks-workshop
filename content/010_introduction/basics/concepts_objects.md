@@ -8,17 +8,17 @@ weight: 50
 <!--
 Kubernetes objects are entities that are used to represent the state of the cluster.  
 -->
-Kubernetesのオブジェクトはクラスターの状態を表す要素です。
+Kubernetesのオブジェクトはクラスタの状態を表す要素です。
 
 <!--
 An object is a “record of intent” – once created, the cluster does its best to ensure it exists as defined.  This is known as the cluster’s “desired state.”
 -->
-オブジェクトは”目的の登録”です - 作成されたら、クラスターはできる限りそこに定義されたことを守るように努めます。これはクラスターの"desired state(望ましい状態)"として知られています。
+オブジェクトは”目指すべきレコード”です - クラスタはできる限りそこに定義されたことを守るように努め、その状態を"desired state(望ましい状態)"としています。
 
 <!--
 Kubernetes is always working to make an object’s “current state” equal to the object’s “desired state.”  A desired state can describe:
 -->
-Kubernetesは常にオブジェクトの"現在の状態"を、オブジェクトの"望ましい状態"と同じにするように動いています。望ましい状態は以下で説明されます:
+Kubernetesは常にオブジェクトの"現在の状態"を、オブジェクトの"望ましい状態"と同じにするように動いています。望ましい状態は以下のように定義されます:
 
 <!--
 * What pods (containers) are running, and on which nodes

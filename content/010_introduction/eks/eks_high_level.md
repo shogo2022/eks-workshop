@@ -9,6 +9,8 @@ weight: 150
 <!--
 Once your EKS cluster is ready, you get an API endpoint and you'd [use Kubectl, community developed tool to interact with your cluster.](https://kubernetes.io/docs/reference/kubectl/kubectl/)
 -->
-EKSクラスタが準備でき、APIエンドポイントの情報がわかったら[コミュニティによって開発されたKubectlでクラスタへ接続できます](https://kubernetes.io/docs/reference/kubectl/kubectl/)。
+EKSクラスタが準備できて、APIエンドポイントの情報がわかったら[コミュニティによって開発されたKubectlでクラスタへ接続できます](https://kubernetes.io/docs/reference/kubectl/kubectl/)。
 
 ![EKS High Level](/images/introduction/eks-high-level.svg)
+
+https://bit.ly/2XsYhIf

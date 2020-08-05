@@ -37,7 +37,7 @@ kubectl{kubectl}
 <!--
 * etcd: Distributed key/value store
 -->
-* etcd: ディストリビューテッド　キー・バリューストア
+* etcd: 分散型のキー・バリューストア
 
 <!--
 * Controller-manager: Always evaluating current vs desired state

@@ -8,8 +8,7 @@ weight: 15
 Amazon EKS clusters require kubectl and kubelet binaries and the aws-cli or aws-iam-authenticator
 binary to allow IAM authentication for your Kubernetes cluster.
 -->
-Amazon EKSクラスターはkubectlとkubeletバイナリーそしてawscliもしくはaws-iam-authenticatorバイナリーが
-KubernetesクラスターのIAM認証のために必要です。
+Amazon EKSクラスターはkubectlとkubeletバイナリー、そしてKubernetesクラスターのIAM認証のためにawscliもしくはaws-iam-authenticatorバイナリーが必要です。
 
 <!--
 {{% notice tip %}}
@@ -19,7 +18,7 @@ for the download links.](https://docs.aws.amazon.com/eks/latest/userguide/gettin
 {{% /notice %}}
 -->
 {{% notice tip %}}
-このワークショップではLinuxバイナリーをダウンロードするコマンドを伝えます。
+このワークショップではLinuxバイナリーをダウンロードします。
 Mac OSX / Windowsを使っている場合は、[公式のEKSドキュメントのダウンロードリンクを確認してください](https://docs.aws.amazon.com/eks/latest/userguide/getting-started.html)
 {{% /notice %}}
 
@@ -36,8 +35,10 @@ sudo chmod +x /usr/local/bin/kubectl
 #### Update awscli
 -->
 #### kubectlのインストール
-```
-sudo curl --silent --location -o /usr/local/bin/kubectl https://amazon-eks.s3.us-west-2.amazonaws.com/1.15.10/2020-02-22/bin/linux/amd64/kubectl
+```bash
+sudo curl --silent --location -o /usr/local/bin/kubectl \
+  https://amazon-eks.s3.us-west-2.amazonaws.com/1.17.7/2020-07-08/bin/linux/amd64/kubectl
+
 sudo chmod +x /usr/local/bin/kubectl
 ```
 #### awscliのアップデート
@@ -63,7 +64,7 @@ sudo yum -y install jq gettext bash-completion moreutils
 ```
 -->
 #### jq、 envsubst (GNU gettext utilities)およびbash-completionのインストール
-```
+```bash
 sudo yum -y install jq gettext bash-completion moreutils
 ```
 
@@ -88,7 +89,7 @@ for command in kubectl jq envsubst aws
   done
 ```
 -->
-#### バイナリーがpathにあり、実行可能であること
+#### バイナリーがpathにあり、実行可能であることを確認します
 ```
 for command in kubectl jq envsubst aws
   do
