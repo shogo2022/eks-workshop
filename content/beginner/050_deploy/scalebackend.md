@@ -31,7 +31,7 @@ kubectl get deployments
 ではバックエンドサービスをスケールアップしましょう:
 ```
 kubectl scale deployment ecsdemo-nodejs --replicas=3
-kubectl scale deployment ecsdemo-crystal --replicas=3
+kubectl scale deployment ecsdemo-crystal --replicas=33
 ```
 deploymentsを見て確認しましょう:
 ```

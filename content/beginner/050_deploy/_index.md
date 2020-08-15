@@ -1,5 +1,5 @@
 ---
-title: "マイクロサービスの一例をデプロイする"
+title: "マイクロサービス例をデプロイする"
 chapter: true
 weight: 50
 pre: '<i class="fa fa-film" aria-hidden="true"></i> '
@@ -11,7 +11,7 @@ tags:
 <!--
 # Deploy the Example Microservices
 -->
-# サンプルのマイクロサービスの一例をデプロイする
+# サンプルのマイクロサービス例のデプロイ
 
 {{< youtube _7S0bLyEIuI >}}
 

@@ -13,12 +13,23 @@ weight: 30
 
 <!--
 {{%expand "Expand here to see the solution" %}}
+
+Copy/Paste the following commands into your Cloud9 workspace:
+
+```
+cd ~/environment/ecsdemo-frontend
+kubectl apply -f kubernetes/deployment.yaml
+kubectl apply -f kubernetes/service.yaml
+```
+
+We can watch the progress by looking at the deployment status:
+```
+kubectl get deployment ecsdemo-frontend
+```
+{{% /expand %}}
 -->
 {{%expand "答えはこちら" %}}
 
-<!--
-Copy/Paste the following commands into your Cloud9 workspace:
--->
 Cloud9のワークスペースに次のコマンドをコピー、ペーストします:
 
 ```
@@ -27,13 +38,6 @@ kubectl apply -f kubernetes/deployment.yaml
 kubectl apply -f kubernetes/service.yaml
 ```
 
-<!--
-We can watch the progress by looking at the deployment status:
-```
-kubectl get deployment ecsdemo-frontend
-```
-{{% /expand %}}
--->
 deploymentの状況を確認することで進捗を見ることができます:
 ```
 kubectl get deployment ecsdemo-frontend
